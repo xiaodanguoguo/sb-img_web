@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.img.gen.dao.ImgResourceDao">
+	<resultMap type="com.img.gen.dao.model.ImgResource" id="imgResourceResultMap">
+		<result property="imgId" column="IMG_ID" />
+		<result property="imgUrl" column="IMG_URL" />
+		<result property="imgSize" column="IMG_SIZE" />
+		<result property="userId" column="USER_ID" />
+		<result property="imgType" column="IMG_TYPE" />
+		<result property="pageView" column="PAGE_VIEW" />
+		<result property="likeCnt" column="LIKE_CNT" />
+		<result property="imgName" column="IMG_NAME" />
+		<result property="generate" column="GENERATE" />
+		<result property="lastGenTime" column="LAST_GEN_TIME" />
+		<result property="shareCnt" column="SHARE_CNT" />
+	</resultMap>
+	
+	<sql id="table_columns">
+		IMG_ID,
+		IMG_URL,
+		IMG_SIZE,
+		USER_ID,
+		IMG_TYPE,
+		PAGE_VIEW,
+		LIKE_CNT,
+		IMG_NAME,
+		GENERATE,
+		LAST_GEN_TIME,
+		SHARE_CNT
+    </sql>
+	<sql id="entity_properties">
+		#{imgId},
+		#{imgUrl},
+		#{imgSize},
+		#{userId},
+		#{imgType},
+		#{pageView},
+		#{likeCnt},
+		#{imgName},
+		#{generate},
+		#{lastGenTime},
+		#{shareCnt}
+	</sql>
+
+    <!-- 使用like用法：columnName like concat('%',#columnName#,'%') -->
+    <sql id="page_where">
+        <trim prefix="where" prefixOverrides="and | or ">
+            <if test="imgUrl != null and imgUrl != ''">and IMG_URL = #{imgUrl}</if>
+            <if test="imgSize != null and imgSize != ''">and IMG_SIZE = #{imgSize}</if>
+            <if test="userId != null and userId != ''">and USER_ID = #{userId}</if>
+            <if test="imgType != null and imgType != ''">and IMG_TYPE = #{imgType}</if>
+            <if test="pageView != null and pageView != ''">and PAGE_VIEW = #{pageView}</if>
+            <if test="likeCnt != null and likeCnt != ''">and LIKE_CNT = #{likeCnt}</if>
+            <if test="imgName != null and imgName != ''">and IMG_NAME = #{imgName}</if>
+            <if test="generate != null and generate != ''">and GENERATE = #{generate}</if>
+            <if test="lastGenTime != null and lastGenTime != ''">and LAST_GEN_TIME = #{lastGenTime}</if>
+            <if test="shareCnt != null and shareCnt != ''">and SHARE_CNT = #{shareCnt}</if>
+        </trim>
+    </sql>
+
+
+	<!-- 适用于主键自增类型 -->
+	<insert id="insert" parameterType="com.img.gen.dao.model.ImgResource" useGeneratedKeys="true" keyProperty="id">
+		insert into img_resource( <include refid="table_columns" /> ) 
+		values ( <include refid="entity_properties" /> )
+	</insert>
+
+    <insert id="insertSelective" parameterType="com.img.gen.dao.model.ImgResource">
+        insert into img_resource
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="imgUrl != null and imgUrl != ''">IMG_URL,</if>
+            <if test="imgSize != null and imgSize != ''">IMG_SIZE,</if>
+            <if test="userId != null and userId != ''">USER_ID,</if>
+            <if test="imgType != null and imgType != ''">IMG_TYPE,</if>
+            <if test="pageView != null and pageView != ''">PAGE_VIEW,</if>
+            <if test="likeCnt != null and likeCnt != ''">LIKE_CNT,</if>
+            <if test="imgName != null and imgName != ''">IMG_NAME,</if>
+            <if test="generate != null and generate != ''">GENERATE,</if>
+            <if test="lastGenTime != null and lastGenTime != ''">LAST_GEN_TIME,</if>
+            <if test="shareCnt != null and shareCnt != ''">SHARE_CNT,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="imgUrl != null and imgUrl != ''">#{imgUrl},</if>
+            <if test="imgSize != null and imgSize != ''">#{imgSize},</if>
+            <if test="userId != null and userId != ''">#{userId},</if>
+            <if test="imgType != null and imgType != ''">#{imgType},</if>
+            <if test="pageView != null and pageView != ''">#{pageView},</if>
+            <if test="likeCnt != null and likeCnt != ''">#{likeCnt},</if>
+            <if test="imgName != null and imgName != ''">#{imgName},</if>
+            <if test="generate != null and generate != ''">#{generate},</if>
+            <if test="lastGenTime != null and lastGenTime != ''">#{lastGenTime},</if>
+            <if test="shareCnt != null and shareCnt != ''">#{shareCnt},</if>
+        </trim>
+	</insert>
+
+
+	<delete id="delete" parameterType="com.img.gen.dao.model.ImgResource">
+		delete from img_resource
+        <include refid="page_where" />
+	</delete>
+
+	<delete id="deleteByPrimaryKey" parameterType="String">
+		delete from img_resource
+		where ID = #{id}
+	</delete>
+
+
+	<update id="updateByPrimaryKey" parameterType="com.img.gen.dao.model.ImgResource">
+		update img_resource 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="imgUrl != null and imgUrl != ''">IMG_URL = #{imgUrl},</if>
+			<if test="imgSize != null and imgSize != ''">IMG_SIZE = #{imgSize},</if>
+			<if test="userId != null and userId != ''">USER_ID = #{userId},</if>
+			<if test="imgType != null and imgType != ''">IMG_TYPE = #{imgType},</if>
+			<if test="pageView != null and pageView != ''">PAGE_VIEW = #{pageView},</if>
+			<if test="likeCnt != null and likeCnt != ''">LIKE_CNT = #{likeCnt},</if>
+			<if test="imgName != null and imgName != ''">IMG_NAME = #{imgName},</if>
+			<if test="generate != null and generate != ''">GENERATE = #{generate},</if>
+			<if test="lastGenTime != null and lastGenTime != ''">LAST_GEN_TIME = #{lastGenTime},</if>
+			<if test="shareCnt != null and shareCnt != ''">SHARE_CNT = #{shareCnt},</if>
+		</trim>
+		<where>ID = #{id}</where>
+	</update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.img.gen.dao.model.ImgResource">
+        update img_resource
+        <trim prefix="set" suffixOverrides=",">
+            <if test="imgUrl != null and imgUrl != ''">IMG_URL = #{imgUrl},</if>
+            <if test="imgSize != null and imgSize != ''">IMG_SIZE = #{imgSize},</if>
+            <if test="userId != null and userId != ''">USER_ID = #{userId},</if>
+            <if test="imgType != null and imgType != ''">IMG_TYPE = #{imgType},</if>
+            <if test="pageView != null and pageView != ''">PAGE_VIEW = #{pageView},</if>
+            <if test="likeCnt != null and likeCnt != ''">LIKE_CNT = #{likeCnt},</if>
+            <if test="imgName != null and imgName != ''">IMG_NAME = #{imgName},</if>
+            <if test="generate != null and generate != ''">GENERATE = #{generate},</if>
+            <if test="lastGenTime != null and lastGenTime != ''">LAST_GEN_TIME = #{lastGenTime},</if>
+            <if test="shareCnt != null and shareCnt != ''">SHARE_CNT = #{shareCnt},</if>
+        </trim>
+        <include refid="page_where" />
+    </update>
+
+
+    <select id="selectAll" resultMap="imgResourceResultMap">
+        select <include refid="table_columns" />
+        from img_resource
+    </select>
+
+    <select id="select" resultMap="imgResourceResultMap">
+        select <include refid="table_columns" />
+        from img_resource
+        <include refid="page_where" />
+	</select>
+
+    <select id="getCount" resultType="int" >
+        select count(ID) from img_resource
+        <include refid="page_where" />
+    </select>
+
+
+    <select id="getByPrimaryKey" resultMap="imgResourceResultMap" parameterType="String" >
+		select <include refid="table_columns" />
+		from img_resource
+		where ID = #{id}
+	</select>
+	
+	<!-- 其他自定义SQL -->
+
+
+</mapper>

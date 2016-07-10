@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.img.gen.dao.ImgCommentDao">
+	<resultMap type="com.img.gen.dao.model.ImgComment" id="imgCommentResultMap">
+		<result property="commentId" column="COMMENT_ID" />
+		<result property="commentContent" column="COMMENT_CONTENT" />
+		<result property="userId" column="USER_ID" />
+		<result property="createTime" column="CREATE_TIME" />
+		<result property="imgId" column="IMG_ID" />
+		<result property="isLogin" column="IS_LOGIN" />
+	</resultMap>
+	
+	<sql id="table_columns">
+		COMMENT_ID,
+		COMMENT_CONTENT,
+		USER_ID,
+		CREATE_TIME,
+		IMG_ID,
+		IS_LOGIN
+    </sql>
+	<sql id="entity_properties">
+		#{commentId},
+		#{commentContent},
+		#{userId},
+		#{createTime},
+		#{imgId},
+		#{isLogin}
+	</sql>
+
+    <!-- 使用like用法：columnName like concat('%',#columnName#,'%') -->
+    <sql id="page_where">
+        <trim prefix="where" prefixOverrides="and | or ">
+            <if test="commentContent != null and commentContent != ''">and COMMENT_CONTENT = #{commentContent}</if>
+            <if test="userId != null and userId != ''">and USER_ID = #{userId}</if>
+            <if test="createTime != null and createTime != ''">and CREATE_TIME = #{createTime}</if>
+            <if test="imgId != null and imgId != ''">and IMG_ID = #{imgId}</if>
+            <if test="isLogin != null and isLogin != ''">and IS_LOGIN = #{isLogin}</if>
+        </trim>
+    </sql>
+
+
+	<!-- 适用于主键自增类型 -->
+	<insert id="insert" parameterType="com.img.gen.dao.model.ImgComment" useGeneratedKeys="true" keyProperty="id">
+		insert into img_comment( <include refid="table_columns" /> ) 
+		values ( <include refid="entity_properties" /> )
+	</insert>
+
+    <insert id="insertSelective" parameterType="com.img.gen.dao.model.ImgComment">
+        insert into img_comment
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="commentContent != null and commentContent != ''">COMMENT_CONTENT,</if>
+            <if test="userId != null and userId != ''">USER_ID,</if>
+            <if test="createTime != null and createTime != ''">CREATE_TIME,</if>
+            <if test="imgId != null and imgId != ''">IMG_ID,</if>
+            <if test="isLogin != null and isLogin != ''">IS_LOGIN,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="commentContent != null and commentContent != ''">#{commentContent},</if>
+            <if test="userId != null and userId != ''">#{userId},</if>
+            <if test="createTime != null and createTime != ''">#{createTime},</if>
+            <if test="imgId != null and imgId != ''">#{imgId},</if>
+            <if test="isLogin != null and isLogin != ''">#{isLogin},</if>
+        </trim>
+	</insert>
+
+
+	<delete id="delete" parameterType="com.img.gen.dao.model.ImgComment">
+		delete from img_comment
+        <include refid="page_where" />
+	</delete>
+
+	<delete id="deleteByPrimaryKey" parameterType="String">
+		delete from img_comment
+		where ID = #{id}
+	</delete>
+
+
+	<update id="updateByPrimaryKey" parameterType="com.img.gen.dao.model.ImgComment">
+		update img_comment 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="commentContent != null and commentContent != ''">COMMENT_CONTENT = #{commentContent},</if>
+			<if test="userId != null and userId != ''">USER_ID = #{userId},</if>
+			<if test="createTime != null and createTime != ''">CREATE_TIME = #{createTime},</if>
+			<if test="imgId != null and imgId != ''">IMG_ID = #{imgId},</if>
+			<if test="isLogin != null and isLogin != ''">IS_LOGIN = #{isLogin},</if>
+		</trim>
+		<where>ID = #{id}</where>
+	</update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.img.gen.dao.model.ImgComment">
+        update img_comment
+        <trim prefix="set" suffixOverrides=",">
+            <if test="commentContent != null and commentContent != ''">COMMENT_CONTENT = #{commentContent},</if>
+            <if test="userId != null and userId != ''">USER_ID = #{userId},</if>
+            <if test="createTime != null and createTime != ''">CREATE_TIME = #{createTime},</if>
+            <if test="imgId != null and imgId != ''">IMG_ID = #{imgId},</if>
+            <if test="isLogin != null and isLogin != ''">IS_LOGIN = #{isLogin},</if>
+        </trim>
+        <include refid="page_where" />
+    </update>
+
+
+    <select id="selectAll" resultMap="imgCommentResultMap">
+        select <include refid="table_columns" />
+        from img_comment
+    </select>
+
+    <select id="select" resultMap="imgCommentResultMap">
+        select <include refid="table_columns" />
+        from img_comment
+        <include refid="page_where" />
+	</select>
+
+    <select id="getCount" resultType="int" >
+        select count(ID) from img_comment
+        <include refid="page_where" />
+    </select>
+
+
+    <select id="getByPrimaryKey" resultMap="imgCommentResultMap" parameterType="String" >
+		select <include refid="table_columns" />
+		from img_comment
+		where ID = #{id}
+	</select>
+	
+	<!-- 其他自定义SQL -->
+
+
+</mapper>

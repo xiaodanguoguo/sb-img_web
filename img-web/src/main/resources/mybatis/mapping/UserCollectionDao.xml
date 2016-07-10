@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.img.gen.dao.UserCollectionDao">
+	<resultMap type="com.img.gen.dao.model.UserCollection" id="userCollectionResultMap">
+		<result property="collectId" column="COLLECT_ID" />
+		<result property="userId" column="USER_ID" />
+		<result property="imgId" column="IMG_ID" />
+		<result property="collectTime" column="COLLECT_TIME" />
+	</resultMap>
+	
+	<sql id="table_columns">
+		COLLECT_ID,
+		USER_ID,
+		IMG_ID,
+		COLLECT_TIME
+    </sql>
+	<sql id="entity_properties">
+		#{collectId},
+		#{userId},
+		#{imgId},
+		#{collectTime}
+	</sql>
+
+    <!-- 使用like用法：columnName like concat('%',#columnName#,'%') -->
+    <sql id="page_where">
+        <trim prefix="where" prefixOverrides="and | or ">
+            <if test="userId != null and userId != ''">and USER_ID = #{userId}</if>
+            <if test="imgId != null and imgId != ''">and IMG_ID = #{imgId}</if>
+            <if test="collectTime != null and collectTime != ''">and COLLECT_TIME = #{collectTime}</if>
+        </trim>
+    </sql>
+
+
+	<!-- 适用于主键自增类型 -->
+	<insert id="insert" parameterType="com.img.gen.dao.model.UserCollection" useGeneratedKeys="true" keyProperty="id">
+		insert into user_collection( <include refid="table_columns" /> ) 
+		values ( <include refid="entity_properties" /> )
+	</insert>
+
+    <insert id="insertSelective" parameterType="com.img.gen.dao.model.UserCollection">
+        insert into user_collection
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="userId != null and userId != ''">USER_ID,</if>
+            <if test="imgId != null and imgId != ''">IMG_ID,</if>
+            <if test="collectTime != null and collectTime != ''">COLLECT_TIME,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="userId != null and userId != ''">#{userId},</if>
+            <if test="imgId != null and imgId != ''">#{imgId},</if>
+            <if test="collectTime != null and collectTime != ''">#{collectTime},</if>
+        </trim>
+	</insert>
+
+
+	<delete id="delete" parameterType="com.img.gen.dao.model.UserCollection">
+		delete from user_collection
+        <include refid="page_where" />
+	</delete>
+
+	<delete id="deleteByPrimaryKey" parameterType="String">
+		delete from user_collection
+		where ID = #{id}
+	</delete>
+
+
+	<update id="updateByPrimaryKey" parameterType="com.img.gen.dao.model.UserCollection">
+		update user_collection 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="userId != null and userId != ''">USER_ID = #{userId},</if>
+			<if test="imgId != null and imgId != ''">IMG_ID = #{imgId},</if>
+			<if test="collectTime != null and collectTime != ''">COLLECT_TIME = #{collectTime},</if>
+		</trim>
+		<where>ID = #{id}</where>
+	</update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.img.gen.dao.model.UserCollection">
+        update user_collection
+        <trim prefix="set" suffixOverrides=",">
+            <if test="userId != null and userId != ''">USER_ID = #{userId},</if>
+            <if test="imgId != null and imgId != ''">IMG_ID = #{imgId},</if>
+            <if test="collectTime != null and collectTime != ''">COLLECT_TIME = #{collectTime},</if>
+        </trim>
+        <include refid="page_where" />
+    </update>
+
+
+    <select id="selectAll" resultMap="userCollectionResultMap">
+        select <include refid="table_columns" />
+        from user_collection
+    </select>
+
+    <select id="select" resultMap="userCollectionResultMap">
+        select <include refid="table_columns" />
+        from user_collection
+        <include refid="page_where" />
+	</select>
+
+    <select id="getCount" resultType="int" >
+        select count(ID) from user_collection
+        <include refid="page_where" />
+    </select>
+
+
+    <select id="getByPrimaryKey" resultMap="userCollectionResultMap" parameterType="String" >
+		select <include refid="table_columns" />
+		from user_collection
+		where ID = #{id}
+	</select>
+	
+	<!-- 其他自定义SQL -->
+
+
+</mapper>

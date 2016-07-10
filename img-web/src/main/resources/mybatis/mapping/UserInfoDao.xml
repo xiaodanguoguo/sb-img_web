@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.img.gen.dao.UserInfoDao">
+	<resultMap type="com.img.gen.dao.model.UserInfo" id="userInfoResultMap">
+		<result property="userId" column="USER_ID" />
+		<result property="userName" column="USER_NAME" />
+		<result property="phoneNum" column="PHONE_NUM" />
+		<result property="email" column="EMAIL" />
+		<result property="iconUrl" column="ICON_URL" />
+		<result property="createTime" column="CREATE_TIME" />
+		<result property="lastLoginTime" column="LAST_LOGIN_TIME" />
+		<result property="status" column="STATUS" />
+		<result property="sex" column="SEX" />
+	</resultMap>
+	
+	<sql id="table_columns">
+		USER_ID,
+		USER_NAME,
+		PHONE_NUM,
+		EMAIL,
+		ICON_URL,
+		CREATE_TIME,
+		LAST_LOGIN_TIME,
+		STATUS,
+		SEX
+    </sql>
+	<sql id="entity_properties">
+		#{userId},
+		#{userName},
+		#{phoneNum},
+		#{email},
+		#{iconUrl},
+		#{createTime},
+		#{lastLoginTime},
+		#{status},
+		#{sex}
+	</sql>
+
+    <!-- 使用like用法：columnName like concat('%',#columnName#,'%') -->
+    <sql id="page_where">
+        <trim prefix="where" prefixOverrides="and | or ">
+            <if test="userName != null and userName != ''">and USER_NAME = #{userName}</if>
+            <if test="phoneNum != null and phoneNum != ''">and PHONE_NUM = #{phoneNum}</if>
+            <if test="email != null and email != ''">and EMAIL = #{email}</if>
+            <if test="iconUrl != null and iconUrl != ''">and ICON_URL = #{iconUrl}</if>
+            <if test="createTime != null and createTime != ''">and CREATE_TIME = #{createTime}</if>
+            <if test="lastLoginTime != null and lastLoginTime != ''">and LAST_LOGIN_TIME = #{lastLoginTime}</if>
+            <if test="status != null and status != ''">and STATUS = #{status}</if>
+            <if test="sex != null and sex != ''">and SEX = #{sex}</if>
+        </trim>
+    </sql>
+
+
+	<!-- 适用于主键自增类型 -->
+	<insert id="insert" parameterType="com.img.gen.dao.model.UserInfo" useGeneratedKeys="true" keyProperty="id">
+		insert into user_info( <include refid="table_columns" /> ) 
+		values ( <include refid="entity_properties" /> )
+	</insert>
+
+    <insert id="insertSelective" parameterType="com.img.gen.dao.model.UserInfo">
+        insert into user_info
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="userName != null and userName != ''">USER_NAME,</if>
+            <if test="phoneNum != null and phoneNum != ''">PHONE_NUM,</if>
+            <if test="email != null and email != ''">EMAIL,</if>
+            <if test="iconUrl != null and iconUrl != ''">ICON_URL,</if>
+            <if test="createTime != null and createTime != ''">CREATE_TIME,</if>
+            <if test="lastLoginTime != null and lastLoginTime != ''">LAST_LOGIN_TIME,</if>
+            <if test="status != null and status != ''">STATUS,</if>
+            <if test="sex != null and sex != ''">SEX,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="userName != null and userName != ''">#{userName},</if>
+            <if test="phoneNum != null and phoneNum != ''">#{phoneNum},</if>
+            <if test="email != null and email != ''">#{email},</if>
+            <if test="iconUrl != null and iconUrl != ''">#{iconUrl},</if>
+            <if test="createTime != null and createTime != ''">#{createTime},</if>
+            <if test="lastLoginTime != null and lastLoginTime != ''">#{lastLoginTime},</if>
+            <if test="status != null and status != ''">#{status},</if>
+            <if test="sex != null and sex != ''">#{sex},</if>
+        </trim>
+	</insert>
+
+
+	<delete id="delete" parameterType="com.img.gen.dao.model.UserInfo">
+		delete from user_info
+        <include refid="page_where" />
+	</delete>
+
+	<delete id="deleteByPrimaryKey" parameterType="String">
+		delete from user_info
+		where ID = #{id}
+	</delete>
+
+
+	<update id="updateByPrimaryKey" parameterType="com.img.gen.dao.model.UserInfo">
+		update user_info 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="userName != null and userName != ''">USER_NAME = #{userName},</if>
+			<if test="phoneNum != null and phoneNum != ''">PHONE_NUM = #{phoneNum},</if>
+			<if test="email != null and email != ''">EMAIL = #{email},</if>
+			<if test="iconUrl != null and iconUrl != ''">ICON_URL = #{iconUrl},</if>
+			<if test="createTime != null and createTime != ''">CREATE_TIME = #{createTime},</if>
+			<if test="lastLoginTime != null and lastLoginTime != ''">LAST_LOGIN_TIME = #{lastLoginTime},</if>
+			<if test="status != null and status != ''">STATUS = #{status},</if>
+			<if test="sex != null and sex != ''">SEX = #{sex},</if>
+		</trim>
+		<where>ID = #{id}</where>
+	</update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.img.gen.dao.model.UserInfo">
+        update user_info
+        <trim prefix="set" suffixOverrides=",">
+            <if test="userName != null and userName != ''">USER_NAME = #{userName},</if>
+            <if test="phoneNum != null and phoneNum != ''">PHONE_NUM = #{phoneNum},</if>
+            <if test="email != null and email != ''">EMAIL = #{email},</if>
+            <if test="iconUrl != null and iconUrl != ''">ICON_URL = #{iconUrl},</if>
+            <if test="createTime != null and createTime != ''">CREATE_TIME = #{createTime},</if>
+            <if test="lastLoginTime != null and lastLoginTime != ''">LAST_LOGIN_TIME = #{lastLoginTime},</if>
+            <if test="status != null and status != ''">STATUS = #{status},</if>
+            <if test="sex != null and sex != ''">SEX = #{sex},</if>
+        </trim>
+        <include refid="page_where" />
+    </update>
+
+
+    <select id="selectAll" resultMap="userInfoResultMap">
+        select <include refid="table_columns" />
+        from user_info
+    </select>
+
+    <select id="select" resultMap="userInfoResultMap">
+        select <include refid="table_columns" />
+        from user_info
+        <include refid="page_where" />
+	</select>
+
+    <select id="getCount" resultType="int" >
+        select count(ID) from user_info
+        <include refid="page_where" />
+    </select>
+
+
+    <select id="getByPrimaryKey" resultMap="userInfoResultMap" parameterType="String" >
+		select <include refid="table_columns" />
+		from user_info
+		where ID = #{id}
+	</select>
+	
+	<!-- 其他自定义SQL -->
+
+
+</mapper>

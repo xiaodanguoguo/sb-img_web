@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context 
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/tx 
+       http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/task 
+       http://www.springframework.org/schema/task/spring-task.xsd">
+
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+                <property name="driverClassName" value="${driverClassName}" />
+                <property name="url" value="${url}" /> 
+                <property name="username" value="${username}" /> 
+                <property name="password" value="${password}" /> 
+                <property name="maxActive" value="20" />
+                <property name="initialSize" value="1" />
+                <property name="maxWait" value="60000" />
+                <property name="minIdle" value="6" />
+                <property name="logAbandoned" value="true" />
+                <property name="removeAbandoned" value="true" />
+                <property name="removeAbandonedTimeout" value="1800" />
+
+                <property name="testWhileIdle" value="true" />
+                <property name="testOnBorrow" value="false" />
+                <property name="testOnReturn" value="false" />
+                <property name="validationQuery" value="select 'x' " />
+                <property name="validationQueryTimeout" value="1" />
+                <property name="timeBetweenEvictionRunsMillis" value="30000" />
+                <property name="numTestsPerEvictionRun" value="20" />
+    </bean>
+
+	 <bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="configLocation" value="classpath:mybatis/mybatis-config.xml"></property>
+		<!-- <property name="typeAliasesPackage" value="cn.ennew"></property> -->
+		<property name="mapperLocations" value="classpath*:mybatis/mapping/**/*.xml" />
+	</bean>
+
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.img.gen.dao"></property>
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+	</bean>
+
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<!-- <tx:method name="getHealthCardNo" propagation="REQUIRES_NEW" /> -->
+			<!-- <tx:method name="getDrugCode" propagation="SUPPORTS" /> -->
+			<tx:method name="insert*"  propagation="REQUIRED" rollback-for="java.lang.RuntimeException"/>
+			<tx:method name="update*"  propagation="REQUIRED" rollback-for="java.lang.RuntimeException"/>
+			<tx:method name="reset*"  propagation="REQUIRED" rollback-for="java.lang.RuntimeException"/>
+			<tx:method name="remove*"  propagation="REQUIRED" rollback-for="java.lang.RuntimeException"/>
+			<tx:method name="delete*"  propagation="REQUIRED" rollback-for="java.lang.RuntimeException"/>
+			<tx:method name="find*" propagation="SUPPORTS" read-only="true" />
+			<tx:method name="get*" propagation="SUPPORTS" read-only="true" />
+			<tx:method name="*" propagation="REQUIRED"/>
+		</tx:attributes>
+	</tx:advice>
+ 
+ 	<aop:config>
+		<aop:pointcut id="facadeMethod"
+			expression=" (execution(* cn.ennew..facade.*Facade.*(..)))" />
+		<aop:advisor pointcut-ref="facadeMethod" advice-ref="txAdvice" />
+	</aop:config>  
+</beans>
+
