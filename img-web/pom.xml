@@ -188,6 +188,13 @@
 			<artifactId>commons-dbcp</artifactId>
 			<version>1.4</version>
 		</dependency>
+
+	  <!--七牛云sdk -->
+	  <dependency>
+		  <groupId>com.qiniu</groupId>
+		  <artifactId>qiniu-java-sdk</artifactId>
+		  <version>7.0.0</version>
+	  </dependency>
   </dependencies> 
 	  <build>
 		<plugins>
@@ -207,12 +214,12 @@
 						</excludes>
 					</instrumentation>
 					<check />
-					<ignores>
-						<!--经过修改的 cobertura， 支持方法级别的过滤 -->
+					<!--<ignores>
+						&lt;!&ndash;经过修改的 cobertura， 支持方法级别的过滤 &ndash;&gt;
 						<ignore>*App*</ignore>
-						<!--以上修改指的是过滤项目中所有类中的方法名中含有 main 的方法 -->
+						&lt;!&ndash;以上修改指的是过滤项目中所有类中的方法名中含有 main 的方法 &ndash;&gt;
 					</ignores>
-					<IgnoreTrival>true</IgnoreTrival>
+					<IgnoreTrival>true</IgnoreTrival>-->
 					<formats>
 						<format>html</format>
 						<format>xml</format>
