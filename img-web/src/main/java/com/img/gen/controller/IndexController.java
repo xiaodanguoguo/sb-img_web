@@ -31,6 +31,11 @@ public class IndexController {
 		}
 		return "index";
 	}
+
+	@RequestMapping("file")
+	public String  file(){
+		return "file";
+	}
 	
 	@RequestMapping("test1")
 	public String test1(JokeDTO jokeDTO) {
