@@ -25,4 +25,22 @@ public interface ImgResourceService {
 
     public Integer updateImgResourceByPrimaryKey(ImgResource record);
 
+    /**
+     * 分页查询图片(带条件)
+     * @author kim
+     * @param pageNo
+     * @param pageSize
+     * @param imgResource
+     * @return
+     */
+	public List<ImgResource> getImgByPage(Integer pageNo, Integer pageSize, ImgResource imgResource);
+
+	/**
+	 * 条件查询图片总记录条数
+	 * @author kim
+	 * @param imgResource
+	 * @return
+	 */
+	public Long getImgCount(ImgResource imgResource);
+
 }

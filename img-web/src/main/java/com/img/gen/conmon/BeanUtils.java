@@ -2,7 +2,9 @@ package com.img.gen.conmon;
 
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import net.sf.cglib.beans.BeanCopier;
 import net.sf.cglib.core.Converter;
@@ -57,5 +59,17 @@ public class BeanUtils {
 	    	return targetList;
     	}
     	return targetList;
+    }
+    
+    public static boolean isNotNull(Object obj) {
+    	return obj != null;
+    }
+    
+    public static boolean isNotNull(Map<? extends Object, ? extends Object> map) {
+    	return map != null && map.size() > 0;
+    }
+    
+    public static boolean isNotNull(Collection<? extends Object> collection) {
+    	return collection != null && collection.size() > 0;
     }
 }

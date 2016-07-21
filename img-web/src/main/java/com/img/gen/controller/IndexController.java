@@ -23,7 +23,7 @@ public class IndexController {
 	@Autowired
 	private JokeService JokeService;
 	
-	@RequestMapping("test")
+	@RequestMapping("index")
 	public String test() {
 		List<ImgComment> imgComents = imgCommentService.findAll();
 		for (ImgComment imgComment : imgComents) {

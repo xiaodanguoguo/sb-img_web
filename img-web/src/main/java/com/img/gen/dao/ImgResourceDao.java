@@ -2,6 +2,8 @@ package com.img.gen.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.img.gen.dao.model.ImgResource;
 
 /**
@@ -33,5 +35,23 @@ public interface ImgResourceDao {
     Integer updateByPrimaryKey(ImgResource record);
 
     Integer updateByPrimaryKeySelective(ImgResource record);
+    
+    /**
+     * 分页查询图片(带条件)
+     * @author kim
+     * @param pageNo
+     * @param pageSize
+     * @param imgResource
+     * @return
+     */
+    List<ImgResource> selectImgByPage(@Param("pageNo") Integer pageNo, @Param("pageSize") Integer pageSize, @Param("imgResource") ImgResource imgResource);
+
+    /**
+	 * 条件查询图片总记录条数
+	 * @author kim
+	 * @param imgResource
+	 * @return
+	 */
+	Long selectImgCount(@Param("imgResource") ImgResource imgResource);
 
 }

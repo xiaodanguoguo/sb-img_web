@@ -49,4 +49,28 @@ public class ImgResourceServiceImpl implements ImgResourceService{
         return imgResourceDao.updateByPrimaryKeySelective(record);
     }
 
+    /**
+     * 分页查询图片(带条件)
+     * @author kim
+     * @param pageNo
+     * @param pageSize
+     * @param imgResource
+     * @return
+     */
+	@Override
+	public List<ImgResource> getImgByPage(Integer pageNo, Integer pageSize, ImgResource imgResource) {
+		return imgResourceDao.selectImgByPage(pageNo, pageSize, imgResource);
+	}
+
+	/**
+	 * 条件查询图片总记录条数
+	 * @author kim
+	 * @param imgResource
+	 * @return
+	 */
+	@Override
+	public Long getImgCount(ImgResource imgResource) {
+		return imgResourceDao.selectImgCount(imgResource);
+	}
+
 }
