@@ -45,7 +45,6 @@
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"></property>
 		<property name="configLocation" value="classpath:mybatis/mybatis-config.xml"></property>
-		<!-- <property name="typeAliasesPackage" value="cn.ennew"></property> -->
 		<property name="mapperLocations" value="classpath*:mybatis/mapping/**/*.xml" />
 	</bean>
 
@@ -71,7 +70,7 @@
  
  	<aop:config>
 		<aop:pointcut id="facadeMethod"
-			expression=" (execution(* cn.ennew..facade.*Facade.*(..)))" />
+			expression=" (execution(* com.img.gen.service.*Service.*(..)))" />
 		<aop:advisor pointcut-ref="facadeMethod" advice-ref="txAdvice" />
 	</aop:config>  
 </beans>
