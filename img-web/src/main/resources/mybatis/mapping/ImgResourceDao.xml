@@ -164,6 +164,16 @@
 	</select>
 	
 	<!-- 其他自定义SQL -->
+	<select id="selectImgByPage" resultMap="imgResourceResultMap">
+		select <include refid="table_columns" />
+		from img_resource
+		<include refid="page_where" />
+		limit #{pageNo}, #{pageSize}
+	</select>
 
-
+	<select id="selectImgCount" resultType="java.lang.Long">
+		select count(1) 
+		from from img_resource 
+		<include refid="page_where" />
+	</select>
 </mapper>
