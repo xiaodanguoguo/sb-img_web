@@ -92,27 +92,20 @@ public class IndexController {
 	@RequestMapping("qiniuFileTest")
 	/************此方法能够实现上传文件到七牛云，但是在tomcat里面产生了一个垃圾文件********************/
 	public ModelAndView qiniuFileTest(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request){
-
 		ModelAndView modelAndView = new ModelAndView();
 		try {
 			String path = request.getSession().getServletContext().getRealPath("upload");
 			String fileName = file.getOriginalFilename();
-
 			File uploadFile = new File(path, fileName);
 			if(!uploadFile.exists()){
 				uploadFile.mkdirs();
 			}
 			file.transferTo(uploadFile);//把文件transfer到零时文件夹
-
 			qiniuUploadService.upload(uploadFile,fileName);
-			System.out.println("文件上传下载测试啦");
-			System.out.println(file);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return  modelAndView;
-
-
 	}
 
 
@@ -123,11 +116,10 @@ public class IndexController {
 	@RequestMapping("qiniuFileTest1")
 	/************测试字节码上传到七牛云服务器********************/
 	public ModelAndView qiniuFileTest1(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request){
-
 		ModelAndView modelAndView = new ModelAndView();
 		try {
 			if(file != null && !file.isEmpty() ){
-				String fileName = file.getName();
+				String fileName = file.getOriginalFilename();
 				byte[] bytes = file.getBytes();
 				qiniuUploadService.upload(bytes,fileName);
 			}
@@ -135,9 +127,17 @@ public class IndexController {
 			e.printStackTrace();
 		}
 		return  modelAndView;
-
-
 	}
+
+	/**
+	 * 跳转生成表情包测试页面
+	 * @return
+     */
+	@RequestMapping("image")
+	public String image (){
+		return "image";
+	}
+
 
 
 }
