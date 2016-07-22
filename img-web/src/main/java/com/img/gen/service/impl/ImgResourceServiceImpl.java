@@ -58,8 +58,8 @@ public class ImgResourceServiceImpl implements ImgResourceService{
      * @return
      */
 	@Override
-	public List<ImgResource> getImgByPage(Integer pageNo, Integer pageSize, ImgResource imgResource) {
-		return imgResourceDao.selectImgByPage(pageNo, pageSize, imgResource);
+	public List<ImgResource> getImgByPage(Integer pageNo, Integer pageSize, String imgName) {
+		return imgResourceDao.selectImgByPage(pageNo, pageSize, imgName);
 	}
 
 	/**
@@ -69,8 +69,8 @@ public class ImgResourceServiceImpl implements ImgResourceService{
 	 * @return
 	 */
 	@Override
-	public Long getImgCount(ImgResource imgResource) {
-		return imgResourceDao.selectImgCount(imgResource);
+	public Long getImgCount(String imgName) {
+		return imgResourceDao.selectImgCount(imgName);
 	}
 
 }
