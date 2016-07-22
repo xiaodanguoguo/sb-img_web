@@ -27,9 +27,26 @@
 	<cglib_version>3.1</cglib_version>
 	<spring_jdbc_version>4.1.1.RELEASE</spring_jdbc_version>
 	<junit_version>4.11</junit_version>
+	<java_mail_version>1.4</java_mail_version>
+	<fast_json_version>1.2.3</fast_json_version>
   </properties>
 
   <dependencies>
+  	 <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fast_json_version}</version>
+     </dependency>
+  	 <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity</artifactId>
+            <version>1.7</version>
+     </dependency>
+  	 <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>${java_mail_version}</version>
+        </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
