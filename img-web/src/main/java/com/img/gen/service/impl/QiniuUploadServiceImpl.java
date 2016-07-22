@@ -27,10 +27,8 @@ public class QiniuUploadServiceImpl implements QiniuUploadService {
     String SECRET_KEY = "J_OcTiwawTqGRNdXcpd6DfK-5cElybswNlGn53d0";
     //要上传的空间
     String bucketname = "sb-img";
-    //上传到七牛后保存的文件名
-    String fileName = "defalut" + new Date().toString() + ".png";
-    //上传文件的路径
-    String FilePath = "/image/";
+    //默认文件名称
+    String defaultFileName = "defalut" + new Date().toString() + ".png";
 
     //密钥配置
     Auth auth = Auth.create(ACCESS_KEY, SECRET_KEY);
@@ -46,14 +44,14 @@ public class QiniuUploadServiceImpl implements QiniuUploadService {
     /**
      * 七牛云上传测试
      * @param file
-     * @param qiniuFileName
+     * @param fileName
      * @return
      */
     @Override
-    public Integer upload(File file,String qiniuFileName) {
+    public Integer upload(File file,String fileName) {
         try {
             //调用put方法上传
-            Response res = uploadManager.put(file, qiniuFileName, getUpToken());
+            Response res = uploadManager.put(file, fileName, getUpToken());
             //打印返回的信息
             System.out.println(res.bodyString());
             return 1;
@@ -70,6 +68,29 @@ public class QiniuUploadServiceImpl implements QiniuUploadService {
         }
         return null;
 
+    }
+
+
+    @Override
+    public Integer upload(byte[] bytes, String fileName) {
+        try {
+            //调用put方法上传
+            Response res = uploadManager.put(bytes, fileName, getUpToken());
+            //打印返回的信息
+            System.out.println(res.bodyString());
+            return 1;
+        } catch (QiniuException e) {
+            Response r = e.response;
+            // 请求失败时打印的异常的信息
+            System.out.println(r.toString());
+            try {
+                //响应的文本信息
+                System.out.println(r.bodyString());
+            } catch (QiniuException e1) {
+                //ignore
+            }
+        }
+        return null;
     }
 
     @Override

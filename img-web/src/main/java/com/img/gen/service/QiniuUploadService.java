@@ -24,4 +24,14 @@ public interface QiniuUploadService {
      */
     public Integer upload(File file, String fileName);
 
+
+    /**
+     * 上传文件
+     * @param bytes
+     * @param fileName
+     * @return
+     */
+    public Integer upload(byte[] bytes,String fileName);
+
+
 }

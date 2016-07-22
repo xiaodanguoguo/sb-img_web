@@ -116,4 +116,28 @@ public class IndexController {
 	}
 
 
+	/**
+	 * 七牛云文件上传测试
+	 * @return
+	 */
+	@RequestMapping("qiniuFileTest1")
+	/************测试字节码上传到七牛云服务器********************/
+	public ModelAndView qiniuFileTest1(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request){
+
+		ModelAndView modelAndView = new ModelAndView();
+		try {
+			if(file != null && !file.isEmpty() ){
+				String fileName = file.getName();
+				byte[] bytes = file.getBytes();
+				qiniuUploadService.upload(bytes,fileName);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return  modelAndView;
+
+
+	}
+
+
 }
