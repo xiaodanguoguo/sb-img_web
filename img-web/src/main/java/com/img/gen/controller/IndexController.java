@@ -1,10 +1,12 @@
 package com.img.gen.controller;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.img.gen.service.QiniuUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,7 +33,10 @@ public class IndexController {
 	
 	@Autowired
 	private JokeService JokeService;
-	
+
+	@Autowired
+	private QiniuUploadService qiniuUploadService;
+
 	@RequestMapping("index")
 	public String test() {
 		List<ImgComment> imgComents = imgCommentService.findAll();
@@ -85,14 +90,29 @@ public class IndexController {
 	 * @return
      */
 	@RequestMapping("qiniuFileTest")
+	/************此方法能够实现上传文件到七牛云，但是在tomcat里面产生了一个垃圾文件********************/
 	public ModelAndView qiniuFileTest(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request){
+
 		ModelAndView modelAndView = new ModelAndView();
+		try {
+			String path = request.getSession().getServletContext().getRealPath("upload");
+			String fileName = file.getOriginalFilename();
 
-		System.out.println("文件上传下载测试啦");
-		System.out.println(file);
+			File uploadFile = new File(path, fileName);
+			if(!uploadFile.exists()){
+				uploadFile.mkdirs();
+			}
+			file.transferTo(uploadFile);//把文件transfer到零时文件夹
 
-
+			qiniuUploadService.upload(uploadFile,fileName);
+			System.out.println("文件上传下载测试啦");
+			System.out.println(file);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return  modelAndView;
+
+
 	}
 
 
