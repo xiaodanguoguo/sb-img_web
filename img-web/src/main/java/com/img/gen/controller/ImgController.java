@@ -19,17 +19,12 @@ public class ImgController {
 	@Autowired
 	private ImgResourceService imgResourceService; 
 	@RequestMapping("get/page")
-	public Page<ImgResourceDTO> getImgByPage(Integer pageNo, Integer pageSize, String keyWords, ImgResourceDTO imgResourceDTO) {
+	public Page<ImgResourceDTO> getImgByPage(Integer pageNo, Integer pageSize, String imgName) {
 		Page<ImgResourceDTO> imgPage = new Page<>(pageNo, pageSize);
 		try {
-			ImgResource imgResource = new ImgResource();
-			if (BeanUtils.isNotNull(imgResourceDTO)) 
-				BeanUtils.copyProperties(imgResourceDTO, imgResource);
-			
-			imgResource.setImgId("1");
-			List<ImgResource> imgResources = imgResourceService.getImgByPage(imgPage.getStartRow(), pageSize, imgResource);
+			List<ImgResource> imgResources = imgResourceService.getImgByPage(imgPage.getStartRow(), pageSize, imgName);
 			BeanUtils.copyPropertieses(imgResources, new ArrayList<ImgResourceDTO>(), ImgResourceDTO.class);
-			Long total = imgResourceService.getImgCount(imgResource);
+			Long total = imgResourceService.getImgCount(imgName);
 			imgPage.setTotal(total);
 		} catch (Exception e) {
 			e.printStackTrace();

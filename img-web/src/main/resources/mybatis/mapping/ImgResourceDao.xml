@@ -167,13 +167,19 @@
 	<select id="selectImgByPage" resultMap="imgResourceResultMap">
 		select <include refid="table_columns" />
 		from img_resource
-		<include refid="page_where" />
+		<![CDATA[
+		where 
+		img_name like concat("%", #{imgName}, "%")		
 		limit #{pageNo}, #{pageSize}
+		]]>
 	</select>
 
 	<select id="selectImgCount" resultType="java.lang.Long">
+		<![CDATA[
 		select count(1) 
-		from from img_resource 
-		<include refid="page_where" />
+		from img_resource 
+		where 
+		img_name like concat("%", #{imgName}, "%")	
+		]]>
 	</select>
 </mapper>

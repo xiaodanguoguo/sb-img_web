@@ -33,7 +33,7 @@ public class IndexController {
 	}
 
 	@RequestMapping("file")
-	public String  file(){
+	public String  file() {
 		return "file";
 	}
 	
