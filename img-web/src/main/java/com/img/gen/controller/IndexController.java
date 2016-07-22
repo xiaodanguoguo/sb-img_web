@@ -17,7 +17,12 @@ import com.img.gen.dao.model.ImgComment;
 import com.img.gen.dao.model.Joke;
 import com.img.gen.service.ImgCommentService;
 import com.img.gen.service.JokeService;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class IndexController {
@@ -73,4 +78,22 @@ public class IndexController {
 		List<Joke> copyPropertieses = BeanUtils.copyPropertieses(jokeList, new ArrayList<Joke>(), Joke.class);
 		
 	}
+
+
+	/**
+	 * 七牛云文件上传测试
+	 * @return
+     */
+	@RequestMapping("qiniuFileTest")
+	public ModelAndView qiniuFileTest(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request){
+		ModelAndView modelAndView = new ModelAndView();
+
+		System.out.println("文件上传下载测试啦");
+		System.out.println(file);
+
+
+		return  modelAndView;
+	}
+
+
 }
