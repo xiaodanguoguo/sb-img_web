@@ -1,10 +1,13 @@
 package com.img.gen.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.img.gen.conmon.BeanUtils;
@@ -14,6 +17,7 @@ import com.img.gen.dao.model.ImgComment;
 import com.img.gen.dao.model.Joke;
 import com.img.gen.service.ImgCommentService;
 import com.img.gen.service.JokeService;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class IndexController {
@@ -35,6 +39,20 @@ public class IndexController {
 	@RequestMapping("file")
 	public String  file() {
 		return "file";
+	}
+
+
+	@RequestMapping("faslJsonTest")
+	@ResponseBody
+	public List<Map<String,Object>> faslJsonTest(){
+		List retList = new ArrayList();
+		Map<String,Object> retMap = new HashMap<String,Object>();
+		retMap.put("name","zhangsan");
+		retMap.put("age",22);
+		retMap.put("sex","male");
+		retMap.put("address","望京soho");
+		retList.add(retMap);
+		return retList;
 	}
 	
 	@RequestMapping("test1")
