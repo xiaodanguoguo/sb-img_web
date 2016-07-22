@@ -44,7 +44,7 @@ public interface ImgResourceDao {
      * @param imgResource
      * @return
      */
-    List<ImgResource> selectImgByPage(@Param("pageNo") Integer pageNo, @Param("pageSize") Integer pageSize, @Param("imgResource") ImgResource imgResource);
+    List<ImgResource> selectImgByPage(@Param("pageNo") Integer pageNo, @Param("pageSize") Integer pageSize, @Param("imgName") String imgName);
 
     /**
 	 * 条件查询图片总记录条数
@@ -52,6 +52,6 @@ public interface ImgResourceDao {
 	 * @param imgResource
 	 * @return
 	 */
-	Long selectImgCount(@Param("imgResource") ImgResource imgResource);
+	Long selectImgCount(@Param("imgName") String imgName);
 
 }
