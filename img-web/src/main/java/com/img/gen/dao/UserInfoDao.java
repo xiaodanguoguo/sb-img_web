@@ -15,20 +15,17 @@ public interface UserInfoDao {
 
     List<UserInfo> select(UserInfo record);
 
-    Integer getCount(UserInfo record);
+    Integer selectCount(UserInfo record);
 
     UserInfo selectByPrimaryKey(Object key);
-
 
     Integer insert(UserInfo record);
 
     Integer insertSelective(UserInfo record);
 
-
     Integer delete(UserInfo record);
 
     Integer deleteByPrimaryKey(Object key);
-
 
     Integer updateByPrimaryKey(UserInfo record);
 

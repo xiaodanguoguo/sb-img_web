@@ -111,13 +111,13 @@
         <include refid="page_where" />
 	</select>
 
-    <select id="getCount" resultType="int" >
+    <select id="selectCount" resultType="int" >
         select count(ID) from img_comment
         <include refid="page_where" />
     </select>
 
 
-    <select id="getByPrimaryKey" resultMap="imgCommentResultMap" parameterType="String" >
+    <select id="selectByPrimaryKey" resultMap="imgCommentResultMap" parameterType="String" >
 		select <include refid="table_columns" />
 		from img_comment
 		where ID = #{id}

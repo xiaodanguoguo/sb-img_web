@@ -25,4 +25,12 @@ public interface JokeService {
 
     public Integer updateJokeByPrimaryKey(Joke record);
 
+    /**
+     * 分页查询段子列表(按热度排序)
+     * @param pageNo
+     * @param pageSize
+     * @return
+     */
+	public List<Joke> findByPage(Integer pageNo, Integer pageSize);
+
 }

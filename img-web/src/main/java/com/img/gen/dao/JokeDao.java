@@ -2,6 +2,8 @@ package com.img.gen.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.img.gen.dao.model.Joke;
 
 /**
@@ -15,7 +17,7 @@ public interface JokeDao {
 
     List<Joke> select(Joke record);
 
-    Integer getCount(Joke record);
+    Integer selectCount(Joke record);
 
     Joke selectByPrimaryKey(Object key);
 
@@ -33,5 +35,13 @@ public interface JokeDao {
     Integer updateByPrimaryKey(Joke record);
 
     Integer updateByPrimaryKeySelective(Joke record);
+
+    /**
+     * 分页查询段子列表(按热度排序)
+     * @param pageNo
+     * @param pageSize
+     * @return
+     */
+	List<Joke> selectByPage(@Param("pageNo") Integer pageNo, @Param("pageSize") Integer pageSize);
 
 }

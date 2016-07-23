@@ -7,6 +7,7 @@
 		<result property="jokeName" column="JOKE_NAME" />
 		<result property="content" column="CONTENT" />
 		<result property="createTime" column="CREATE_TIME" />
+		<result property="likeCnt" column="LIKE_CNT" />
 	</resultMap>
 	
 	<sql id="table_columns">
@@ -14,14 +15,16 @@
 		USER_ID,
 		JOKE_NAME,
 		CONTENT,
-		CREATE_TIME
+		CREATE_TIME,
+		LIKE_CNT
     </sql>
 	<sql id="entity_properties">
 		#{jokeId},
 		#{userId},
 		#{jokeName},
 		#{content},
-		#{createTime}
+		#{createTime},
+		#{likeCnt}
 	</sql>
 
     <!-- 使用like用法：columnName like concat('%',#columnName#,'%') -->
@@ -47,13 +50,15 @@
             <if test="userId != null and userId != ''">USER_ID,</if>
             <if test="jokeName != null and jokeName != ''">JOKE_NAME,</if>
             <if test="content != null and content != ''">CONTENT,</if>
-            <if test="createTime != null and createTime != ''">CREATE_TIME,</if>
+            <if test="createTime != null">CREATE_TIME,</if>
+            <if test="likeCnt != null and likeCnt != ''">LIKE_CNT,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
             <if test="userId != null and userId != ''">#{userId},</if>
             <if test="jokeName != null and jokeName != ''">#{jokeName},</if>
             <if test="content != null and content != ''">#{content},</if>
-            <if test="createTime != null and createTime != ''">#{createTime},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="likeCnt != null and likeCnt != ''">#{likeCnt},</if>
         </trim>
 	</insert>
 
@@ -75,7 +80,8 @@
 			<if test="userId != null and userId != ''">USER_ID = #{userId},</if>
 			<if test="jokeName != null and jokeName != ''">JOKE_NAME = #{jokeName},</if>
 			<if test="content != null and content != ''">CONTENT = #{content},</if>
-			<if test="createTime != null and createTime != ''">CREATE_TIME = #{createTime},</if>
+			<if test="createTime != null">CREATE_TIME = #{createTime},</if>
+            <if test="likeCnt != null and likeCnt != ''">LIKE_CNT = #{likeCnt},</if>
 		</trim>
 		<where>ID = #{id}</where>
 	</update>
@@ -86,7 +92,8 @@
             <if test="userId != null and userId != ''">USER_ID = #{userId},</if>
             <if test="jokeName != null and jokeName != ''">JOKE_NAME = #{jokeName},</if>
             <if test="content != null and content != ''">CONTENT = #{content},</if>
-            <if test="createTime != null and createTime != ''">CREATE_TIME = #{createTime},</if>
+            <if test="createTime != null">CREATE_TIME = #{createTime},</if>
+             <if test="likeCnt != null and likeCnt != ''">LIKE_CNT = #{likeCnt},</if>
         </trim>
         <include refid="page_where" />
     </update>
@@ -103,19 +110,24 @@
         <include refid="page_where" />
 	</select>
 
-    <select id="getCount" resultType="int" >
+    <select id="selectCount" resultType="int" >
         select count(ID) from joke
         <include refid="page_where" />
     </select>
 
 
-    <select id="getByPrimaryKey" resultMap="jokeResultMap" parameterType="String" >
+    <select id="selectByPrimaryKey" resultMap="jokeResultMap" parameterType="String" >
 		select <include refid="table_columns" />
 		from joke
-		where ID = #{id}
+		where JOKE_ID = #{jokeId}
 	</select>
 	
 	<!-- 其他自定义SQL -->
-
+	<select id="selectByPage" resultMap="jokeResultMap">
+		select JOKE_ID, JOKE_NAME,
+		from joke
+		order by LIKE_CNT desc
+		limit #{pageNo}, #{pageSize}
+	</select>
 
 </mapper>

@@ -95,13 +95,13 @@
         <include refid="page_where" />
 	</select>
 
-    <select id="getCount" resultType="int" >
+    <select id="selectCount" resultType="int" >
         select count(ID) from user_collection
         <include refid="page_where" />
     </select>
 
 
-    <select id="getByPrimaryKey" resultMap="userCollectionResultMap" parameterType="String" >
+    <select id="selectByPrimaryKey" resultMap="userCollectionResultMap" parameterType="String" >
 		select <include refid="table_columns" />
 		from user_collection
 		where ID = #{id}

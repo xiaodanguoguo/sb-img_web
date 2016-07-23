@@ -43,4 +43,11 @@ public interface ImgResourceService {
 	 */
 	public Long getImgCount(String imgName);
 
+	/**
+	 * 查询最火爆表情
+	 * @author kim
+	 * @return
+	 */
+	public List<ImgResource> getImgResourceByHot();
+
 }

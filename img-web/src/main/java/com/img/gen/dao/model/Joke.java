@@ -15,11 +15,11 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 public class Joke implements Serializable {
 	
 	private String	jokeId;		
-	private Integer	userId;		
+	private Long	userId;		
 	private String	jokeName;		
 	private String	content;		
 	private Date	createTime;		
-
+	private Integer likeCnt;
 	// Constructor
 	public Joke() {
 	}
@@ -27,7 +27,7 @@ public class Joke implements Serializable {
 	/**
 	 * full Constructor
 	 */
-	public Joke(String jokeId, Integer userId, String jokeName, String content, Date createTime) {
+	public Joke(String jokeId, Long userId, String jokeName, String content, Date createTime) {
 		this.jokeId = jokeId;
 		this.userId = userId;
 		this.jokeName = jokeName;
@@ -35,7 +35,14 @@ public class Joke implements Serializable {
 		this.createTime = createTime;
 	}
 
-	
+	public Integer getLikeCnt() {
+		return likeCnt;
+	}
+
+	public void setLikeCnt(Integer likeCnt) {
+		this.likeCnt = likeCnt;
+	}
+
 	public String getJokeId() {
 		return jokeId;
 	}
@@ -45,11 +52,11 @@ public class Joke implements Serializable {
 	}
 
 	
-	public Integer getUserId() {
+	public Long getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Integer userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 

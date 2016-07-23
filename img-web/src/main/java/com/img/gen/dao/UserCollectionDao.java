@@ -15,7 +15,7 @@ public interface UserCollectionDao {
 
     List<UserCollection> select(UserCollection record);
 
-    Integer getCount(UserCollection record);
+    Integer selectCount(UserCollection record);
 
     UserCollection selectByPrimaryKey(Object key);
 

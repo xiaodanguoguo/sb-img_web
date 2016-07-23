@@ -15,7 +15,7 @@ public interface ImgCommentDao {
 
     List<ImgComment> select(ImgComment record);
 
-    Integer getCount(ImgComment record);
+    Integer selectCount(ImgComment record);
 
     ImgComment selectByPrimaryKey(Object key);
 

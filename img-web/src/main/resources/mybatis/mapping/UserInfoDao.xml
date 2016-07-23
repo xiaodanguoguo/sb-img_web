@@ -104,6 +104,7 @@
 			<if test="lastLoginTime != null and lastLoginTime != ''">LAST_LOGIN_TIME = #{lastLoginTime},</if>
 			<if test="status != null and status != ''">STATUS = #{status},</if>
 			<if test="sex != null and sex != ''">SEX = #{sex},</if>
+			<if test="password != null and password != ''">PASSWORD = #{password},</if>
 		</trim>
 		<where>ID = #{id}</where>
 	</update>
@@ -119,6 +120,7 @@
             <if test="lastLoginTime != null and lastLoginTime != ''">LAST_LOGIN_TIME = #{lastLoginTime},</if>
             <if test="status != null and status != ''">STATUS = #{status},</if>
             <if test="sex != null and sex != ''">SEX = #{sex},</if>
+            <if test="password != null and password != ''">PASSWORD = #{password},</if>
         </trim>
         <include refid="page_where" />
     </update>
@@ -135,16 +137,16 @@
         <include refid="page_where" />
 	</select>
 
-    <select id="getCount" resultType="int" >
+    <select id="selectCount" resultType="int" >
         select count(ID) from user_info
         <include refid="page_where" />
     </select>
 
 
-    <select id="getByPrimaryKey" resultMap="userInfoResultMap" parameterType="String" >
+    <select id="selectByPrimaryKey" resultMap="userInfoResultMap" parameterType="Long" >
 		select <include refid="table_columns" />
 		from user_info
-		where ID = #{id}
+		where USER_ID = #{userId}
 	</select>
 	
 	<!-- 其他自定义SQL -->

@@ -49,4 +49,15 @@ public class JokeServiceImpl implements JokeService{
         return jokeDao.updateByPrimaryKeySelective(record);
     }
 
+    /**
+     * 分页查询段子列表(按热度排序)
+     * @param pageNo
+     * @param pageSize
+     * @return
+     */
+	@Override
+	public List<Joke> findByPage(Integer pageNo, Integer pageSize) {
+		return jokeDao.selectByPage(pageNo, pageSize);
+	}
+
 }

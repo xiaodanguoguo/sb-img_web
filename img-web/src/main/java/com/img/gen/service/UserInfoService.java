@@ -25,4 +25,12 @@ public interface UserInfoService {
 
     public Integer updateUserInfoByPrimaryKey(UserInfo record);
 
+    /**
+     * 用户登录
+     * @param userName
+     * @param password
+     * @return
+     */
+	public UserInfo login(String userName, String password);
+
 }

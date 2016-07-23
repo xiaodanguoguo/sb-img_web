@@ -17,20 +17,17 @@ public interface ImgResourceDao {
 
     List<ImgResource> select(ImgResource record);
 
-    Integer getCount(ImgResource record);
+    Integer selectCount(ImgResource record);
 
     ImgResource selectByPrimaryKey(Object key);
-
 
     Integer insert(ImgResource record);
 
     Integer insertSelective(ImgResource record);
 
-
     Integer delete(ImgResource record);
 
     Integer deleteByPrimaryKey(Object key);
-
 
     Integer updateByPrimaryKey(ImgResource record);
 
@@ -54,4 +51,10 @@ public interface ImgResourceDao {
 	 */
 	Long selectImgCount(@Param("imgName") String imgName);
 
+	/**
+	 * 查询最火爆表情
+	 * @author kim
+	 * @return
+	 */
+	List<ImgResource> selectImgResourceByHot();
 }

@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.img.gen.conmon.BeanUtils;
+import com.img.gen.conmon.MD5CncryptHelper;
 import com.img.gen.dao.UserInfoDao;
 import com.img.gen.dao.model.UserInfo;
 import com.img.gen.service.UserInfoService;
@@ -34,7 +36,6 @@ public class UserInfoServiceImpl implements UserInfoService{
 
     public Integer createUserInfo(UserInfo record){
         return userInfoDao.insert(record);
-
     }
 
     public Integer deleteUserInfo(UserInfo record){
@@ -49,4 +50,22 @@ public class UserInfoServiceImpl implements UserInfoService{
         return userInfoDao.updateByPrimaryKeySelective(record);
     }
 
+    /**
+     * 用户登录
+     * @param userName
+     * @param password
+     * @return
+     */
+	@Override
+	public UserInfo login(String userName, String password) {
+		UserInfo userInfo = new UserInfo();
+		userInfo.setUserName(userName);
+		List<UserInfo> userInfos = userInfoDao.select(userInfo);
+		if (BeanUtils.isNotNull(userInfos)) {
+			UserInfo user = userInfos.get(0);
+			if (MD5CncryptHelper.cncryptMD5(password).equals(user.getPassword()));
+			return user;
+		} else 
+			return null;
+	}
 }

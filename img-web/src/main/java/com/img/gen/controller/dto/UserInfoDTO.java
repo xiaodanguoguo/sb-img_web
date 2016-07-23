@@ -3,6 +3,9 @@ package com.img.gen.controller.dto;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.img.gen.conmon.enumeration.SexEnum;
+import com.img.gen.conmon.enumeration.StatusEnum;
+
 
 /**
  * DTO:UserInfo
@@ -12,16 +15,17 @@ import java.util.Date;
  */
 public class UserInfoDTO implements Serializable {
 	
-	private Integer	userId;		
+	private Long	userId;		
 	private String	userName;		
 	private String	phoneNum;		
 	private String	email;		
 	private String	iconUrl;		
 	private Date	createTime;		
 	private Date	lastLoginTime;		
-	private Boolean	status;		
-	private Boolean	sex;		
-
+	private StatusEnum	status;		
+	private SexEnum	sex;		
+	private String password;
+	
 	// Constructor
 	public UserInfoDTO() {
 	}
@@ -29,7 +33,7 @@ public class UserInfoDTO implements Serializable {
 	/**
 	 * full Constructor
 	 */
-	public UserInfoDTO(Integer userId, String userName, String phoneNum, String email, String iconUrl, Date createTime, Date lastLoginTime, Boolean status, Boolean sex) {
+	public UserInfoDTO(Long userId, String userName, String phoneNum, String email, String iconUrl, Date createTime, Date lastLoginTime, String status, String sex) {
 		this.userId = userId;
 		this.userName = userName;
 		this.phoneNum = phoneNum;
@@ -37,18 +41,27 @@ public class UserInfoDTO implements Serializable {
 		this.iconUrl = iconUrl;
 		this.createTime = createTime;
 		this.lastLoginTime = lastLoginTime;
-		this.status = status;
-		this.sex = sex;
+		this.status = StatusEnum.getStatusEnum(status);
+		this.sex = SexEnum.getSexEnum(sex);
+	}
+	
+	public String getPassword() {
+		return password;
 	}
 
-	public Integer getUserId() {
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Long getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Integer userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 
+	
 	public String getUserName() {
 		return userName;
 	}
@@ -57,6 +70,7 @@ public class UserInfoDTO implements Serializable {
 		this.userName = userName;
 	}
 
+	
 	public String getPhoneNum() {
 		return phoneNum;
 	}
@@ -65,6 +79,7 @@ public class UserInfoDTO implements Serializable {
 		this.phoneNum = phoneNum;
 	}
 
+	
 	public String getEmail() {
 		return email;
 	}
@@ -73,6 +88,7 @@ public class UserInfoDTO implements Serializable {
 		this.email = email;
 	}
 
+	
 	public String getIconUrl() {
 		return iconUrl;
 	}
@@ -97,24 +113,25 @@ public class UserInfoDTO implements Serializable {
 		this.lastLoginTime = lastLoginTime;
 	}
 
-	public Boolean getStatus() {
-		return status;
+	public String getStatus() {
+		return status.getCode();
 	}
 
-	public void setStatus(Boolean status) {
-		this.status = status;
+	public void setStatus(String status) {
+		this.status = StatusEnum.getStatusEnum(status);
 	}
 
-	public Boolean getSex() {
-		return sex;
+	
+	public String getSex() {
+		return sex.getCode();
 	}
 
-	public void setSex(Boolean sex) {
-		this.sex = sex;
+	public void setSex(String sex) {
+		this.sex = SexEnum.getSexEnum(sex);
 	}
 
 	@Override
 	public String toString() {
-		return "UserInfoDTO [" + "userId=" + userId + ", userName=" + userName + ", phoneNum=" + phoneNum + ", email=" + email + ", iconUrl=" + iconUrl + ", createTime=" + createTime + ", lastLoginTime=" + lastLoginTime + ", status=" + status + ", sex=" + sex +  "]";
+		return "UserInfo [" + "userId=" + userId + ", userName=" + userName + ", phoneNum=" + phoneNum + ", email=" + email + ", iconUrl=" + iconUrl + ", createTime=" + createTime + ", lastLoginTime=" + lastLoginTime + ", status=" + status + ", sex=" + sex +  "]";
 	}
 }

@@ -15,7 +15,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 public class UserCollection implements Serializable {
 	
 	private String	collectId;		
-	private Integer	userId;		
+	private Long	userId;		
 	private String	imgId;		
 	private Date	collectTime;		
 
@@ -26,7 +26,7 @@ public class UserCollection implements Serializable {
 	/**
 	 * full Constructor
 	 */
-	public UserCollection(String collectId, Integer userId, String imgId, Date collectTime) {
+	public UserCollection(String collectId, Long userId, String imgId, Date collectTime) {
 		this.collectId = collectId;
 		this.userId = userId;
 		this.imgId = imgId;
@@ -43,11 +43,11 @@ public class UserCollection implements Serializable {
 	}
 
 	
-	public Integer getUserId() {
+	public Long getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Integer userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 

@@ -151,16 +151,16 @@
         <include refid="page_where" />
 	</select>
 
-    <select id="getCount" resultType="int" >
+    <select id="selectCount" resultType="int" >
         select count(ID) from img_resource
         <include refid="page_where" />
     </select>
 
 
-    <select id="getByPrimaryKey" resultMap="imgResourceResultMap" parameterType="String" >
+    <select id="selectByPrimaryKey" resultMap="imgResourceResultMap" parameterType="String" >
 		select <include refid="table_columns" />
 		from img_resource
-		where ID = #{id}
+		where IMG_ID = #{imgId}
 	</select>
 	
 	<!-- 其他自定义SQL -->
@@ -173,7 +173,7 @@
 		limit #{pageNo}, #{pageSize}
 		]]>
 	</select>
-
+	
 	<select id="selectImgCount" resultType="java.lang.Long">
 		<![CDATA[
 		select count(1) 
@@ -181,5 +181,12 @@
 		where 
 		img_name like concat("%", #{imgName}, "%")	
 		]]>
+	</select>
+	
+	<select id="selectImgResourceByHot" resultMap="imgResourceResultMap">
+		select <include refid="table_columns" />
+		from img_resource
+		order by 
+		GENERATE DESC, LIKE_CNT DESC, SHARE_CNT DESC, PAGE_VIEW DESC
 	</select>
 </mapper>

@@ -29,9 +29,15 @@
 	<junit_version>4.11</junit_version>
 	<java_mail_version>1.4</java_mail_version>
 	<fast_json_version>1.2.3</fast_json_version>
+	<httpclient_version>4.3.6</httpclient_version>
   </properties>
 
   <dependencies>
+  	 <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>${httpclient_version}</version>
+     </dependency>
   	 <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>

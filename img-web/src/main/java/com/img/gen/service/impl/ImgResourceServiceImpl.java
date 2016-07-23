@@ -34,7 +34,6 @@ public class ImgResourceServiceImpl implements ImgResourceService{
 
     public Integer createImgResource(ImgResource record){
         return imgResourceDao.insert(record);
-
     }
 
     public Integer deleteImgResource(ImgResource record){
@@ -73,4 +72,13 @@ public class ImgResourceServiceImpl implements ImgResourceService{
 		return imgResourceDao.selectImgCount(imgName);
 	}
 
+	/**
+	 * 查询最火爆表情
+	 * @author kim
+	 * @return
+	 */
+	@Override
+	public List<ImgResource> getImgResourceByHot() {
+		return imgResourceDao.selectImgResourceByHot();
+	}
 }
