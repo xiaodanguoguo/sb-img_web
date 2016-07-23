@@ -30,13 +30,16 @@
 
             $("#dragText").mousedown(function(ev){
                 //alert("鼠标点击拖拽事件");
-                console.log(ev);
+                //console.log(ev);
 
                 var oEvent=ev||event;
                 mouseStart.x=oEvent.clientX;
                 mouseStart.y=oEvent.clientY;
                 divStart.x=oDiv.offsetLeft;
                 divStart.y=oDiv.offsetTop;
+
+                console.log(mouseStart);
+                console.log(divStart);
             })
 
 

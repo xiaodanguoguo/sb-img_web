@@ -89,181 +89,10 @@
     <script type="text/javascript">
         window.onload=function()
         {
-            var oDiv=document.getElementById("div1");
             var oDiv2=document.getElementById("div2");
-            var zhezhao=document.getElementById("zhezhao");
             var h2=oDiv2.getElementsByTagName("h2")[0];
-            var right=document.getElementById("right");
-            var bottom=document.getElementById("bottom");
             var mouseStart={};
             var divStart={};
-            var rightStart={};
-            var bottomStart={};
-            //往右拽
-            right.onmousedown=function(ev)
-            {
-                var oEvent=ev||event;
-                mouseStart.x=oEvent.clientX;
-                mouseStart.y=oEvent.clientY;
-                rightStart.x=right.offsetLeft;
-                if(right.setCapture)
-                {
-                    right.onmousemove=doDrag1;
-                    right.onmouseup=stopDrag1;
-                    right.setCapture();
-                }
-                else
-                {
-                    document.addEventListener("mousemove",doDrag1,true);
-                    document.addEventListener("mouseup",stopDrag1,true);
-                }
-            };
-            function doDrag1(ev)
-            {
-                var oEvent=ev||event;
-                var l=oEvent.clientX-mouseStart.x+rightStart.x;
-                var w=l+oDiv.offsetWidth;
-
-                if(w<oDiv.offsetWidth)
-                {
-                    w=oDiv.offsetWidth;
-                }
-                else if(w>document.documentElement.clientWidth-oDiv2.offsetLeft)
-                {
-                    w=document.documentElement.clientWidth-oDiv2.offsetLeft-2;
-                }
-                oDiv2.style.width=w+"px";
-            };
-            function stopDrag1()
-            {
-                if(right.releaseCapture)
-                {
-                    right.onmousemove=null;
-                    right.onmouseup=null;
-                    right.releaseCapture();
-                }
-                else
-                {
-                    document.removeEventListener("mousemove",doDrag1,true);
-                    document.removeEventListener("mouseup",stopDrag1,true);
-                }
-            };
-            //往下拽
-            bottom.onmousedown=function(ev)
-            {
-                var oEvent=ev||event;
-                mouseStart.x=oEvent.clientX;
-                mouseStart.y=oEvent.clientY;
-                bottomStart.y=bottom.offsetTop;
-                if(bottom.setCapture)
-                {
-                    bottom.onmousemove=doDrag2;
-                    bottom.onmouseup=stopDrag2;
-                    bottom.setCapture();
-                }
-                else
-                {
-                    document.addEventListener("mousemove",doDrag2,true);
-                    document.addEventListener("mouseup",stopDrag2,true);
-                }
-            };
-            function doDrag2(ev)
-            {
-                var oEvent=ev||event;
-                var t=oEvent.clientY-mouseStart.y+bottomStart.y;
-                var h=t+oDiv.offsetHeight;
-
-                if(h<oDiv.offsetHeight)
-                {
-                    h=oDiv.offsetHeight;
-                }
-                else if(h>document.documentElement.clientHeight-oDiv2.offsetTop)
-                {
-                    h=document.documentElement.clientHeight-oDiv2.offsetTop-2;
-                }
-
-                oDiv2.style.height=h+"px";
-            };
-            function stopDrag2()
-            {
-                if(bottom.releaseCapture)
-                {
-                    bottom.onmousemove=null;
-                    bottom.onmouseup=null;
-                    bottom.releaseCapture();
-                }
-                else
-                {
-                    document.removeEventListener("mousemove",doDrag2,true);
-                    document.removeEventListener("mouseup",stopDrag2,true);
-                }
-            };
-            //往左右同时拽
-            oDiv.onmousedown=function(ev)
-            {
-                var oEvent=ev||event;
-                mouseStart.x=oEvent.clientX;
-                mouseStart.y=oEvent.clientY;
-                divStart.x=oDiv.offsetLeft;
-                divStart.y=oDiv.offsetTop;
-                if(oDiv.setCapture)
-                {
-                    oDiv.onmousemove=doDrag;
-                    oDiv.onmouseup=stopDrag;
-                    oDiv.setCapture();
-                }
-                else
-                {
-                    document.addEventListener("mousemove",doDrag,true);
-                    document.addEventListener("mouseup",stopDrag,true);
-                }
-                zhezhao.style.display='block';
-            };
-            function doDrag(ev)
-            {
-                var oEvent=ev||event;
-                var l=oEvent.clientX-mouseStart.x+divStart.x;
-                var t=oEvent.clientY-mouseStart.y+divStart.y;
-
-
-                var w=l+oDiv.offsetWidth;
-                var h=t+oDiv.offsetHeight;
-
-                if(w<oDiv.offsetWidth)
-                {
-                    w=oDiv.offsetWidth;
-                }
-                else if(w>document.documentElement.clientWidth-oDiv2.offsetLeft)
-                {
-                    w=document.documentElement.clientWidth-oDiv2.offsetLeft-2;
-                }
-                if(h<oDiv.offsetHeight)
-                {
-                    h=oDiv.offsetHeight;
-                }
-                else if(h>document.documentElement.clientHeight-oDiv2.offsetTop)
-                {
-                    h=document.documentElement.clientHeight-oDiv2.offsetTop-2;
-                }
-
-                oDiv2.style.width=w+"px";
-                oDiv2.style.height=h+"px";
-            };
-            function stopDrag()
-            {
-                if(oDiv.releaseCapture)
-                {
-                    oDiv.onmousemove=null;
-                    oDiv.onmouseup=null;
-                    oDiv.releaseCapture();
-                }
-                else
-                {
-                    document.removeEventListener("mousemove",doDrag,true);
-                    document.removeEventListener("mouseup",stopDrag,true);
-                }
-                zhezhao.style.display='none';
-            };
 
             //h2完美拖拽
             h2.onmousedown=function(ev)
@@ -285,9 +114,8 @@
                     document.addEventListener("mousemove",doDrag3,true);
                     document.addEventListener("mouseup",stopDrag3,true);
                 }
-
-                zhezhao.style.display='block';
             };
+
             function doDrag3(ev)
             {
                 var oEvent=ev||event;
@@ -326,7 +154,6 @@
                     document.removeEventListener("mouseup",stopDrag3,true);
                 }
 
-                zhezhao.style.display='none';
             }
         };
     </script>
@@ -336,12 +163,8 @@
     <div style="width:100%; height:100%; overflow:hidden;">
         <h2>完美的拖拽</h2>
         <p>体验不错的JavaScript网页拖动，除了拖动，还可拖动放大，像Windows窗口一样被放大或缩小，只要按住层的右下角，就可以收放自如的放大或缩小。想使用的朋友，可将代码里的Js封装成类，从外部引入想必更合理些。'</p>
-        <div id="right"></div>
-        <div id="div1">拖</div>
-        <div id="bottom"></div>
     </div>
 </div>
-<div id="zhezhao"></div>
 </body>
 </html>
 
