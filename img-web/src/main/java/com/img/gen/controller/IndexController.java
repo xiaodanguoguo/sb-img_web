@@ -1,10 +1,12 @@
 package com.img.gen.controller;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.img.gen.service.QiniuUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,7 +19,12 @@ import com.img.gen.dao.model.ImgComment;
 import com.img.gen.dao.model.Joke;
 import com.img.gen.service.ImgCommentService;
 import com.img.gen.service.JokeService;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class IndexController {
@@ -26,7 +33,10 @@ public class IndexController {
 	
 	@Autowired
 	private JokeService JokeService;
-	
+
+	@Autowired
+	private QiniuUploadService qiniuUploadService;
+
 	@RequestMapping("index")
 	public String test() {
 		List<ImgComment> imgComents = imgCommentService.findAll();
@@ -73,4 +83,61 @@ public class IndexController {
 		List<Joke> copyPropertieses = BeanUtils.copyPropertieses(jokeList, new ArrayList<Joke>(), Joke.class);
 		
 	}
+
+
+	/**
+	 * 七牛云文件上传测试
+	 * @return
+     */
+	@RequestMapping("qiniuFileTest")
+	/************此方法能够实现上传文件到七牛云，但是在tomcat里面产生了一个垃圾文件********************/
+	public ModelAndView qiniuFileTest(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request){
+		ModelAndView modelAndView = new ModelAndView();
+		try {
+			String path = request.getSession().getServletContext().getRealPath("upload");
+			String fileName = file.getOriginalFilename();
+			File uploadFile = new File(path, fileName);
+			if(!uploadFile.exists()){
+				uploadFile.mkdirs();
+			}
+			file.transferTo(uploadFile);//把文件transfer到零时文件夹
+			qiniuUploadService.upload(uploadFile,fileName);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return  modelAndView;
+	}
+
+
+	/**
+	 * 七牛云文件上传测试
+	 * @return
+	 */
+	@RequestMapping("qiniuFileTest1")
+	/************测试字节码上传到七牛云服务器********************/
+	public ModelAndView qiniuFileTest1(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request){
+		ModelAndView modelAndView = new ModelAndView();
+		try {
+			if(file != null && !file.isEmpty() ){
+				String fileName = file.getOriginalFilename();
+				byte[] bytes = file.getBytes();
+				qiniuUploadService.upload(bytes,fileName);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return  modelAndView;
+	}
+
+	/**
+	 * 跳转生成表情包测试页面
+	 * @return
+     */
+	@RequestMapping("image")
+	public String image (){
+		return "image";
+	}
+
+
+
 }
