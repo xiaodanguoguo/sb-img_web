@@ -139,6 +139,9 @@ public class IndexController {
 		return "image";
 	}
 
+
+
+	//TODO 把七牛云的图片下载到临时文件夹，在临时文件夹通过awt包生成图片，然后上传到七牛云，回显七牛云地址
 	@RequestMapping("generatorImg")
 	@ResponseBody
 	public JSONObject  generatorImg(String text,String x,String y,String img){
