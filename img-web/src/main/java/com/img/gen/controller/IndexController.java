@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.alibaba.fastjson.JSONObject;
 import com.img.gen.service.QiniuUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -138,6 +139,15 @@ public class IndexController {
 		return "image";
 	}
 
+	@RequestMapping("generatorImg")
+	@ResponseBody
+	public JSONObject  generatorImg(String text,String x,String y,String img){
+		JSONObject retObj = new JSONObject();
+
+
+
+		return retObj;
+	}
 
 
 }

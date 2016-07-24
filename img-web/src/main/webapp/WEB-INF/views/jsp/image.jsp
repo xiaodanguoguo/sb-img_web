@@ -17,6 +17,10 @@
 
 
     <script>
+
+        //全局位置变量
+        var textX = 0
+        var textY = 0;
         /**
          * 实现拖拽的js效果
          */
@@ -31,7 +35,6 @@
              */
             var dragging = false;
             var iX, iY;
-            var textX,textY;//post到后台生成图片文本框的位置
             var maxX = 440 - 200;//最大x值,200为文本框的宽度
             var maxY = 460 - 40;//最大y值，40为文本框的高度
             var minX = 0;//最小x值
@@ -101,6 +104,39 @@
 
             }
 
+
+            /**
+             * 点击生成图片
+             */
+            $("#submitBtn").click(function(){
+               //alert("我要生成图片啦");
+               var text = $("#imageName").val();
+               var x = textX;
+               var y = textY;
+               var img = $("#img-content").attr("src");
+
+
+                $.ajax({
+                    url: ctx +" /generatorImg.html",    //请求的url地址
+                    dataType: "json",   //返回格式为json
+                    data: {
+
+                        "text": text,
+                        "x" : x,
+                        "y" : y,
+                        "img" :img
+                    },    //参数值
+                    type: "POST",   //请求方式
+                    success: function(req) {
+                        //请求成功时处理
+                    },
+
+                    error: function() {
+                        //请求出错处理
+                    }
+                });
+            })
+
         })
     </script>
 
@@ -120,10 +156,13 @@
 
     #dragLayer input{
         border: 0px;
-        background-color: rgba(0, 0, 0, 0.06);
+        background-color: rgba(0, 0, 0, 0.04);
         width: 200px;
         height: 40px;
         float: left;
+        color: #5bc0de;
+        font-size: 16px;
+        font-weight: 300;
     }
     #dragText{
         display: block;
@@ -166,16 +205,17 @@
 
             <!--图片层 -->
             <div id="imgLayer">
-                <img class="img-responsive"  src="http://7xweel.com1.z0.glb.clouddn.com/F%60%29%609%7D40ML6X$NJ%7DC%5D%7DPVAR.jpg" alt="">
+                <img class="img-responsive" id="img-content"  src="http://7xweel.com1.z0.glb.clouddn.com/F%60%29%609%7D40ML6X$NJ%7DC%5D%7DPVAR.jpg" alt="">
                 <!--拖拽字体层 -->
                 <div id="dragLayer">
-                    <input type="text" name="imageName"  ><span id="dragText">点击拖动</span>
+                    <input type="text" name="imageName" id="imageName"  ><span id="dragText">点击拖动</span>
                 </div>
                 <!-- end of 拖拽字体层 -->
 
             </div>
             <!--end of 图片层 -->
 
+            <button id="submitBtn">生成图片</button>
     </div>
 
 </div>
