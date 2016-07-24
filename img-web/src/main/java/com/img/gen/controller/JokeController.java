@@ -1,6 +1,7 @@
 package com.img.gen.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -24,6 +25,12 @@ public class JokeController {
 	@Autowired
 	private JokeService jokeService;
 	
+	/**
+	 * 分页查询段子列表 
+	 * @param pageNo
+	 * @param pageSize
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping("joke/get/page/{pageNO}/{pageSize}")
 	public JsonResult<List<JokeDTO>> getJokeByPage(@PathVariable("pageNo") Integer pageNo, @PathVariable("pageSize") Integer pageSize) {
@@ -40,6 +47,11 @@ public class JokeController {
 		return result;
 	}
 	
+	/**
+	 * 查看单个段子详情
+	 * @param jokeId
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping("joke/get/{jokeId}")
 	public JsonResult<JokeDTO> getJoke(@PathVariable("jokeId") Integer jokeId) {
@@ -57,6 +69,11 @@ public class JokeController {
 		return result;
 	}
 	
+	/**
+	 * 新增一个段子
+	 * @param jokeDTO
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping("joke/add")
 	public JsonResult<JokeDTO> addJoke(JokeDTO jokeDTO) {
@@ -67,10 +84,39 @@ public class JokeController {
 			jokeDTO.setJokeId(IdHelper.generateLongUUID());
 			Joke joke = new Joke();
 			BeanUtils.copyProperties(jokeDTO, joke);
+//			List<Joke> jokes = Arrays.asList(joke);
+//			jokeService.batchAdd(jokes);
 			jokeService.createJoke(joke);
 		} catch (Exception e) {
 			result.setStatus(JsonResult.ERROR);
 		}
 		return result;
 	}
+	
+	/**
+	 * 批量插入段子
+	 * @param jokeDTOs
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("jokes/add")
+	public JsonResult<JokeDTO> addJokes(List<JokeDTO> jokeDTOs) {
+		JsonResult<JokeDTO> result = new JsonResult<>(JsonResult.SUCCESS);
+		try {
+			for (JokeDTO jokeDTO : jokeDTOs) {
+				jokeDTO.setUserId(AssertContext.getUserId());
+				jokeDTO.setCreateTime(new Date());
+				jokeDTO.setJokeId(IdHelper.generateLongUUID());
+			}
+			result.setStatus(
+					jokeService.batchAdd(
+							BeanUtils.copyPropertieses(
+									jokeDTOs, new ArrayList<Joke>(), Joke.class)) > 1
+							? JsonResult.SUCCESS : JsonResult.ERROR);
+		} catch (Exception e) {
+			result.setStatus(JsonResult.ERROR);
+		}
+		return result;
+	}
+	
 }

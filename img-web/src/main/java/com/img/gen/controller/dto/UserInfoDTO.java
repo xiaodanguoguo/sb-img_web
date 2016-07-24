@@ -25,7 +25,7 @@ public class UserInfoDTO implements Serializable {
 	private StatusEnum	status;		
 	private SexEnum	sex;		
 	private String password;
-	
+	private Date modDate;
 	// Constructor
 	public UserInfoDTO() {
 	}
@@ -45,6 +45,14 @@ public class UserInfoDTO implements Serializable {
 		this.sex = SexEnum.getSexEnum(sex);
 	}
 	
+	public Date getModDate() {
+		return modDate;
+	}
+
+	public void setModDate(Date modDate) {
+		this.modDate = modDate;
+	}
+
 	public String getPassword() {
 		return password;
 	}

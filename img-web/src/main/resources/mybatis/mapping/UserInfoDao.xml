@@ -11,6 +11,7 @@
 		<result property="lastLoginTime" column="LAST_LOGIN_TIME" />
 		<result property="status" column="STATUS" />
 		<result property="sex" column="SEX" />
+		<result property="modDate" column="MOD_DATE" />
 	</resultMap>
 	
 	<sql id="table_columns">
@@ -22,7 +23,8 @@
 		CREATE_TIME,
 		LAST_LOGIN_TIME,
 		STATUS,
-		SEX
+		SEX,
+		MOD_DATE
     </sql>
 	<sql id="entity_properties">
 		#{userId},
@@ -33,7 +35,8 @@
 		#{createTime},
 		#{lastLoginTime},
 		#{status},
-		#{sex}
+		#{sex},
+		#{modDate}
 	</sql>
 
     <!-- 使用like用法：columnName like concat('%',#columnName#,'%') -->
@@ -43,8 +46,8 @@
             <if test="phoneNum != null and phoneNum != ''">and PHONE_NUM = #{phoneNum}</if>
             <if test="email != null and email != ''">and EMAIL = #{email}</if>
             <if test="iconUrl != null and iconUrl != ''">and ICON_URL = #{iconUrl}</if>
-            <if test="createTime != null and createTime != ''">and CREATE_TIME = #{createTime}</if>
-            <if test="lastLoginTime != null and lastLoginTime != ''">and LAST_LOGIN_TIME = #{lastLoginTime}</if>
+            <if test="createTime != null ">and CREATE_TIME = #{createTime}</if>
+            <if test="lastLoginTime != null ">and LAST_LOGIN_TIME = #{lastLoginTime}</if>
             <if test="status != null and status != ''">and STATUS = #{status}</if>
             <if test="sex != null and sex != ''">and SEX = #{sex}</if>
         </trim>
@@ -64,8 +67,8 @@
             <if test="phoneNum != null and phoneNum != ''">PHONE_NUM,</if>
             <if test="email != null and email != ''">EMAIL,</if>
             <if test="iconUrl != null and iconUrl != ''">ICON_URL,</if>
-            <if test="createTime != null and createTime != ''">CREATE_TIME,</if>
-            <if test="lastLoginTime != null and lastLoginTime != ''">LAST_LOGIN_TIME,</if>
+            <if test="createTime != null">CREATE_TIME,</if>
+            <if test="lastLoginTime != null ">LAST_LOGIN_TIME,</if>
             <if test="status != null and status != ''">STATUS,</if>
             <if test="sex != null and sex != ''">SEX,</if>
         </trim>
@@ -74,8 +77,8 @@
             <if test="phoneNum != null and phoneNum != ''">#{phoneNum},</if>
             <if test="email != null and email != ''">#{email},</if>
             <if test="iconUrl != null and iconUrl != ''">#{iconUrl},</if>
-            <if test="createTime != null and createTime != ''">#{createTime},</if>
-            <if test="lastLoginTime != null and lastLoginTime != ''">#{lastLoginTime},</if>
+            <if test="createTime != null ">#{createTime},</if>
+            <if test="lastLoginTime != null ">#{lastLoginTime},</if>
             <if test="status != null and status != ''">#{status},</if>
             <if test="sex != null and sex != ''">#{sex},</if>
         </trim>
@@ -100,8 +103,8 @@
 			<if test="phoneNum != null and phoneNum != ''">PHONE_NUM = #{phoneNum},</if>
 			<if test="email != null and email != ''">EMAIL = #{email},</if>
 			<if test="iconUrl != null and iconUrl != ''">ICON_URL = #{iconUrl},</if>
-			<if test="createTime != null and createTime != ''">CREATE_TIME = #{createTime},</if>
-			<if test="lastLoginTime != null and lastLoginTime != ''">LAST_LOGIN_TIME = #{lastLoginTime},</if>
+			<if test="createTime != null ">CREATE_TIME = #{createTime},</if>
+			<if test="lastLoginTime != null ">LAST_LOGIN_TIME = #{lastLoginTime},</if>
 			<if test="status != null and status != ''">STATUS = #{status},</if>
 			<if test="sex != null and sex != ''">SEX = #{sex},</if>
 			<if test="password != null and password != ''">PASSWORD = #{password},</if>
@@ -116,8 +119,8 @@
             <if test="phoneNum != null and phoneNum != ''">PHONE_NUM = #{phoneNum},</if>
             <if test="email != null and email != ''">EMAIL = #{email},</if>
             <if test="iconUrl != null and iconUrl != ''">ICON_URL = #{iconUrl},</if>
-            <if test="createTime != null and createTime != ''">CREATE_TIME = #{createTime},</if>
-            <if test="lastLoginTime != null and lastLoginTime != ''">LAST_LOGIN_TIME = #{lastLoginTime},</if>
+            <if test="createTime != null ">CREATE_TIME = #{createTime},</if>
+            <if test="lastLoginTime != null ">LAST_LOGIN_TIME = #{lastLoginTime},</if>
             <if test="status != null and status != ''">STATUS = #{status},</if>
             <if test="sex != null and sex != ''">SEX = #{sex},</if>
             <if test="password != null and password != ''">PASSWORD = #{password},</if>

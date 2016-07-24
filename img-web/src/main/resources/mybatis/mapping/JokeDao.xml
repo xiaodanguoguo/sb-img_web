@@ -129,5 +129,12 @@
 		order by LIKE_CNT desc
 		limit #{pageNo}, #{pageSize}
 	</select>
-
+	
+	<insert id="batchInsert" parameterType="List">
+		insert into joke (<include refid="table_columns" />)
+		values 
+		<foreach collection="list" item="joke" separator="," open="(" close=")">
+			#{joke.jokeId}, #{joke.userId}, #{joke.jokeName}, #{joke.content}, #{joke.createTime}, #{joke.likeCnt}
+		</foreach>		
+	</insert>
 </mapper>

@@ -30,9 +30,15 @@
 	<java_mail_version>1.4</java_mail_version>
 	<fast_json_version>1.2.3</fast_json_version>
 	<httpclient_version>4.3.6</httpclient_version>
+	<htmlparser_version>2.1</htmlparser_version>
   </properties>
 
   <dependencies>
+	 <dependency>
+	     <groupId>org.htmlparser</groupId>
+	     <artifactId>htmlparser</artifactId>
+	     <version>${htmlparser_version}</version>
+	 </dependency>
   	 <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>

@@ -30,6 +30,13 @@ public class ImgController {
 	@Autowired
 	private UserCollectionService userCollectionService;
 	
+	/**
+	 * 分页查询图片
+	 * @param pageNo
+	 * @param pageSize
+	 * @param imgName
+	 * @return
+	 */
 	@RequestMapping("get/page/{pageNo}/{pageSize}/{imgName}")
 	@ResponseBody
 	public JsonResult<Page<ImgResourceDTO>> getImgByPage(@PathVariable("pageNo") Integer pageNo, @PathVariable("pageSize") Integer pageSize, @PathVariable("imgName") String imgName) {
@@ -46,7 +53,12 @@ public class ImgController {
 		}
 		return result;
 	}
-	
+
+	/**
+	 * 获取单个图片
+	 * @param imgId
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping("get/{imgId}")
 	public JsonResult<ImgResourceDTO> getImg(@PathVariable("imgId") String imgId) {
@@ -62,6 +74,10 @@ public class ImgController {
 		return result;
 	}
 	
+	/**
+	 * 查询火爆图片列表
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping("get/hot")
 	public JsonResult<List<ImgResourceDTO>> getImgByHot() {
@@ -77,6 +93,10 @@ public class ImgController {
 		return result;
 	}
 	
+	/**
+	 * 点赞
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping("like")
 	public JsonResult<Integer> likeImg() {
@@ -97,6 +117,11 @@ public class ImgController {
 		return result;
 	}
 	
+	/**
+	 * 收藏
+	 * @param imgId
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping("coll/{imgId}")
 	public JsonResult<Integer> collImg(@PathVariable("imgId") String imgId) {
@@ -127,6 +152,10 @@ public class ImgController {
 		return result;
 	}
 	
+	/**
+	 * 获取收藏
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping("get/coll")
 	public JsonResult<List<UserCollectionDTO>> getCollImg() {
@@ -141,6 +170,4 @@ public class ImgController {
 		}
 		return result;
 	}
-	
-	
 }

@@ -96,7 +96,30 @@ public class UserController {
 	}
 	
 	/**
-	 * 滤重(用户名)
+	 * 修改用户信息
+	 * @param userName
+	 * @param password
+	 * @return
+	 */
+	@RequestMapping("modify")
+	@ResponseBody
+	public JsonResult<UserInfoDTO> modifyUser(UserInfoDTO userInfoDTO) {
+		JsonResult<UserInfoDTO> result = new JsonResult<>(JsonResult.SUCCESS);
+		try {
+			UserInfo userInfo = new UserInfo();
+			userInfoDTO.setUserId(AssertContext.getUserId());
+			userInfoDTO.setModDate(new Date());
+			BeanUtils.copyProperties(userInfoDTO, userInfo);
+			result.setStatus(
+					userInfoService.updateUserInfoByPrimaryKey(userInfo) == 1 ? JsonResult.SUCCESS : JsonResult.ERROR);
+		} catch (Exception e) {
+			result.setStatus(JsonResult.ERROR);
+		} 
+		return result;
+	}
+	
+	/**
+	 * 通过用户ID获取用户信息
 	 * @param userName
 	 * @param password
 	 * @return
@@ -118,5 +141,4 @@ public class UserController {
 		} 
 		return result;
 	}
-	
 }
