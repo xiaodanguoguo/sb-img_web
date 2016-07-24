@@ -1,5 +1,6 @@
 package com.img.gen.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.img.gen.dao.model.Joke;
@@ -32,5 +33,12 @@ public interface JokeService {
      * @return
      */
 	public List<Joke> findByPage(Integer pageNo, Integer pageSize);
+
+	/**
+	 * 批量导入笑话
+	 * @param copyPropertieses
+	 * @return
+	 */
+	public Integer batchAdd(List<Joke> jokes);
 
 }

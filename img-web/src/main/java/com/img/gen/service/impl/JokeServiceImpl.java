@@ -60,4 +60,14 @@ public class JokeServiceImpl implements JokeService{
 		return jokeDao.selectByPage(pageNo, pageSize);
 	}
 
+	/**
+	 * 批量导入笑话
+	 * @param copyPropertieses
+	 * @return
+	 */
+	@Override
+	public Integer batchAdd(List<Joke> jokes) {
+		return jokeDao.batchInsert(jokes);
+	}
+
 }

@@ -44,4 +44,11 @@ public interface JokeDao {
      */
 	List<Joke> selectByPage(@Param("pageNo") Integer pageNo, @Param("pageSize") Integer pageSize);
 
+	/**
+	 * 批量插入段子
+	 * @param jokes
+	 * @return
+	 */
+	Integer batchInsert(List<Joke> jokes);
+
 }
