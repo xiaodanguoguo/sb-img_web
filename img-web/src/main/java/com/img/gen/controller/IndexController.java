@@ -39,10 +39,10 @@ public class IndexController {
 
 	@RequestMapping("index")
 	public String test() {
-		List<ImgComment> imgComents = imgCommentService.findAll();
+		/*List<ImgComment> imgComents = imgCommentService.findAll();
 		for (ImgComment imgComment : imgComents) {
 			System.out.println(imgComment.getCommentContent());
-		}
+		}*/
 		return "index";
 	}
 
