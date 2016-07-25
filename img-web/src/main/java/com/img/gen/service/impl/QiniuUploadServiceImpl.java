@@ -1,16 +1,15 @@
 package com.img.gen.service.impl;
 
+import java.io.File;
+import java.util.Date;
+
+import org.springframework.stereotype.Service;
+
 import com.img.gen.service.QiniuUploadService;
 import com.qiniu.common.QiniuException;
 import com.qiniu.http.Response;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.util.Auth;
-import com.sun.xml.internal.ws.developer.Serialization;
-import org.springframework.stereotype.Service;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.Date;
 
 /**
  * Created by Zhengpeng on 2016/7/20.

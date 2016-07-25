@@ -6,26 +6,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.alibaba.fastjson.JSONObject;
-import com.img.gen.service.QiniuUploadService;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import com.img.gen.conmon.BeanUtils;
-import com.img.gen.conmon.JsonMapper;
-import com.img.gen.controller.dto.JokeDTO;
-import com.img.gen.dao.model.ImgComment;
-import com.img.gen.dao.model.Joke;
-import com.img.gen.service.ImgCommentService;
-import com.img.gen.service.JokeService;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
+import com.alibaba.fastjson.JSONObject;
+import com.img.gen.conmon.BeanUtils;
+import com.img.gen.conmon.JsonMapper;
+import com.img.gen.controller.dto.JokeDTO;
+import com.img.gen.dao.model.Joke;
+import com.img.gen.service.ImgCommentService;
+import com.img.gen.service.JokeService;
+import com.img.gen.service.QiniuUploadService;
 
 @Controller
 public class IndexController {

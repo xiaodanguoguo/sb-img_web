@@ -1,6 +1,5 @@
 package com.img.gen.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.img.gen.dao.model.Joke;

@@ -3,8 +3,6 @@ package com.img.gen.dao.model;
 import java.io.Serializable;
 import java.util.Date;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
 
 /**
  * entity:ImgResource

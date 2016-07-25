@@ -1,8 +1,8 @@
 package com.img.gen.conmon;
 
-import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
-
 import java.util.Properties;
+
+import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 
 /**
  * @Description: 自定义属性配置类,在SPRING的XML中配置加载所有的属性文件
