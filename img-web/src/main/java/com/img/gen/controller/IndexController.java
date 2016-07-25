@@ -1,13 +1,18 @@
 package com.img.gen.controller;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 import com.alibaba.fastjson.JSONObject;
 import com.img.gen.service.QiniuUploadService;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpMethod;
+import org.apache.commons.httpclient.methods.GetMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -151,6 +156,10 @@ public class IndexController {
 
 		return retObj;
 	}
+
+
+
+
 
 
 }
