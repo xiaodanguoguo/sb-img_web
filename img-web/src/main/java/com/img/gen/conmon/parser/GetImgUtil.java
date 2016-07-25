@@ -79,7 +79,14 @@ public class GetImgUtil {
 					processNodeList(childList, keyword);
 			}//end wile
 		}
-		
+
+	/**
+	 * 下载图片
+	 * @param imgUrl
+	 * @param fileAddr
+	 * @param imgName
+	 * @throws Exception
+     */
 	public static void downloadImg(String imgUrl, String fileAddr, String imgName) throws Exception {
 		System.out.println(imgUrl);
 		HttpClient client = new HttpClient();  
@@ -88,13 +95,15 @@ public class GetImgUtil {
         File storeFile = new File(fileAddr);  
         if (!storeFile.exists())
         	storeFile.mkdirs();
-        storeFile = new File(fileAddr + "\\" + imgName);
+        storeFile = new File(fileAddr + File.separator + imgName);
         FileOutputStream output = new FileOutputStream(storeFile);  
         //得到网络资源的字节数组,并写入文件  
         output.write(get.getResponseBody());  
         output.close();  
 	}
-	
+
+
+
 	public static void main(String[] args) throws Exception {
 		for (int i = 1; i < 39; i ++){
 			String url = "http://www.doubean.com/face/ListWithImage.aspx?pn=" + i;

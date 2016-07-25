@@ -11,8 +11,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 
+
 /**
- * Created by Administrator on 2016/7/25 0025.
+ * 图片表情包测试类
  */
 public class TestConvertImg {
 

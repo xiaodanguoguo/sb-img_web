@@ -9,11 +9,14 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import com.alibaba.fastjson.JSONObject;
+import com.img.gen.conmon.ImageUtils;
+import com.img.gen.conmon.parser.GetImgUtil;
 import com.img.gen.service.QiniuUploadService;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -147,10 +150,36 @@ public class IndexController {
 
 
 	//TODO 把七牛云的图片下载到临时文件夹，在临时文件夹通过awt包生成图片，然后上传到七牛云，回显七牛云地址
+
+	/**
+	 * @param text 文字
+	 * @param x x位置
+	 * @param y y位置
+	 * @param img 原图片地址
+     * @return
+     */
 	@RequestMapping("generatorImg")
 	@ResponseBody
-	public JSONObject  generatorImg(String text,String x,String y,String img){
+	public JSONObject  generatorImg(String text, String x, String y, String img, HttpServletRequest request) throws  Exception{
 		JSONObject retObj = new JSONObject();
+
+		String imgFolderPath = request.getRealPath("/") + File.separator + "temp" + File.separator + "img";//图片文件夹名称
+		String srcImgName = "111.jpg";
+		String targetImgName = "222.jpg";
+		//下载图片
+		GetImgUtil.downloadImg(img,imgFolderPath,srcImgName);
+		//生成图片
+		ImageUtils.convertImg((imgFolderPath +File.separator+ srcImgName) , text, Integer.valueOf(x),Integer.valueOf(y),(imgFolderPath +File.separator+ targetImgName));
+
+		File uploadFile = new File((imgFolderPath +File.separator+ targetImgName));
+		//上传到七牛云
+		qiniuUploadService.upload(uploadFile,targetImgName);
+
+
+		//System.out.println();
+
+
+
 
 
 
