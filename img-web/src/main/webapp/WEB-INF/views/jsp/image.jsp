@@ -137,6 +137,23 @@
                 });
             })
 
+            /**
+             * 字体变大
+             */
+            //TODO 字体变大变小
+            $("#add_font").click(function() {
+
+                var style = $("#imageName").attr('style');
+
+                console.log(style);
+                var fontSize = $(this).css('font-size',function(){
+                    var s = style.match(/(?:font-size:)s*(\d+.{0,1}\d*)/)[0].replace(/font-size:/,'');
+                    return s;
+                });
+
+                console.log(fontSize);
+            })
+
         })
     </script>
 
@@ -154,7 +171,7 @@
         height: 40px;
     }
 
-    #dragLayer input{
+    #imageName{
         border: 0px;
         background-color: rgba(0, 0, 0, 0.04);
         width: 200px;
@@ -214,7 +231,8 @@
 
             </div>
             <!--end of 图片层 -->
-
+            <button id="add_font">字体变大</button>
+            <button id="sub_font">字体变小</button>
             <button id="submitBtn">生成图片</button>
     </div>
 

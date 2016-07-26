@@ -2,10 +2,7 @@ package com.img.gen.controller;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 import com.alibaba.fastjson.JSONObject;
@@ -164,8 +161,9 @@ public class IndexController {
 		JSONObject retObj = new JSONObject();
 
 		String imgFolderPath = request.getRealPath("/") + File.separator + "temp" + File.separator + "img";//图片文件夹名称
-		String srcImgName = "111.jpg";
-		String targetImgName = "222.jpg";
+		String uuid = UUID.randomUUID().toString();
+		String srcImgName = uuid+"temp"+".jpg";
+		String targetImgName = uuid+".jpg";
 		//下载图片
 		GetImgUtil.downloadImg(img,imgFolderPath,srcImgName);
 		//生成图片
