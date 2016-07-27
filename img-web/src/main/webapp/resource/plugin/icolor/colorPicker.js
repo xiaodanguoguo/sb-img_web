@@ -557,5 +557,5 @@ function hideColorPicker()
 function maskedHex(input)
 {
 	var mask = '#[0-9a-fA-F]{7}';
- input.value=input.value.replace(mask,"");
+    input.value=input.value.replace(mask,"");
 }
