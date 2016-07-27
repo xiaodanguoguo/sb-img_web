@@ -15,7 +15,9 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="${ctx}/resource/js/bootstrap.min.js"></script>
 
-
+    <!--拾色器插件 -->
+    <script src="${ctx}/resource/plugin/icolor/colorPicker.js"></script>
+    <link href="${ctx}/resource/plugin/icolor/colorPicker.css" rel="stylesheet">
     <script>
 
         //全局位置变量
@@ -178,6 +180,8 @@
                 $("#imageName").css("font-size",  textFontSize + unit );
             })
 
+            //TODO 拾色器
+
         })
     </script>
 
@@ -258,6 +262,7 @@
             <button id="add_font">字体变大</button>
             <button id="sub_font">字体变小</button>
             <button id="submitBtn">生成图片</button>
+            <input type="text" id="bau" onclick="startColorPicker(this)" onkeyup="maskedHex(this);setColor();">
     </div>
 
 </div>
