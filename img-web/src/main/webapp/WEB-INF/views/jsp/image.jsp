@@ -21,6 +21,7 @@
         //全局位置变量
         var textX = 0
         var textY = 0;
+        var fontSize = 16;//默认字体
         /**
          * 实现拖拽的js效果
          */
@@ -124,7 +125,8 @@
                         "text": text,
                         "x" : x,
                         "y" : y,
-                        "img" :img
+                        "img" :img,
+                        "fontSize" : fontSize
                     },    //参数值
                     type: "POST",   //请求方式
                     success: function(req) {
@@ -140,18 +142,40 @@
             /**
              * 字体变大
              */
-            //TODO 字体变大变小
             $("#add_font").click(function() {
 
-                var style = $("#imageName").attr('style');
+                //获取para的字体大小
+                var thisEle = $("#imageName").css("font-size");
+                //parseFloat的第二个参数表示转化的进制，10就表示转为10进制
+                var textFontSize = parseFloat(thisEle , 10);
+                //javascript自带方法
+                var unit = thisEle.slice(-2); //获取单位:px
+                var cName = $(this).attr("class");
+                if(textFontSize < 30){//最大字体为30px
+                    textFontSize += 2;//字体增大
+                }
+                fontSize = textFontSize;
+                console.log(textFontSize);
+                $("#imageName").css("font-size",  textFontSize + unit );
+            })
 
-                console.log(style);
-                var fontSize = $(this).css('font-size',function(){
-                    var s = style.match(/(?:font-size:)s*(\d+.{0,1}\d*)/)[0].replace(/font-size:/,'');
-                    return s;
-                });
-
-                console.log(fontSize);
+            /**
+             * 字体变小
+             */
+            $("#sub_font").click(function(){
+                //获取para的字体大小
+                var thisEle = $("#imageName").css("font-size");
+                //parseFloat的第二个参数表示转化的进制，10就表示转为10进制
+                var textFontSize = parseFloat(thisEle , 10);
+                //javascript自带方法
+                var unit = thisEle.slice(-2); //获取单位:px
+                var cName = $(this).attr("class");
+                if(textFontSize > 12){//最小字体为12px
+                    textFontSize -= 2;//字体减小
+                }
+                fontSize = textFontSize;
+                console.log(textFontSize);
+                $("#imageName").css("font-size",  textFontSize + unit );
             })
 
         })
