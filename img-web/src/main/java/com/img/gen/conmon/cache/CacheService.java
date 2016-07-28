@@ -1,11 +1,12 @@
 package com.img.gen.conmon.cache;
 
+import com.img.gen.conmon.cache.model.ImgCacheDTO;
+
 public interface CacheService {
-	public Integer getLikeCnt(String imgId);
-	
-	public Integer getShareCnt(String imgId);
-	
-	public Integer getPageView(String imgId);
-	
-	public Integer getGenerateCnt(String imgId);
+	/**
+	 * 通过ID获取图片
+	 * @param imgId  图片ID
+	 * @return
+	 */
+	public ImgCacheDTO getImgById(String imgId);
 }
