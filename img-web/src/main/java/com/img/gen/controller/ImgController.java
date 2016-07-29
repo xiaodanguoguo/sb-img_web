@@ -15,7 +15,6 @@ import com.img.gen.conmon.IdHelper;
 import com.img.gen.conmon.JsonResult;
 import com.img.gen.conmon.Page;
 import com.img.gen.conmon.cache.CacheService;
-import com.img.gen.conmon.cache.model.ImgCacheDTO;
 import com.img.gen.conmon.thread.AssertContext;
 import com.img.gen.controller.dto.ImgResourceDTO;
 import com.img.gen.controller.dto.UserCollectionDTO;
@@ -67,11 +66,12 @@ public class ImgController {
 	public JsonResult<ImgResourceDTO> getImg(@PathVariable("imgId") String imgId) {
 		JsonResult<ImgResourceDTO> result = new JsonResult<>(JsonResult.SUCCESS);
 		try {
-			cacheService.incrPageView(imgId);
+			Integer pageView = cacheService.incrPageView(imgId);
 			
 			ImgResource imgResource = imgResourceService.getImgResourceByPrimaryKey(imgId);
 			ImgResourceDTO imgResourceDTO = new ImgResourceDTO();
 			BeanUtils.copyProperties(imgResource, imgResourceDTO);
+			imgResourceDTO.setPageView(pageView);
 			result.setResults(imgResourceDTO);
 		} catch (Exception e) {
 			result.setStatus(JsonResult.ERROR);
@@ -107,7 +107,7 @@ public class ImgController {
 	public JsonResult<Integer> likeImg(@PathVariable("imgId") String imgId) {
 		JsonResult<Integer> result = new JsonResult<>(JsonResult.SUCCESS);
 		try {
-			cacheService.incrLikeCnt(imgId);
+			result.setResults(cacheService.incrLikeCnt(imgId));
 		} catch (Exception e) {
 			result.setStatus(JsonResult.ERROR);
 		}
