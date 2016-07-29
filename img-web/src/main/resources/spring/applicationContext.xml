@@ -49,4 +49,6 @@
 	<bean id="propertyConfigurer"  class="com.img.gen.conmon.PropertyConfigurer">
 		<property name="properties" ref="configurationProperties" />
 	</bean>
+	
+	<bean id="cacheService" class="com.img.gen.conmon.cache.impl.CacheServiceImpl" init-method="init"/>
 </beans>
