@@ -558,4 +558,9 @@ function maskedHex(input)
 {
 	var mask = '#[0-9a-fA-F]{7}';
     input.value=input.value.replace(mask,"");
+
+
+    var color = $("#bau").val();
+    console.log(color);
+    $("#imageName").css({"color":color});
 }

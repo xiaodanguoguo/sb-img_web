@@ -24,6 +24,7 @@
         var textX = 0
         var textY = 0;
         var fontSize = 16;//默认字体
+        var color = "#000000";//默认黑色
         /**
          * 实现拖拽的js效果
          */
@@ -117,8 +118,9 @@
                var x = textX;
                var y = textY;
                var img = $("#img-content").attr("src");
+               color = $("#bau").val();
 
-
+               console.log(color);
                 $.ajax({
                     url: ctx +" /generatorImg.html",    //请求的url地址
                     dataType: "json",   //返回格式为json
@@ -128,7 +130,8 @@
                         "x" : x,
                         "y" : y,
                         "img" :img,
-                        "fontSize" : fontSize
+                        "fontSize" : fontSize,
+                        "color" : color,
                     },    //参数值
                     type: "POST",   //请求方式
                     success: function(req) {
