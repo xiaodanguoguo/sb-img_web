@@ -33,7 +33,7 @@ public class CacheServiceImpl implements CacheService{
 			List<ImgResource> imgResources = imgResourceService.findAll();
 			List<ImgCacheDTO> imgCacheDTOs;
 			imgCacheDTOs = BeanUtils.copyPropertieses(imgResources, new ArrayList<ImgCacheDTO>(imgResources.size()), ImgCacheDTO.class);
-			imgCacheDTOs.forEach((final ImgCacheDTO imgCacheDTO) -> imgCache.put(imgCacheDTO.getImgId(), imgCacheDTO));
+			//imgCacheDTOs.forEach((final ImgCacheDTO imgCacheDTO) -> imgCache.put(imgCacheDTO.getImgId(), imgCacheDTO));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

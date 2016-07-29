@@ -8,6 +8,7 @@ import java.util.concurrent.ExecutionException;
 import javax.servlet.http.HttpServletRequest;
 
 import com.alibaba.fastjson.JSONObject;
+import com.img.gen.conmon.FileUtils;
 import com.img.gen.conmon.ImageUtils;
 import com.img.gen.conmon.parser.GetImgUtil;
 import com.img.gen.service.QiniuUploadService;
@@ -175,7 +176,10 @@ public class IndexController {
 		//上传到七牛云
 		qiniuUploadService.upload(uploadFile,targetImgName);
 
-		//System.out.println();
+		File resourceFile = new File((imgFolderPath +File.separator+ srcImgName));
+		//删除文件
+		FileUtils.deleteFile(resourceFile);
+		FileUtils.deleteFile(uploadFile);
 		return retObj;
 	}
 
