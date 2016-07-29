@@ -9,4 +9,32 @@ public interface CacheService {
 	 * @return
 	 */
 	public ImgCacheDTO getImgById(String imgId);
+	
+	/**
+	 * 点赞数+1
+	 * @param imgId
+	 * @return
+	 */
+	public Integer incrLikeCnt(String imgId); 
+	
+	/**
+	 * 浏览数+1
+	 * @param imgId
+	 * @return
+	 */
+	public Integer incrPageView(String imgId); 
+	
+	/**
+	 * 生成数+1
+	 * @param imgId
+	 * @return
+	 */
+	public Integer incrGenerate(String imgId); 
+	
+	/**
+	 * 分享数+1
+	 * @param imgId
+	 * @return
+	 */
+	public Integer incrShareCnt(String imgId); 
 }

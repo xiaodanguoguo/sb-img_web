@@ -14,6 +14,8 @@ import com.img.gen.conmon.BeanUtils;
 import com.img.gen.conmon.IdHelper;
 import com.img.gen.conmon.JsonResult;
 import com.img.gen.conmon.Page;
+import com.img.gen.conmon.cache.CacheService;
+import com.img.gen.conmon.cache.model.ImgCacheDTO;
 import com.img.gen.conmon.thread.AssertContext;
 import com.img.gen.controller.dto.ImgResourceDTO;
 import com.img.gen.controller.dto.UserCollectionDTO;
@@ -29,7 +31,8 @@ public class ImgController {
 	private ImgResourceService imgResourceService; 
 	@Autowired
 	private UserCollectionService userCollectionService;
-	
+	@Autowired
+	private CacheService cacheService;
 	/**
 	 * 分页查询图片
 	 * @param pageNo
@@ -64,6 +67,8 @@ public class ImgController {
 	public JsonResult<ImgResourceDTO> getImg(@PathVariable("imgId") String imgId) {
 		JsonResult<ImgResourceDTO> result = new JsonResult<>(JsonResult.SUCCESS);
 		try {
+			cacheService.incrPageView(imgId);
+			
 			ImgResource imgResource = imgResourceService.getImgResourceByPrimaryKey(imgId);
 			ImgResourceDTO imgResourceDTO = new ImgResourceDTO();
 			BeanUtils.copyProperties(imgResource, imgResourceDTO);
@@ -98,19 +103,11 @@ public class ImgController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping("like")
-	public JsonResult<Integer> likeImg() {
+	@RequestMapping("like/{imgId}")
+	public JsonResult<Integer> likeImg(@PathVariable("imgId") String imgId) {
 		JsonResult<Integer> result = new JsonResult<>(JsonResult.SUCCESS);
 		try {
-			int i = 0; //TODO 从缓存取
-			if (i < 10) {
-				//TODO 如果点赞数大于一定数量，再同步数据库，减少服务器压力
-				//其余时刻点赞数量去本地缓存操作，缓存待添加
-			} else {
-				ImgResource imgResource = new ImgResource();
-				imgResource.setLikeCnt(i);
-				result.setResults(10000);
-			}
+			cacheService.incrLikeCnt(imgId);
 		} catch (Exception e) {
 			result.setStatus(JsonResult.ERROR);
 		}
@@ -127,18 +124,7 @@ public class ImgController {
 	public JsonResult<Integer> collImg(@PathVariable("imgId") String imgId) {
 		JsonResult<Integer> result = new JsonResult<>(JsonResult.SUCCESS);
 		try {
-			int i = 0; //TODO 从缓存取
-			if (i < 10) {
-				//TODO 如果点赞数大于一定数量，再同步数据库，减少服务器压力
-				//其余时刻点赞数量去本地缓存操作，缓存待添加   
-			} else {
-				ImgResource imgResource = new ImgResource();
-				imgResource.setLikeCnt(i);
-				
-				List<ImgResource> imgResources = imgResourceService.getImgResourceByHot();
-				result.setResults(10000);
-			}
-			
+
 			UserCollection userCollection = new UserCollection();
 			userCollection.setCollectId(IdHelper.generateLongUUID());
 			userCollection.setCollectTime(new Date());

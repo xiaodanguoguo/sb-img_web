@@ -1476,7 +1476,6 @@ public class StringHelper extends StringUtils {
 			}
 			matcher.appendTail(sb);
 		} catch (Exception e) {
-			// TODO
 		}
 		return input;
 		// return sb.toString();

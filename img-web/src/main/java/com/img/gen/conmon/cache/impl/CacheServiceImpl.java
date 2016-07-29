@@ -20,7 +20,13 @@ public class CacheServiceImpl implements CacheService{
 	@Autowired
 	private ImgResourceService imgResourceService;
 	
-//	private static final Integer PAGE_VIEW = 10;
+	private static final Integer PAGE_VIEW = 50;
+	
+	private static final Integer SHARE_CNT = 10;
+	private static final Integer LIKE_CNT = 10;
+	private static final Integer GENERATE = 30;
+	
+	
 	private void init() {
 		this.imgCache = new HashMap<>();
 		try {
@@ -54,5 +60,83 @@ public class CacheServiceImpl implements CacheService{
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public Integer incrLikeCnt(String imgId) {
+		ImgCacheDTO imgObj = getImgById(imgId);
+		if (!BeanUtils.isNotNull(imgObj)) 
+			return null;
+		
+		Integer likeCnt = imgObj.getLikeCnt();
+		
+		//每点赞20次入一次库
+		if (++likeCnt % LIKE_CNT != 0) 
+			imgObj.setLikeCnt(likeCnt);
+		else {
+			ImgResource imgResource = new ImgResource();
+			imgResource.setLikeCnt(likeCnt);
+			updateImg(imgId, imgResource);
+		}
+		return likeCnt;
+	}
+
+	@Override
+	public Integer incrPageView(String imgId) {
+		ImgCacheDTO imgObj = getImgById(imgId);
+		if (!BeanUtils.isNotNull(imgObj)) 
+			return null;
+		
+		Integer pageView = imgObj.getPageView();
+		
+		if (++pageView % PAGE_VIEW != 0) 
+			imgObj.setPageView(pageView);
+		else {
+			ImgResource imgResource = new ImgResource();
+			imgResource.setPageView(pageView);
+			updateImg(imgId, imgResource);
+		}
+		return pageView;
+	}
+
+	@Override
+	public Integer incrGenerate(String imgId) {
+		ImgCacheDTO imgObj = getImgById(imgId);
+		if (!BeanUtils.isNotNull(imgObj)) 
+			return null;
+		
+		Integer generate = imgObj.getGenerate();
+		
+		if (++generate % GENERATE != 0) 
+			imgObj.setGenerate(generate);
+		else {
+			ImgResource imgResource = new ImgResource();
+			imgResource.setGenerate(generate);
+			updateImg(imgId, imgResource);
+		}
+		return generate;
+	}
+
+	@Override
+	public Integer incrShareCnt(String imgId) {
+		ImgCacheDTO imgObj = getImgById(imgId);
+		if (!BeanUtils.isNotNull(imgObj)) 
+			return null;
+		
+		Integer shareCnt = imgObj.getShareCnt();
+		
+		if (++shareCnt % SHARE_CNT != 0) 
+			imgObj.setShareCnt(shareCnt);
+		else {
+			ImgResource imgResource = new ImgResource();
+			imgResource.setShareCnt(shareCnt);
+			updateImg(imgId, imgResource);
+		}
+		return shareCnt;
+	}
+	
+	private void updateImg(String imgId, ImgResource imgResource) {
+		imgResource.setImgId(imgId);
+		imgResourceService.updateImgResourceByPrimaryKey(imgResource);
 	}
 }
