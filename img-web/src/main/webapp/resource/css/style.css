@@ -13,7 +13,7 @@
 .post-ding { color: Silver; }
 .post-chai { color: Silver; }
 
-/* bean page */
+/* comment page */
 .bean-page { text-align: right; clear: both; }
 .bean-page a { margin: 0 0.2em; padding: 0.2em 0.4em; color: #777; text-decoration: none; }
 .bean-page a:hover { background-color: rgba(0,0,0,0.03); -webkit-border-radius: 0.2em; border-radius: 0.2em; }
