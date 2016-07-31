@@ -32,3 +32,8 @@
 .navi-block .search-bar .search-box { display: block; float: left; height: 1.6em; margin: 0.4em 0; width: 8em; text-indent: 3px; vertical-align: middle; border: 0; outline: 0; background: #fff; -webkit-border-radius: 0.2em; border-radius: 0.2em; }
 .navi-block .search-bar .search-go { display: block; float: right; height: 2em; padding: 0 0.4em; color: White; font-weight: bold; }
 
+.img-content {
+    width:460px;
+    height:500px;
+    background: rgb(245,245,245);
+}

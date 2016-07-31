@@ -165,11 +165,13 @@ public class IndexController {
 	 * @param img 原图片地址
 	 * @param color 颜色
 	 * @param fontSize 字体大小
+	 * @param  width 图片宽度
+	 * @param  height 图片高度
      * @return
      */
 	@RequestMapping("generatorImg")
 	@ResponseBody
-	public JSONObject  generatorImg(String fontSize,String text, String color,String x, String y, String img, HttpServletRequest request) throws  Exception{
+	public JSONObject  generatorImg(String fontSize,String text, String color,String x, String y, String img, String width,String height,HttpServletRequest request) throws  Exception{
 		JSONObject retObj = new JSONObject();
 
 		String imgFolderPath = request.getRealPath("/") + File.separator + "temp" + File.separator + "img";//图片文件夹名称
@@ -179,7 +181,7 @@ public class IndexController {
 		//下载图片
 		GetImgUtil.downloadImg(img,imgFolderPath,srcImgName);
 		//生成图片
-		ImageUtils.convertImg((imgFolderPath +File.separator+ srcImgName) , text,color,Integer.valueOf(x),Integer.valueOf(y),Integer.valueOf(fontSize),imgFolderPath +File.separator+ targetImgName);
+		ImageUtils.convertImg((imgFolderPath +File.separator+ srcImgName) , text,color,Integer.valueOf(x),Integer.valueOf(y),Integer.valueOf(width),Integer.valueOf(height),Integer.valueOf(fontSize),imgFolderPath +File.separator+ targetImgName);
 
 		File uploadFile = new File((imgFolderPath +File.separator+ targetImgName));
 		//上传到七牛云

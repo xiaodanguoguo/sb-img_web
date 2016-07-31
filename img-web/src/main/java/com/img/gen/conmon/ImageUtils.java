@@ -12,6 +12,35 @@ import java.io.File;
 public class ImageUtils {
 
 
+
+    /**
+     * 转换图片，生成表情包
+     * @return
+     * @param  sourceFile 源位置
+     * @param  targetFile 目标位置
+     * @param text 文字
+     * @param x 文字的x位置
+     * @param y 文字的y位置
+     * @throws Exception
+     */
+    public static Integer convertImg(String sourceFile,String text,String color, Integer x,Integer y,Integer width,Integer height,Integer fontSize,String targetFile) throws  Exception{
+
+        File tFile = new File(targetFile);//目标文件
+        File sFile = new File(sourceFile);//源文件
+        BufferedImage source_img = ImageIO.read(sFile);
+        BufferedImage tagert_Img = new BufferedImage(width,height,BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2 = tagert_Img.createGraphics();
+        g2.drawImage(source_img,0,0,width,height,null);//拷贝图片
+        Font font = new Font("宋体", Font.PLAIN, fontSize);
+        g2.setFont(font);
+        Color color1 = ColorUtils.parseToColor(color.substring(1));
+        g2.setColor(color1);//红色
+        g2.drawString(text,x,y+font.getSize());//写字   *y+font.getSize()*表示字体的起始位置
+        ImageIO.write(tagert_Img,"jpg",tFile);
+        return 1;
+
+    }
+
     /**
      * 转换图片，生成表情包
      * @return

@@ -27,10 +27,20 @@
         var textY = 0;
         var fontSize = 16;//默认字体
         var color = "#000000";//默认黑色
+        var imgWidth = 0 ;//图片宽度
+        var imgHeight = 0;//图片高度
         /**
          * 实现拖拽的js效果
          */
         $(function(){
+
+            $(".img-responsive").on('load', function(){
+                $("#imgWidth").val($(this).width());
+                $("#imgHeight").val($(this).height());
+
+                imgWidth = $("#imgWidth").val();
+                imgHeight = $("#imgHeight").val();
+            });
 
 
             /*--------------拖曳效果----------------
@@ -40,16 +50,27 @@
              * mouseup:fn(){dragging = false, 释放鼠标捕获，防止冒泡}
              */
             var dragging = false;
-            var iX, iY;
-            var maxX = 440 - 200;//最大x值,200为文本框的宽度
-            var maxY = 460 - 40;//最大y值，40为文本框的高度
+            var iX, iY,iX1,iY1;
+
+
+
+            console.log(imgWidth);
+
+            var maxX = 460 - 200;//最大x值,200为文本框的宽度
+            var maxY = 500 - 40;//最大y值，40为文本框的高度
             var minX = 0;//最小x值
             var minY = 0;//最小y值
-
+            var indexCount = 0;
             $("#dragText").mousedown(function(e) {
+
+                indexCount++;//
                 dragging = true;
-                iX = e.clientX ;//位置含义：当前的位置与dom的距离 x
-                iY = e.clientY ;//位置含义： 当前的位置与dom的距离 y
+                if(indexCount == 1){
+                    iX = e.clientX ;//位置含义：当前的位置与dom的距离 x
+                    iY = e.clientY ;//位置含义： 当前的位置与dom的距离 y
+                }
+                iX1 = e.clientX ;//位置含义：当前的位置与dom的距离 x
+                iY1 = e.clientY ;//位置含义： 当前的位置与dom的距离 y
                 this.setCapture && this.setCapture();//捕获鼠标事件
                 return false;
             });
@@ -111,6 +132,8 @@
             }
 
 
+
+
             /**
              * 点击生成图片
              */
@@ -119,10 +142,10 @@
                 var text = $("#imageName").val();
                 var x = textX;
                 var y = textY;
-                var img = $("#img-content").attr("src");
+                var img = $(".img-responsive").attr("src");
                 color = $("#bau").val();
-
-                console.log(color);
+                imgWidth = $("#imgWidth").val();
+                imgHeight = $("#imgHeight").val();
                 $.ajax({
                     url: ctx +" /generatorImg.html",    //请求的url地址
                     dataType: "json",   //返回格式为json
@@ -134,6 +157,8 @@
                         "img" :img,
                         "fontSize" : fontSize,
                         "color" : color,
+                        "width" : imgWidth,
+                        "height" : imgHeight
                     },    //参数值
                     type: "POST",   //请求方式
                     success: function(req) {
@@ -185,8 +210,15 @@
                 $("#imageName").css("font-size",  textFontSize + unit );
             })
 
-            //TODO 拾色器
+            //TODO 1.文本框只能够在图片中，不能超过图片
 
+            //TODO 2.解决掉定位每次都从0开始的bug
+
+            //TODO 3.把图片的宽度和高度作为参数传递过去
+
+
+
+            //TODO 4.
         })
     </script>
 
@@ -210,7 +242,7 @@
         width: 200px;
         height: 40px;
         float: left;
-        color: #5bc0de;
+        color: #000000;
         font-size: 16px;
         font-weight: 300;
     }
@@ -230,10 +262,10 @@
         */
     }
 
-    .img-responsive{
+    /*.img-responsive{
         width: 440px;
         height: 460px;
-    }
+    }*/
     /**********end of 图层定位************************/
 
 </style>
@@ -368,7 +400,7 @@
     <hr>
     <hr>
     <!--热搜表情 -->
-    <div class="navi-block">
+    <%--<div class="navi-block">
         <ul>
             <li>
                 <a href="Home.aspx">表情主页</a>
@@ -387,7 +419,7 @@
             <input name="ctl00$ctl00$ContentPlaceHolder1$TextBoxSearch" type="text" maxlength="100" id="ctl00_ctl00_ContentPlaceHolder1_TextBoxSearch" class="search-box">
             <a href="SearchText.aspx" id="ctl00_ctl00_ContentPlaceHolder1_searchgo" class="search-go">搜索</a>
         </div>
-    </div>
+    </div>--%>
     <hr>
     <!--end of 热搜表情 -->
     <!-- Projects Row -->
@@ -397,7 +429,12 @@
             <div class="col-md-12 portfolio-item ">
                 <!--图片层 -->
                 <div id="imgLayer">
-                    <img class="img-responsive" id="img-content"  src="http://7xweel.com1.z0.glb.clouddn.com/F%60%29%609%7D40ML6X$NJ%7DC%5D%7DPVAR.jpg" alt="">
+                    <div class="img-content">
+
+                        <img class="img-responsive" src="http://7xweel.com1.z0.glb.clouddn.com/T8U_G4KZY~SUQ8V%254C%5BA%25CF.jpg" alt="">
+                        <input type="hidden" id="imgWidth">
+                        <input type="hidden" id="imgHeight">
+                    </div>
                     <!--拖拽字体层 -->
                     <div id="dragLayer">
                         <input type="text" name="imageName" id="imageName"  ><span id="dragText">点击拖动</span>
@@ -405,7 +442,7 @@
                     <!-- end of 拖拽字体层 -->
                 </div>
                 <!--end of 图片层 -->
-                <span class="col-md-1 text-success ">颜色选择:</span><input  class="col-md-1"  type="text" id="bau" onclick="startColorPicker(this)" onkeyup="maskedHex(this);setColor();">
+                <span class="col-md-1  ">颜色选择:</span><input  class="col-md-1" value="#000000"  type="text" id="bau" onclick="startColorPicker(this)" onkeyup="maskedHex(this);setColor();">
                 <button id="add_font">字体变大</button>
                 <button id="sub_font">字体变小</button>
                 <button id="submitBtn">生成图片</button>
