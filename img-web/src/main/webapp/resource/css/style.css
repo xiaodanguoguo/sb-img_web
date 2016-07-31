@@ -1,0 +1,39 @@
+
+/* post block */
+.post-block { float: left; width: 60%; margin-bottom: 1em; padding: 1em 1%; background-color: #F5DEB3; font-size: smaller; text-align: left; } /* Wheat */
+.post-control { margin: 10px 0; }
+.post-input { width: 100%; height: 4em; margin: 0 auto; font-size: large; color: Gray; }
+.post-button { width: 8em; height: 2em; margin-top: 5px; font-size: small; cursor: pointer; }
+.post-list { list-style-type: none; margin: 1em 0 0 0; padding: 0; color: Gray; }
+.post-list li { border-top: 1px solid silver; padding: 1em 0.6em; }
+.post-content { word-wrap: break-word; word-break: break-all; }
+.post-info { margin-top: 1em; color: Silver; }
+.post-name { color: Silver; }
+.post-date { color: Silver; }
+.post-ding { color: Silver; }
+.post-chai { color: Silver; }
+
+/* comment page */
+.bean-page { text-align: right; clear: both; }
+.bean-page a { margin: 0 0.2em; padding: 0.2em 0.4em; color: #777; text-decoration: none; }
+.bean-page a:hover { background-color: rgba(0,0,0,0.03); -webkit-border-radius: 0.2em; border-radius: 0.2em; }
+.bean-page a.current { color: #d32; border: 1px solid #ccc; -webkit-border-radius: 0.2em; border-radius: 0.2em; }
+
+/* navi-block */
+.navi-block { background-color: #000000; overflow: hidden; border: 0px solid #000000; }
+.navi-block ul { float: left; list-style-type: none; overflow: hidden; border: 0px solid red;}
+.navi-block ul li { float: left; height: 2em; line-height: 2em; border-right: 1px solid Gray; }
+.navi-block ul li a { display: block; text-decoration: none; padding: 0 0.5em; }
+.navi-block ul li a:link { color: Gray; }
+.navi-block ul li a:visited { color: Gray; }
+.navi-block ul li a:hover { color: #bb4513; }
+.navi-block ul li a:active { color: #bb4513; }
+.navi-block .search-bar { float: right; height: 2em; line-height: 2em; width: 10em; vertical-align: middle; background-color: #000000; padding: 0 0 0 0.4em; border: 0px solid red; }
+.navi-block .search-bar .search-box { display: block; float: left; height: 1.6em; margin: 0.4em 0; width: 8em; text-indent: 3px; vertical-align: middle; border: 0; outline: 0; background: #fff; -webkit-border-radius: 0.2em; border-radius: 0.2em; }
+.navi-block .search-bar .search-go { display: block; float: right; height: 2em; padding: 0 0.4em; color: White; font-weight: bold; }
+
+.img-content {
+    width:460px;
+    height:500px;
+    background: rgb(245,245,245);
+}
