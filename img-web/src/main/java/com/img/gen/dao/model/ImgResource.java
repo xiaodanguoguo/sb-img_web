@@ -23,6 +23,15 @@ public class ImgResource implements Serializable {
 	private Integer	generate;		
 	private Date	lastGenTime;		
 	private Integer	shareCnt;		
+	private String smallimgUrl;/*小图url*/
+
+	public String getSmallimgUrl() {
+		return smallimgUrl;
+	}
+
+	public void setSmallimgUrl(String smallimgUrl) {
+		this.smallimgUrl = smallimgUrl;
+	}
 
 	// Constructor
 	public ImgResource() {

@@ -13,6 +13,7 @@
 		<result property="generate" column="GENERATE" />
 		<result property="lastGenTime" column="LAST_GEN_TIME" />
 		<result property="shareCnt" column="SHARE_CNT" />
+		<result property="smallimgUrl" column="SMALL_IMG_URL"/>
 	</resultMap>
 	
 	<sql id="table_columns">
@@ -26,7 +27,8 @@
 		IMG_NAME,
 		GENERATE,
 		LAST_GEN_TIME,
-		SHARE_CNT
+		SHARE_CNT,
+		SMALL_IMG_URL
     </sql>
 	<sql id="entity_properties">
 		#{imgId},
@@ -39,7 +41,8 @@
 		#{imgName},
 		#{generate},
 		#{lastGenTime},
-		#{shareCnt}
+		#{shareCnt},
+		#{smallimgUrl}
 	</sql>
 
     <!-- 使用like用法：columnName like concat('%',#columnName#,'%') -->
@@ -55,6 +58,7 @@
             <if test="generate != null and generate != ''">and GENERATE = #{generate}</if>
             <if test="lastGenTime != null and lastGenTime != ''">and LAST_GEN_TIME = #{lastGenTime}</if>
             <if test="shareCnt != null and shareCnt != ''">and SHARE_CNT = #{shareCnt}</if>
+			<if test="smallimgUrl != null and smallimgUrl != ''">and SMALL_IMG_URL = #{smallimgUrl}</if>
         </trim>
     </sql>
 
@@ -78,6 +82,7 @@
             <if test="generate != null and generate != ''">GENERATE,</if>
             <if test="lastGenTime != null and lastGenTime != ''">LAST_GEN_TIME,</if>
             <if test="shareCnt != null and shareCnt != ''">SHARE_CNT,</if>
+			<if test="smallimgUrl != null and smallimgUrl != ''">SMALL_IMG_URL,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
             <if test="imgUrl != null and imgUrl != ''">#{imgUrl},</if>
@@ -90,6 +95,7 @@
             <if test="generate != null and generate != ''">#{generate},</if>
             <if test="lastGenTime != null and lastGenTime != ''">#{lastGenTime},</if>
             <if test="shareCnt != null and shareCnt != ''">#{shareCnt},</if>
+			<if test="smallimgUrl != null and smallimgUrl != ''">#{smallimgUrl},</if>
         </trim>
 	</insert>
 
@@ -118,6 +124,7 @@
 			<if test="generate != null and generate != ''">GENERATE = #{generate},</if>
 			<if test="lastGenTime != null and lastGenTime != ''">LAST_GEN_TIME = #{lastGenTime},</if>
 			<if test="shareCnt != null and shareCnt != ''">SHARE_CNT = #{shareCnt},</if>
+			<if test="smallimgUrl != null and smallimgUrl != ''">SMALL_IMG_URL = #{smallimgUrl},</if>
 		</trim>
 		<where>ID = #{id}</where>
 	</update>
@@ -135,6 +142,7 @@
             <if test="generate != null and generate != ''">GENERATE = #{generate},</if>
             <if test="lastGenTime != null and lastGenTime != ''">LAST_GEN_TIME = #{lastGenTime},</if>
             <if test="shareCnt != null and shareCnt != ''">SHARE_CNT = #{shareCnt},</if>
+			<if test="smallimgUrl != null and smallimgUrl != ''">SMALL_IMG_URL = #{smallimgUrl},</if>
         </trim>
         <include refid="page_where" />
     </update>
