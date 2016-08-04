@@ -11,7 +11,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.img.gen.conmon.FileUtils;
 import com.img.gen.conmon.ImageUtils;
 import com.img.gen.conmon.parser.GetImgUtil;
-import com.img.gen.service.QiniuUploadService;
+import com.img.gen.dao.model.ImgComment;
+import com.img.gen.dao.model.ImgResource;
+import com.img.gen.service.*;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.methods.GetMethod;
@@ -29,15 +31,16 @@ import com.img.gen.conmon.BeanUtils;
 import com.img.gen.conmon.JsonMapper;
 import com.img.gen.controller.dto.JokeDTO;
 import com.img.gen.dao.model.Joke;
-import com.img.gen.service.ImgCommentService;
-import com.img.gen.service.JokeService;
 import com.img.gen.service.QiniuUploadService;
 
 @Controller
 public class IndexController {
+
 	@Autowired
 	private ImgCommentService imgCommentService;
-	
+	@Autowired
+	private ImgResourceService imgResourceService;
+
 	@Autowired
 	private JokeService JokeService;
 
@@ -45,13 +48,16 @@ public class IndexController {
 	private QiniuUploadService qiniuUploadService;
 
 	@RequestMapping("index")
-	public String test() {
-		/*List<ImgComment> imgComents = imgCommentService.findAll();
-		for (ImgComment imgComment : imgComents) {
-			System.out.println(imgComment.getCommentContent());
-		}*/
-		return "index";
+	public ModelAndView index(){
+		ModelAndView modelAndView = new ModelAndView("index");
+		List<ImgResource> imgResources = imgResourceService.findAll();
+		modelAndView.addObject("imgResources",imgResources);
+		return  modelAndView;
 	}
+
+
+
+
 
 	@RequestMapping("file")
 	public String  file() {

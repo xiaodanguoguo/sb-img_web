@@ -63,7 +63,7 @@ public class ImgController {
 	 */
 	@ResponseBody
 	@RequestMapping("get/{imgId}")
-	public JsonResult<ImgResourceDTO> getImg(@PathVariable("imgId") String imgId) {
+	public JsonResult<ImgResourceDTO> getImg(@PathVariable("imgId") Integer imgId) {
 		JsonResult<ImgResourceDTO> result = new JsonResult<>(JsonResult.SUCCESS);
 		try {
 			Integer pageView = cacheService.incrPageView(imgId);
@@ -104,7 +104,7 @@ public class ImgController {
 	 */
 	@ResponseBody
 	@RequestMapping("like/{imgId}")
-	public JsonResult<Integer> likeImg(@PathVariable("imgId") String imgId) {
+	public JsonResult<Integer> likeImg(@PathVariable("imgId") Integer imgId) {
 		JsonResult<Integer> result = new JsonResult<>(JsonResult.SUCCESS);
 		try {
 			result.setResults(cacheService.incrLikeCnt(imgId));

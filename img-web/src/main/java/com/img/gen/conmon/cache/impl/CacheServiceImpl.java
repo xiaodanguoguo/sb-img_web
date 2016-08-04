@@ -45,7 +45,7 @@ public class CacheServiceImpl implements CacheService{
 	 * @return
 	 */
 	@Override
-	public ImgCacheDTO getImgById(String imgId) {
+	public ImgCacheDTO getImgById(Integer imgId) {
 		if (BeanUtils.isNotNull(imgCache)) init();
 		ImgCacheDTO imgCacheDTO = imgCache.get(imgId);
 		if (BeanUtils.isNotNull(imgCacheDTO))
@@ -55,7 +55,7 @@ public class CacheServiceImpl implements CacheService{
 			if (BeanUtils.isNotNull(imgResource)) {
 				imgCacheDTO = new ImgCacheDTO();
 				BeanUtils.copyProperties(imgResource, imgCacheDTO);
-				imgCache.put(imgId, imgCacheDTO);
+				imgCache.put(imgId.toString(), imgCacheDTO);
 				return imgCacheDTO;
 			}
 		}
@@ -63,7 +63,7 @@ public class CacheServiceImpl implements CacheService{
 	}
 
 	@Override
-	public Integer incrLikeCnt(String imgId) {
+	public Integer incrLikeCnt(Integer imgId) {
 		ImgCacheDTO imgObj = getImgById(imgId);
 		if (!BeanUtils.isNotNull(imgObj)) 
 			return null;
@@ -82,7 +82,7 @@ public class CacheServiceImpl implements CacheService{
 	}
 
 	@Override
-	public Integer incrPageView(String imgId) {
+	public Integer incrPageView(Integer imgId) {
 		ImgCacheDTO imgObj = getImgById(imgId);
 		if (!BeanUtils.isNotNull(imgObj)) 
 			return null;
@@ -100,7 +100,7 @@ public class CacheServiceImpl implements CacheService{
 	}
 
 	@Override
-	public Integer incrGenerate(String imgId) {
+	public Integer incrGenerate(Integer imgId) {
 		ImgCacheDTO imgObj = getImgById(imgId);
 		if (!BeanUtils.isNotNull(imgObj)) 
 			return null;
@@ -118,7 +118,7 @@ public class CacheServiceImpl implements CacheService{
 	}
 
 	@Override
-	public Integer incrShareCnt(String imgId) {
+	public Integer incrShareCnt(Integer imgId) {
 		ImgCacheDTO imgObj = getImgById(imgId);
 		if (!BeanUtils.isNotNull(imgObj)) 
 			return null;
@@ -135,7 +135,7 @@ public class CacheServiceImpl implements CacheService{
 		return shareCnt;
 	}
 	
-	private void updateImg(String imgId, ImgResource imgResource) {
+	private void updateImg(Integer imgId, ImgResource imgResource) {
 		imgResource.setImgId(imgId);
 		imgResourceService.updateImgResourceByPrimaryKey(imgResource);
 	}

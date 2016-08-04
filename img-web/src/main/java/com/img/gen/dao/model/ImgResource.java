@@ -12,7 +12,7 @@ import java.util.Date;
  */
 public class ImgResource implements Serializable {
 	
-	private String	imgId;		
+	private Integer	imgId;
 	private String	imgUrl;		
 	private Integer	imgSize;		
 	private Integer	userId;		
@@ -40,7 +40,7 @@ public class ImgResource implements Serializable {
 	/**
 	 * full Constructor
 	 */
-	public ImgResource(String imgId, String imgUrl, Integer imgSize, Integer userId, Boolean imgType, Integer pageView, Integer likeCnt, String imgName, Integer generate, Date lastGenTime, Integer shareCnt) {
+	public ImgResource(Integer imgId, String imgUrl, Integer imgSize, Integer userId, Boolean imgType, Integer pageView, Integer likeCnt, String imgName, Integer generate, Date lastGenTime, Integer shareCnt) {
 		this.imgId = imgId;
 		this.imgUrl = imgUrl;
 		this.imgSize = imgSize;
@@ -54,16 +54,15 @@ public class ImgResource implements Serializable {
 		this.shareCnt = shareCnt;
 	}
 
-	
-	public String getImgId() {
+
+	public Integer getImgId() {
 		return imgId;
 	}
 
-	public void setImgId(String imgId) {
+	public void setImgId(Integer imgId) {
 		this.imgId = imgId;
 	}
 
-	
 	public String getImgUrl() {
 		return imgUrl;
 	}
