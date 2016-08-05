@@ -16,21 +16,30 @@ public class ImgResource implements Serializable {
 	private String	imgUrl;		
 	private Integer	imgSize;		
 	private Integer	userId;		
-	private Boolean	imgType;		
-	private Integer	pageView;		
-	private Integer	likeCnt;		
+	private Integer	imgType = 1;
+	private Integer	pageView = 0;
+	private Integer	likeCnt = 0;
 	private String	imgName;		
-	private Integer	generate;		
+	private Integer	generate = 0;
 	private Date	lastGenTime;		
-	private Integer	shareCnt;		
-	private String smallimgUrl;/*小图url*/
+	private Integer	shareCnt = 0;
+	private String smallImgUrl;/*小图url*/
+	private Integer samilImgSize;  /* 小图大小 */
 
-	public String getSmallimgUrl() {
-		return smallimgUrl;
+	public String getSmallImgUrl() {
+		return smallImgUrl;
 	}
 
-	public void setSmallimgUrl(String smallimgUrl) {
-		this.smallimgUrl = smallimgUrl;
+	public void setSmallImgUrl(String smallImgUrl) {
+		this.smallImgUrl = smallImgUrl;
+	}
+
+	public Integer getSamilImgSize() {
+		return samilImgSize;
+	}
+
+	public void setSamilImgSize(Integer samilImgSize) {
+		this.samilImgSize = samilImgSize;
 	}
 
 	// Constructor
@@ -40,7 +49,7 @@ public class ImgResource implements Serializable {
 	/**
 	 * full Constructor
 	 */
-	public ImgResource(Integer imgId, String imgUrl, Integer imgSize, Integer userId, Boolean imgType, Integer pageView, Integer likeCnt, String imgName, Integer generate, Date lastGenTime, Integer shareCnt) {
+	public ImgResource(Integer imgId, String imgUrl, Integer imgSize, Integer userId, Integer imgType, Integer pageView, Integer likeCnt, String imgName, Integer generate, Date lastGenTime, Integer shareCnt) {
 		this.imgId = imgId;
 		this.imgUrl = imgUrl;
 		this.imgSize = imgSize;
@@ -89,16 +98,14 @@ public class ImgResource implements Serializable {
 		this.userId = userId;
 	}
 
-	
-	public Boolean getImgType() {
+	public Integer getImgType() {
 		return imgType;
 	}
 
-	public void setImgType(Boolean imgType) {
+	public void setImgType(Integer imgType) {
 		this.imgType = imgType;
 	}
 
-	
 	public Integer getPageView() {
 		return pageView;
 	}

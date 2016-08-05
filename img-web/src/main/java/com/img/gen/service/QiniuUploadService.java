@@ -13,7 +13,7 @@ public interface QiniuUploadService {
      * @param file
      * @return
      */
-    public Integer upload(File file);
+    public String upload(File file);
 
 
     /**
@@ -22,7 +22,7 @@ public interface QiniuUploadService {
      * @param fileName
      * @return
      */
-    public Integer upload(File file, String fileName);
+    public String upload(File file, String fileName);
 
 
     /**
@@ -31,7 +31,7 @@ public interface QiniuUploadService {
      * @param fileName
      * @return
      */
-    public Integer upload(byte[] bytes,String fileName);
+    public String upload(byte[] bytes,String fileName);
 
 
 }

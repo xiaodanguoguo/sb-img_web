@@ -3,6 +3,11 @@ package com.img.gen.conmon.parser;
 import java.io.File;
 import java.io.FileOutputStream;
 
+import com.img.gen.conmon.IdHelper;
+import com.img.gen.controller.dto.ImgInfoDTO;
+import com.img.gen.dao.model.ImgResource;
+import com.img.gen.service.ImgResourceService;
+import com.img.gen.service.QiniuUploadService;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.methods.GetMethod;
@@ -10,11 +15,18 @@ import org.htmlparser.Node;
 import org.htmlparser.Parser;
 import org.htmlparser.util.NodeList;
 import org.htmlparser.util.SimpleNodeIterator;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class GetImgUtil {
 
+	@Autowired
+	private QiniuUploadService qiniuUploadService;
+
+	@Autowired
+	private ImgResourceService imgResourceService;
+
 	// 循环访问所有节点，输出包含关键字的值节点
-	public static void extractKeyWordHtml(String url, String keyword) throws Exception {
+	public void extractKeyWordHtml(String url, String keyword) throws Exception {
 		// 生成一个解析器对象，用网页的 url 作为参数
 		Parser parser = new Parser(url);
 		// 设置网页的编码,这里只是请求了一个 utf-8 编码网页
@@ -25,7 +37,7 @@ public class GetImgUtil {
 		processNodeList(list, keyword);
 	}
 
-	private static void processNodeList(NodeList list, String keyword) throws Exception {
+	private void processNodeList(NodeList list, String keyword) throws Exception {
 		// 迭代开始
 		SimpleNodeIterator iterator = list.elements();
 		while (iterator.hasMoreNodes()) {
@@ -39,6 +51,8 @@ public class GetImgUtil {
 				// String result = node.toPlainTextString();
 				// 若包含关键字
 				if (result.indexOf(keyword) != -1) {
+					ImgResource imgResource = new ImgResource();
+
 					String bigImgId = "";
 					String href = node.getParent().getParent().toHtml();
 					href = "http://www.doubean.com/face/"
@@ -60,19 +74,30 @@ public class GetImgUtil {
 							int begin = html.indexOf(
 									"<img id=\"ctl00_ctl00_ContentPlaceHolder1_ContentPlaceHolder1_ImageResult\" alt=\"generated picture\" class=\"JIATHIS_IMG_OK\" src=\"")
 									+ 5;
-							html = "http://www.doubean.com/face/" + html.substring(begin, html.indexOf("?c=", begin));
-							String bigImgUrl = html.replace(
+							String urlHtml = "http://www.doubean.com/face/" + html.substring(begin, html.indexOf("?c=", begin));
+							String bigImgUrl = urlHtml.replace(
 									"id=\"ctl00_ctl00_ContentPlaceHolder1_ContentPlaceHolder1_ImageResult\" alt=\"generated picture\" class=\"JIATHIS_IMG_OK\" src=\"",
 									"");
-							bigImgId = String.valueOf((int) (Math.random() * 100000) + 1000000);
-							downloadImg(bigImgUrl, "F:\\img\\" + bigImgId, bigImgId + "big.jpg");
+
+							begin = html.indexOf("class=\"head-title\">"); //
+							String name = html.substring(begin, html.indexOf("</h1>", begin));
+							imgResource.setImgName(name);
+//							bigImgId = String.valueOf((int) (Math.random() * 100000) + 1000000);
+							bigImgId = IdHelper.generateShortUUID();
+							ImgInfoDTO imgInfoDTO = downloadImg(bigImgUrl, bigImgId + "big.jpg");
+							imgResource.setImgSize(imgInfoDTO.getLength());
+							imgResource.setImgUrl(imgInfoDTO.getUrl());
 						}
 					}
 
 					String src = "http://www.doubean.com/"
 							+ result.substring(result.indexOf("src=\"") + 6, result.lastIndexOf("\""));
 					String smailImgName = bigImgId + "smail.jpg";
-					downloadImg(src, "F:\\img\\" + bigImgId, smailImgName);
+					ImgInfoDTO samllImgInfoDTO = downloadImg(src, smailImgName);
+					imgResource.setSmallImgUrl(samllImgInfoDTO.getUrl());
+					imgResource.setSamilImgSize(samllImgInfoDTO.getLength());
+
+					imgResourceService.createImgResource(imgResource);
 				}
 			} // end if
 				// 孩子节点不为空，继续迭代该孩子节点
@@ -85,29 +110,35 @@ public class GetImgUtil {
 	/**
 	 * 下载图片
 	 * @param imgUrl
-	 * @param fileAddr
 	 * @param imgName
 	 * @throws Exception
      */
-	public static void downloadImg(String imgUrl, String fileAddr, String imgName) throws Exception {
+	public ImgInfoDTO downloadImg(String imgUrl, String imgName) throws Exception {
 		System.out.println(imgUrl);
 		HttpClient client = new HttpClient();
 		HttpMethod get = new GetMethod(imgUrl);
 		client.executeMethod(get);
-		File storeFile = new File(fileAddr);
-		if (!storeFile.exists())
-			storeFile.mkdirs();
-		storeFile = new File(fileAddr + "\\" + imgName);
-		FileOutputStream output = new FileOutputStream(storeFile);
+
+		byte[] responseBody = get.getResponseBody();
+
+		String url = qiniuUploadService.upload(responseBody, imgName);
+
+		return new ImgInfoDTO(url, responseBody.length);
+//		File storeFile = new File(fileAddr);
+//		if (!storeFile.exists())
+//			storeFile.mkdirs();
+//		storeFile = new File(fileAddr + File.pathSeparator + imgName);
+//		FileOutputStream output = new FileOutputStream(storeFile);
         //得到网络资源的字节数组,并写入文件  
-        output.write(get.getResponseBody());  
-        output.close();  
+//        output.write(get.getResponseBody());
+//        output.close();
 	}
 
 	public static void main(String[] args) throws Exception {
+		GetImgUtil imgUtil = new GetImgUtil();
 		for (int i = 1; i < 39; i++) {
 			String url = "http://www.doubean.com/face/ListWithImage.aspx?pn=" + i;
-			extractKeyWordHtml(url, "<img alt=\"");
+			imgUtil.extractKeyWordHtml(url, "<img alt=\"");
 		}
 	}
 }

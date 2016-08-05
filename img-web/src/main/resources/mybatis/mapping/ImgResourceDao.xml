@@ -13,7 +13,8 @@
 		<result property="generate" column="GENERATE" />
 		<result property="lastGenTime" column="LAST_GEN_TIME" />
 		<result property="shareCnt" column="SHARE_CNT" />
-		<result property="smallimgUrl" column="SMALL_IMG_URL"/>
+		<result property="smallImgUrl" column="SMALL_IMG_URL"/>
+		<result property="smallImgSize" column="SMALL_IMG_SIZE"/>
 	</resultMap>
 	
 	<sql id="table_columns">
@@ -28,7 +29,8 @@
 		GENERATE,
 		LAST_GEN_TIME,
 		SHARE_CNT,
-		SMALL_IMG_URL
+		SMALL_IMG_URL,
+		SMALL_IMG_SIZE
     </sql>
 	<sql id="entity_properties">
 		#{imgId},
@@ -42,7 +44,8 @@
 		#{generate},
 		#{lastGenTime},
 		#{shareCnt},
-		#{smallimgUrl}
+		#{smallImgUrl},
+		#{smallImgSize}
 	</sql>
 
     <!-- 使用like用法：columnName like concat('%',#columnName#,'%') -->
@@ -58,7 +61,8 @@
             <if test="generate != null and generate != ''">and GENERATE = #{generate}</if>
             <if test="lastGenTime != null and lastGenTime != ''">and LAST_GEN_TIME = #{lastGenTime}</if>
             <if test="shareCnt != null and shareCnt != ''">and SHARE_CNT = #{shareCnt}</if>
-			<if test="smallimgUrl != null and smallimgUrl != ''">and SMALL_IMG_URL = #{smallimgUrl}</if>
+			<if test="smallImgUrl != null and smallImgUrl != ''">and SMALL_IMG_URL = #{smallImgUrl}</if>
+			<if test="smallImgSize != null and smallImgSize != ''">and SMALL_IMG_SIZE = #{smallImgSize}</if>
         </trim>
     </sql>
 
@@ -82,8 +86,9 @@
             <if test="generate != null and generate != ''">GENERATE,</if>
             <if test="lastGenTime != null and lastGenTime != ''">LAST_GEN_TIME,</if>
             <if test="shareCnt != null and shareCnt != ''">SHARE_CNT,</if>
-			<if test="smallimgUrl != null and smallimgUrl != ''">SMALL_IMG_URL,</if>
-        </trim>
+			<if test="smallImgUrl != null and smallImgUrl != ''">SMALL_IMG_URL,</if>
+			<if test="smallImgSize != null and smallImgSize != ''">SMALL_IMG_SIZE,</if>
+		</trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
             <if test="imgUrl != null and imgUrl != ''">#{imgUrl},</if>
             <if test="imgSize != null and imgSize != ''">#{imgSize},</if>
@@ -95,8 +100,9 @@
             <if test="generate != null and generate != ''">#{generate},</if>
             <if test="lastGenTime != null and lastGenTime != ''">#{lastGenTime},</if>
             <if test="shareCnt != null and shareCnt != ''">#{shareCnt},</if>
-			<if test="smallimgUrl != null and smallimgUrl != ''">#{smallimgUrl},</if>
-        </trim>
+			<if test="smallImgUrl != null and smallImgUrl != ''">#{smallImgUrl},</if>
+			<if test="smallImgSize != null and smallImgSize != ''">#{smallImgSize}</if>
+		</trim>
 	</insert>
 
 
@@ -124,7 +130,8 @@
 			<if test="generate != null and generate != ''">GENERATE = #{generate},</if>
 			<if test="lastGenTime != null and lastGenTime != ''">LAST_GEN_TIME = #{lastGenTime},</if>
 			<if test="shareCnt != null and shareCnt != ''">SHARE_CNT = #{shareCnt},</if>
-			<if test="smallimgUrl != null and smallimgUrl != ''">SMALL_IMG_URL = #{smallimgUrl},</if>
+			<if test="smallImgUrl != null and smallImgUrl != ''">SMALL_IMG_URL = #{smallImgUrl},</if>
+			<if test="smallImgSize != null and smallImgSize != ''">SMALL_IMG_SIZE = #{smallImgSize}</if>
 		</trim>
 		<where>ID = #{id}</where>
 	</update>
@@ -142,8 +149,9 @@
             <if test="generate != null and generate != ''">GENERATE = #{generate},</if>
             <if test="lastGenTime != null and lastGenTime != ''">LAST_GEN_TIME = #{lastGenTime},</if>
             <if test="shareCnt != null and shareCnt != ''">SHARE_CNT = #{shareCnt},</if>
-			<if test="smallimgUrl != null and smallimgUrl != ''">SMALL_IMG_URL = #{smallimgUrl},</if>
-        </trim>
+			<if test="smallImgUrl != null and smallImgUrl != ''">SMALL_IMG_URL = #{smallImgUrl},</if>
+			<if test="smallImgSize != null and smallImgSize != ''">SMALL_IMG_SIZE = #{smallImgSize}</if>
+		</trim>
         <include refid="page_where" />
     </update>
 

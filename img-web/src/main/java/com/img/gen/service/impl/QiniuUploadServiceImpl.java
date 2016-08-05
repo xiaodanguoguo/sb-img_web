@@ -3,6 +3,7 @@ package com.img.gen.service.impl;
 import java.io.File;
 import java.util.Date;
 
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.stereotype.Service;
 
 import com.img.gen.service.QiniuUploadService;
@@ -47,13 +48,14 @@ public class QiniuUploadServiceImpl implements QiniuUploadService {
      * @return
      */
     @Override
-    public Integer upload(File file,String fileName) {
+    public String upload(File file,String fileName) {
         try {
             //调用put方法上传
             Response res = uploadManager.put(file, fileName, getUpToken());
             //打印返回的信息
             System.out.println(res.bodyString());
-            return 1;
+            JSONObject json = (JSONObject)JSONObject.parse(res.bodyString());
+            return (String)json.get("key");
         } catch (QiniuException e) {
             Response r = e.response;
             // 请求失败时打印的异常的信息
@@ -71,13 +73,14 @@ public class QiniuUploadServiceImpl implements QiniuUploadService {
 
 
     @Override
-    public Integer upload(byte[] bytes, String fileName) {
+    public String upload(byte[] bytes, String fileName) {
         try {
             //调用put方法上传
             Response res = uploadManager.put(bytes, fileName, getUpToken());
             //打印返回的信息
             System.out.println(res.bodyString());
-            return 1;
+            JSONObject json = (JSONObject)JSONObject.parse(res.bodyString());
+            return (String)json.get("key");
         } catch (QiniuException e) {
             Response r = e.response;
             // 请求失败时打印的异常的信息
@@ -93,7 +96,7 @@ public class QiniuUploadServiceImpl implements QiniuUploadService {
     }
 
     @Override
-    public Integer upload(File file) {
+    public String upload(File file) {
         return null;
     }
 }

@@ -16,22 +16,15 @@ public class ImgResourceDTO implements Serializable {
 	private String	imgUrl;		
 	private Integer	imgSize;		
 	private Integer	userId;		
-	private Boolean	imgType;		
+	private Integer	imgType;
 	private Integer	pageView;		
 	private Integer	likeCnt;		
 	private String	imgName;		
 	private Integer	generate;		
 	private Date	lastGenTime;		
 	private Integer	shareCnt;		
-	private String smallimgUrl;/*小图url*/
-
-	public String getSmallimgUrl() {
-		return smallimgUrl;
-	}
-
-	public void setSmallimgUrl(String smallimgUrl) {
-		this.smallimgUrl = smallimgUrl;
-	}
+	private String smallImgUrl;/*小图url*/
+	private Integer samilImgSize;  /* 小图大小 */
 
 	// Constructor
 	public ImgResourceDTO() {
@@ -40,7 +33,7 @@ public class ImgResourceDTO implements Serializable {
 	/**
 	 * full Constructor
 	 */
-	public ImgResourceDTO(String imgId, String imgUrl, Integer imgSize, Integer userId, Boolean imgType, Integer pageView, Integer likeCnt, String imgName, Integer generate, Date lastGenTime, Integer shareCnt) {
+	public ImgResourceDTO(String imgId, String imgUrl, Integer imgSize, Integer userId, Integer imgType, Integer pageView, Integer likeCnt, String imgName, Integer generate, Date lastGenTime, Integer shareCnt) {
 		this.imgId = imgId;
 		this.imgUrl = imgUrl;
 		this.imgSize = imgSize;
@@ -86,12 +79,28 @@ public class ImgResourceDTO implements Serializable {
 		this.userId = userId;
 	}
 
-	public Boolean getImgType() {
+	public Integer getImgType() {
 		return imgType;
 	}
 
-	public void setImgType(Boolean imgType) {
+	public void setImgType(Integer imgType) {
 		this.imgType = imgType;
+	}
+
+	public String getSmallImgUrl() {
+		return smallImgUrl;
+	}
+
+	public void setSmallImgUrl(String smallImgUrl) {
+		this.smallImgUrl = smallImgUrl;
+	}
+
+	public Integer getSamilImgSize() {
+		return samilImgSize;
+	}
+
+	public void setSamilImgSize(Integer samilImgSize) {
+		this.samilImgSize = samilImgSize;
 	}
 
 	public Integer getPageView() {

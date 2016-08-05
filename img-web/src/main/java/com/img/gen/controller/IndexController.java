@@ -8,8 +8,7 @@ import java.util.concurrent.ExecutionException;
 import javax.servlet.http.HttpServletRequest;
 
 import com.alibaba.fastjson.JSONObject;
-import com.img.gen.conmon.FileUtils;
-import com.img.gen.conmon.ImageUtils;
+import com.img.gen.conmon.*;
 import com.img.gen.conmon.parser.GetImgUtil;
 import com.img.gen.dao.model.ImgComment;
 import com.img.gen.dao.model.ImgResource;
@@ -27,8 +26,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONObject;
-import com.img.gen.conmon.BeanUtils;
-import com.img.gen.conmon.JsonMapper;
 import com.img.gen.controller.dto.JokeDTO;
 import com.img.gen.dao.model.Joke;
 import com.img.gen.service.QiniuUploadService;
@@ -46,6 +43,9 @@ public class IndexController {
 
 	@Autowired
 	private QiniuUploadService qiniuUploadService;
+
+	@Autowired
+	private GetImgUtil imgUtil;
 
 	@RequestMapping("index")
 	public ModelAndView index(){
@@ -185,7 +185,7 @@ public class IndexController {
 		String srcImgName = uuid+"temp"+".jpg";
 		String targetImgName = uuid+".jpg";
 		//下载图片
-		GetImgUtil.downloadImg(img,imgFolderPath,srcImgName);
+		imgUtil.downloadImg(img, srcImgName);
 		//生成图片
 		ImageUtils.convertImg((imgFolderPath +File.separator+ srcImgName) , text,color,Integer.valueOf(x),Integer.valueOf(y),Integer.valueOf(width),Integer.valueOf(height),Integer.valueOf(fontSize),imgFolderPath +File.separator+ targetImgName);
 
@@ -200,4 +200,17 @@ public class IndexController {
 		return retObj;
 	}
 
+	@RequestMapping("/img/import")
+	public JsonResult<String> importImg() {
+		JsonResult<String> result = new JsonResult<>(JsonResult.SUCCESS);
+		try {
+			for (int i = 1; i < 39; i++) {
+                String url = "http://www.doubean.com/face/ListWithImage.aspx?pn=" + i;
+                imgUtil.extractKeyWordHtml(url, "<img alt=\"");
+            }
+		} catch (Exception e) {
+			result.setResults(JsonResult.ERROR);
+		}
+		return result;
+	}
 }
