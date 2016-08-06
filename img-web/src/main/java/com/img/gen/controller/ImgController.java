@@ -1,19 +1,19 @@
 package com.img.gen.controller;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.io.File;
+import java.util.*;
 
+import com.alibaba.fastjson.JSONObject;
+import com.img.gen.conmon.*;
+import com.img.gen.conmon.parser.GetImgUtil;
+import com.img.gen.pungin.PageView;
+import com.img.gen.service.QiniuUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.img.gen.conmon.BeanUtils;
-import com.img.gen.conmon.IdHelper;
-import com.img.gen.conmon.JsonResult;
-import com.img.gen.conmon.Page;
 import com.img.gen.conmon.cache.CacheService;
 import com.img.gen.conmon.thread.AssertContext;
 import com.img.gen.controller.dto.ImgResourceDTO;
@@ -22,6 +22,9 @@ import com.img.gen.dao.model.ImgResource;
 import com.img.gen.dao.model.UserCollection;
 import com.img.gen.service.ImgResourceService;
 import com.img.gen.service.UserCollectionService;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("img/")
@@ -32,6 +35,11 @@ public class ImgController {
 	private UserCollectionService userCollectionService;
 	@Autowired
 	private CacheService cacheService;
+	@Autowired
+	private GetImgUtil imgUtil;
+	@Autowired
+	private QiniuUploadService qiniuUploadService;//七牛云上传下载
+
 	/**
 	 * 分页查询图片
 	 * @param pageNo
@@ -55,6 +63,90 @@ public class ImgController {
 		}
 		return result;
 	}
+
+	/**
+	 * 默认第一次加载图片资源
+	 * @return
+     */
+	@RequestMapping("index")
+	public ModelAndView index(){
+		ModelAndView modelAndView = new ModelAndView("index");
+		Map<String,Object> paramMap = new HashMap<String,Object>();
+		PageView pageMode = imgResourceService.queryByPage(1,30,paramMap);//默认30条记录
+		modelAndView.addObject("pageModel",pageMode);
+		return  modelAndView;
+	}
+
+
+	/**
+	 * 分页查询
+	 * @param pageNo 当前页
+	 * @param pageSize 页数
+	 * @param type 类型
+	 * @param keys 关键词
+	 * @return
+	 */
+	@RequestMapping("queryByPage")
+	@ResponseBody
+	public ModelAndView queryByPage(String pageNo,String pageSize,String type,String keys){
+		ModelAndView modelAndView = new ModelAndView("index");
+		Map<String,Object> paramMap = new HashMap<String,Object>();
+		PageView pageMode = imgResourceService.queryByPage(Integer.valueOf(pageNo),Integer.valueOf(pageSize),paramMap);
+		modelAndView.addObject("pageModel",pageMode);
+		return modelAndView;
+	}
+
+
+	/**
+	 * 详细信息
+	 * @param id 主键
+	 * @return
+	 */
+	@RequestMapping("detail")
+	public ModelAndView detail(String id){
+		ModelAndView modelAndView = new ModelAndView("detail");
+		ImgResource imgResource = imgResourceService.getImgResourceByPrimaryKey(id);
+		modelAndView.addObject("imgResource",imgResource);
+		return  modelAndView ;
+	}
+
+	/**
+	 * @param text 文字
+	 * @param x x位置
+	 * @param y y位置
+	 * @param img 原图片地址
+	 * @param color 颜色
+	 * @param fontSize 字体大小
+	 * @param  width 图片宽度
+	 * @param  height 图片高度
+	 * @return
+	 */
+	@RequestMapping("generatorImg")
+	@ResponseBody
+	public JSONObject generatorImg(String fontSize, String text, String color, String x, String y, String img, String width, String height, HttpServletRequest request) throws  Exception{
+		JSONObject retObj = new JSONObject();
+
+		String imgFolderPath = request.getRealPath("/") + File.separator + "temp" + File.separator + "img";//图片文件夹名称
+		String uuid = UUID.randomUUID().toString();
+		String srcImgName = uuid+"temp"+".jpg";
+		String targetImgName = uuid+".jpg";
+		//下载图片
+		imgUtil.downloadImg(img,imgFolderPath , srcImgName);
+		//生成图片
+		ImageUtils.convertImg((imgFolderPath +File.separator+ srcImgName) , text,color,Integer.valueOf(x),Integer.valueOf(y),Integer.valueOf(width),Integer.valueOf(height),Integer.valueOf(fontSize),imgFolderPath +File.separator+ targetImgName);
+
+		File uploadFile = new File((imgFolderPath +File.separator+ targetImgName));
+		//上传到七牛云
+		qiniuUploadService.upload(uploadFile,targetImgName);
+
+		File resourceFile = new File((imgFolderPath +File.separator+ srcImgName));
+		//删除文件
+		FileUtils.deleteFile(resourceFile);
+		FileUtils.deleteFile(uploadFile);
+		return retObj;
+	}
+
+
 
 	/**
 	 * 获取单个图片

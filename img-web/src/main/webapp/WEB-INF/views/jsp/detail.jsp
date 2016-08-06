@@ -57,7 +57,7 @@
             console.log(imgWidth);
 
             var maxX = 460 - 200;//最大x值,200为文本框的宽度
-            var maxY = 500 - 40;//最大y值，40为文本框的高度
+            var maxY = 500 - 80;//最大y值，40为文本框的高度
             var minX = 0;//最小x值
             var minY = 0;//最小y值
             var indexCount = 0;
@@ -147,7 +147,7 @@
                 imgWidth = $("#imgWidth").val();
                 imgHeight = $("#imgHeight").val();
                 $.ajax({
-                    url: ctx +" /generatorImg.html",    //请求的url地址
+                    url: ctx +" /img/generatorImg.html",    //请求的url地址
                     dataType: "json",   //返回格式为json
                     data: {
 
@@ -183,7 +183,7 @@
                 //javascript自带方法
                 var unit = thisEle.slice(-2); //获取单位:px
                 var cName = $(this).attr("class");
-                if(textFontSize < 30){//最大字体为30px
+                if(textFontSize < 40){//最大字体为40px
                     textFontSize += 2;//字体增大
                 }
                 fontSize = textFontSize;
@@ -240,7 +240,7 @@
         border: 0px;
         background-color: rgba(0, 0, 0, 0.04);
         width: 200px;
-        height: 40px;
+        height: 80px;
         float: left;
         color: #000000;
         font-size: 16px;
@@ -397,6 +397,7 @@
 <!--end of 导航条 -->
 
 <div class="container">
+
     <hr>
     <hr>
     <!--热搜表情 -->
@@ -424,6 +425,7 @@
     <!--end of 热搜表情 -->
     <!-- Projects Row -->
     <div class="row">
+
         <div>
             <!--图片 -->
             <div class="col-md-12 portfolio-item ">
@@ -431,12 +433,13 @@
                 <div id="imgLayer">
                     <div class="img-content">
 
-                        <img class="img-responsive" src="http://7xweel.com1.z0.glb.clouddn.com/T8U_G4KZY~SUQ8V%254C%5BA%25CF.jpg" alt="">
+                        <img class="img-responsive" src="${baesImgSrc}${imgResource.imgUrl}" alt="">
                         <input type="hidden" id="imgWidth">
                         <input type="hidden" id="imgHeight">
                     </div>
                     <!--拖拽字体层 -->
                     <div id="dragLayer">
+                        <%--<textarea name="imageName" id="imageName"  value="妈的智障"></textarea><span id="dragText">点击拖动</span>--%>
                         <input type="text" name="imageName" id="imageName"  ><span id="dragText">点击拖动</span>
                     </div>
                     <!-- end of 拖拽字体层 -->
@@ -449,7 +452,7 @@
             </div>
             <!--end of 图片 -->
             <!--评论 -->
-            <div class="col-lg-5">
+            <%--<div class="col-lg-5">
                 <label >评论:</label>
                     <textarea class="form-control " cols="5" rows="5"></textarea>
                 <div class="right">
@@ -512,7 +515,7 @@
                     </div>
                 </div>
 
-            </div>
+            </div>--%>
             <!--end of评论 -->
         </div>
 

@@ -20,6 +20,7 @@ import org.apache.commons.httpclient.methods.GetMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -49,32 +50,9 @@ public class IndexController {
 	@Autowired
 	private GetImgUtil imgUtil;
 
-	@RequestMapping("index")
-	public ModelAndView index(){
-		ModelAndView modelAndView = new ModelAndView("index");
-		Map<String,Object> paramMap = new HashMap<String,Object>();
-		PageView pageMode = imgResourceService.queryByPage(1,30,paramMap);//默认30条记录
-		modelAndView.addObject("pageModel",pageMode);
-		return  modelAndView;
-	}
 
-	/**
-	 *
-	 * @param pageNo 当前页
-	 * @param pageSize 页数
-	 * @param type 类型
-	 * @param keys 关键词
-     * @return
-     */
-	@RequestMapping("queryByPage")
-	@ResponseBody
-	public ModelAndView queryByPage(String pageNo,String pageSize,String type,String keys){
-		ModelAndView modelAndView = new ModelAndView("index");
-		Map<String,Object> paramMap = new HashMap<String,Object>();
-		PageView pageMode = imgResourceService.queryByPage(Integer.valueOf(pageNo),Integer.valueOf(pageSize),paramMap);
-		modelAndView.addObject("pageModel",pageMode);
-		return modelAndView;
-	}
+
+
 
 
 
@@ -116,7 +94,6 @@ public class IndexController {
 		List<Joke> copyPropertieses = BeanUtils.copyPropertieses(jokeList, new ArrayList<Joke>(), Joke.class);
 		
 	}
-
 
 	/**
 	 * 七牛云文件上传测试
@@ -172,53 +149,9 @@ public class IndexController {
 	}
 
 
-	/**
-	 * 详细页面
-	 * @return
-     */
-	@RequestMapping("detail")
-	public String detail(){
-		return "detail";
-	}
-
 
 	//TODO 把七牛云的图片下载到临时文件夹，在临时文件夹通过awt包生成图片，然后上传到七牛云，回显七牛云地址
 
-	/**
-	 * @param text 文字
-	 * @param x x位置
-	 * @param y y位置
-	 * @param img 原图片地址
-	 * @param color 颜色
-	 * @param fontSize 字体大小
-	 * @param  width 图片宽度
-	 * @param  height 图片高度
-     * @return
-     */
-	@RequestMapping("generatorImg")
-	@ResponseBody
-	public JSONObject  generatorImg(String fontSize,String text, String color,String x, String y, String img, String width,String height,HttpServletRequest request) throws  Exception{
-		JSONObject retObj = new JSONObject();
-
-		String imgFolderPath = request.getRealPath("/") + File.separator + "temp" + File.separator + "img";//图片文件夹名称
-		String uuid = UUID.randomUUID().toString();
-		String srcImgName = uuid+"temp"+".jpg";
-		String targetImgName = uuid+".jpg";
-		//下载图片
-		imgUtil.downloadImg(img, srcImgName);
-		//生成图片
-		ImageUtils.convertImg((imgFolderPath +File.separator+ srcImgName) , text,color,Integer.valueOf(x),Integer.valueOf(y),Integer.valueOf(width),Integer.valueOf(height),Integer.valueOf(fontSize),imgFolderPath +File.separator+ targetImgName);
-
-		File uploadFile = new File((imgFolderPath +File.separator+ targetImgName));
-		//上传到七牛云
-		qiniuUploadService.upload(uploadFile,targetImgName);
-
-		File resourceFile = new File((imgFolderPath +File.separator+ srcImgName));
-		//删除文件
-		FileUtils.deleteFile(resourceFile);
-		FileUtils.deleteFile(uploadFile);
-		return retObj;
-	}
 
 	@RequestMapping("/img/import")
 	public JsonResult<String> importImg() {
