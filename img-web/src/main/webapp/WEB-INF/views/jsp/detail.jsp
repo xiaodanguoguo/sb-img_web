@@ -161,8 +161,12 @@
                         "height" : imgHeight
                     },    //参数值
                     type: "POST",   //请求方式
-                    success: function(req) {
+                    dataType: "json",
+                    success: function(data) {
                         //请求成功时处理
+                        if(data.success){
+                            $(".img-responsive").attr("src",baseImgSrc+data.imgUrl);//更换图片
+                        }
                     },
 
                     error: function() {

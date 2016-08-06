@@ -145,6 +145,8 @@ public class ImgController {
 		imgResource.setImgId(null);
 		imgResource.setLastGenTime(new Date());
 		imgResourceService.createImgResource(imgResource);
+		retObj.put("imgUrl",targetImgName);//回显
+		retObj.put("success",true);
 		//删除文件
 		File resourceFile = new File((imgFolderPath +File.separator+ srcImgName));
 		FileUtils.deleteFile(resourceFile);
