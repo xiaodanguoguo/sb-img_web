@@ -153,11 +153,11 @@
 	<div class="row">
 
 		<!-- 左边图片布局 -->
-		<div class="col-lg-10">
+		<div class="col-lg-12">
 			<c:forEach  items="${imgResources}" var="imgResource" >
 				<div class="col-md-3 portfolio-item">
 					<a href="#">
-						<img class="img-responsive" src="${baesImgSrc}${imgResource.imgUrl}" width="207px" height="124px" alt="">
+						<img class="img-responsive" src="${baesImgSrc}${imgResource.imgUrl}?imageView/1/w/207/h/124" width="207px" height="124px" alt="">
 					</a>
 				</div>
 			</c:forEach>
@@ -167,7 +167,7 @@
 		</div>
 
 		<!--右边扩展布局 -->
-		<div class="col-md-2">
+		<%--<div class="col-md-2">
 
 			<!-- Blog Search Well -->
 			<div class="well">
@@ -215,7 +215,7 @@
 					他向我摇头一笑，不是啊，我每天都是准时来接大白菜的，今天来早了，噢，我是她男朋友...</p>
 			</div>
 
-		</div>
+		</div>--%>
 	</div>
 	<!-- /.row -->
 

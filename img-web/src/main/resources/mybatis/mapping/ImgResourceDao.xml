@@ -14,7 +14,7 @@
 		<result property="lastGenTime" column="LAST_GEN_TIME" />
 		<result property="shareCnt" column="SHARE_CNT" />
 		<result property="smallImgUrl" column="SMALL_IMG_URL"/>
-		<result property="smallImgSize" column="SMALL_IMG_SIZE"/>
+		<result property="samllImgSize" column="SMALL_IMG_SIZE"/>
 	</resultMap>
 	
 	<sql id="table_columns">
