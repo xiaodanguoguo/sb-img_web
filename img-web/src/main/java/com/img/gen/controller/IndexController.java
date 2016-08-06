@@ -12,6 +12,7 @@ import com.img.gen.conmon.*;
 import com.img.gen.conmon.parser.GetImgUtil;
 import com.img.gen.dao.model.ImgComment;
 import com.img.gen.dao.model.ImgResource;
+import com.img.gen.pungin.PageView;
 import com.img.gen.service.*;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
@@ -31,6 +32,7 @@ import com.img.gen.dao.model.Joke;
 import com.img.gen.service.QiniuUploadService;
 
 @Controller
+@RequestMapping("index")
 public class IndexController {
 
 	@Autowired
@@ -50,11 +52,29 @@ public class IndexController {
 	@RequestMapping("index")
 	public ModelAndView index(){
 		ModelAndView modelAndView = new ModelAndView("index");
-		List<ImgResource> imgResources = imgResourceService.findAll();
-		modelAndView.addObject("imgResources",imgResources);
+		Map<String,Object> paramMap = new HashMap<String,Object>();
+		PageView pageMode = imgResourceService.queryByPage(1,30,paramMap);//默认30条记录
+		modelAndView.addObject("pageModel",pageMode);
 		return  modelAndView;
 	}
 
+	/**
+	 *
+	 * @param pageNo 当前页
+	 * @param pageSize 页数
+	 * @param type 类型
+	 * @param keys 关键词
+     * @return
+     */
+	@RequestMapping("queryByPage")
+	@ResponseBody
+	public ModelAndView queryByPage(String pageNo,String pageSize,String type,String keys){
+		ModelAndView modelAndView = new ModelAndView("index");
+		Map<String,Object> paramMap = new HashMap<String,Object>();
+		PageView pageMode = imgResourceService.queryByPage(Integer.valueOf(pageNo),Integer.valueOf(pageSize),paramMap);
+		modelAndView.addObject("pageModel",pageMode);
+		return modelAndView;
+	}
 
 
 

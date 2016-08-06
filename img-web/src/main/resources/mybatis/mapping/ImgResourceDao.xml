@@ -205,4 +205,9 @@
 		order by 
 		GENERATE DESC, LIKE_CNT DESC, SHARE_CNT DESC, PAGE_VIEW DESC
 	</select>
+
+	<select id="queryByPage" resultMap="imgResourceResultMap" parameterType="java.util.Map">
+		select <include refid="table_columns" />
+		from img_resource
+	</select>
 </mapper>
