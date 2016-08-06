@@ -24,12 +24,12 @@ public class ImgResource implements Serializable {
 	private Date	lastGenTime;		
 	private Integer	shareCnt = 0;
 	private String smallImgUrl;/*小图url*/
-	private Integer samllImgSize;  /* 小图大小 */
+	private Integer smallImgSize;  /* 小图大小 */
 
 	public ImgResource() {
 	}
 
-	public ImgResource(Integer imgId, String imgUrl, Integer imgSize, Integer userId, Integer imgType, Integer pageView, Integer likeCnt, String imgName, Integer generate, Date lastGenTime, Integer shareCnt, String smallImgUrl, Integer samllImgSize) {
+	public ImgResource(Integer imgId, String imgUrl, Integer imgSize, Integer userId, Integer imgType, Integer pageView, Integer likeCnt, String imgName, Integer generate, Date lastGenTime, Integer shareCnt, String smallImgUrl, Integer smallImgSize) {
 		this.imgId = imgId;
 		this.imgUrl = imgUrl;
 		this.imgSize = imgSize;
@@ -42,15 +42,7 @@ public class ImgResource implements Serializable {
 		this.lastGenTime = lastGenTime;
 		this.shareCnt = shareCnt;
 		this.smallImgUrl = smallImgUrl;
-		this.samllImgSize = samllImgSize;
-	}
-
-	public Integer getSamllImgSize() {
-		return samllImgSize;
-	}
-
-	public void setSamllImgSize(Integer samllImgSize) {
-		this.samllImgSize = samllImgSize;
+		this.smallImgSize = smallImgSize;
 	}
 
 	public Integer getImgId() {
@@ -149,5 +141,11 @@ public class ImgResource implements Serializable {
 		this.smallImgUrl = smallImgUrl;
 	}
 
+	public Integer getSmallImgSize() {
+		return smallImgSize;
+	}
 
+	public void setSmallImgSize(Integer smallImgSize) {
+		this.smallImgSize = smallImgSize;
+	}
 }

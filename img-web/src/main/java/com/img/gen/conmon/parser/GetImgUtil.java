@@ -95,7 +95,7 @@ public class GetImgUtil {
 					String smailImgName = bigImgId + "smail.jpg";
 					ImgInfoDTO samllImgInfoDTO = downloadImg(src, smailImgName);
 					imgResource.setSmallImgUrl(samllImgInfoDTO.getUrl());
-					imgResource.setSamllImgSize(samllImgInfoDTO.getLength());
+					imgResource.setSmallImgSize(samllImgInfoDTO.getLength());
 
 					imgResourceService.createImgResource(imgResource);
 				}

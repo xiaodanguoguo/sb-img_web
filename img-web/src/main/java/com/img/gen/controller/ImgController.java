@@ -111,6 +111,7 @@ public class ImgController {
 	}
 
 	/**
+	 * @param id 主键
 	 * @param text 文字
 	 * @param x x位置
 	 * @param y y位置
@@ -123,7 +124,7 @@ public class ImgController {
 	 */
 	@RequestMapping("generatorImg")
 	@ResponseBody
-	public JSONObject generatorImg(String fontSize, String text, String color, String x, String y, String img, String width, String height, HttpServletRequest request) throws  Exception{
+	public JSONObject generatorImg(String id,String fontSize, String text, String color, String x, String y, String img, String width, String height, HttpServletRequest request) throws  Exception{
 		JSONObject retObj = new JSONObject();
 
 		String imgFolderPath = request.getRealPath("/") + File.separator + "temp" + File.separator + "img";//图片文件夹名称
@@ -138,11 +139,18 @@ public class ImgController {
 		File uploadFile = new File((imgFolderPath +File.separator+ targetImgName));
 		//上传到七牛云
 		qiniuUploadService.upload(uploadFile,targetImgName);
-
-		File resourceFile = new File((imgFolderPath +File.separator+ srcImgName));
+		//TODO 新增图片到数据库
+		ImgResource imgResource =  imgResourceService.getImgResourceByPrimaryKey(id);
+		imgResource.setImgUrl(uuid);
+		imgResource.setImgId(null);
+		imgResource.setLastGenTime(new Date());
+		imgResourceService.createImgResource(imgResource);
 		//删除文件
+		File resourceFile = new File((imgFolderPath +File.separator+ srcImgName));
 		FileUtils.deleteFile(resourceFile);
 		FileUtils.deleteFile(uploadFile);
+
+
 		return retObj;
 	}
 

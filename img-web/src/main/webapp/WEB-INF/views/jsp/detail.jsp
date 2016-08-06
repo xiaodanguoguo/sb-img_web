@@ -150,7 +150,7 @@
                     url: ctx +" /img/generatorImg.html",    //请求的url地址
                     dataType: "json",   //返回格式为json
                     data: {
-
+                        "id" : ${imgResource.imgId},
                         "text": text,
                         "x" : x,
                         "y" : y,

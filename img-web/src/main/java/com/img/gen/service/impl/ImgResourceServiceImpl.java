@@ -35,7 +35,7 @@ public class ImgResourceServiceImpl implements ImgResourceService{
     }
 
     public Integer createImgResource(ImgResource record){
-        return imgResourceDao.insert(record);
+        return imgResourceDao.insertSelective(record);
     }
 
     public Integer deleteImgResource(ImgResource record){
