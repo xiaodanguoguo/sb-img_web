@@ -214,6 +214,10 @@
                 $("#imageName").css("font-size",  textFontSize + unit );
             })
 
+            $("#refreshBtn").click(function () {
+                document.location.reload();
+            })
+
             //TODO 1.文本框只能够在图片中，不能超过图片
 
             //TODO 2.解决掉定位每次都从0开始的bug
@@ -453,6 +457,7 @@
                 <button id="add_font">字体变大</button>
                 <button id="sub_font">字体变小</button>
                 <button id="submitBtn">生成图片</button>
+                <button id="refreshBtn">从新生成</button>
             </div>
             <!--end of 图片 -->
             <!--评论 -->
@@ -545,3 +550,6 @@
 
 </body>
 </html>
+
+
+
