@@ -37,6 +37,15 @@
                 <property name="numTestsPerEvictionRun" value="20" />
     </bean>
 
+	<bean id="pagePlugin" class="com.img.gen.pungin.PagePlugin">
+		<property name="properties">
+			<props>
+				<prop key="dialect">mysql</prop>
+				<prop key="pageSqlId">.*query.*</prop>
+			</props>
+		</property>
+	</bean>
+
 	 <bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource"></property>
@@ -46,6 +55,11 @@
 		<property name="dataSource" ref="dataSource"></property>
 		<property name="configLocation" value="classpath:mybatis/mybatis-config.xml"></property>
 		<property name="mapperLocations" value="classpath*:mybatis/mapping/**/*.xml" />
+		<property name="plugins" >
+			<array>
+				<ref bean="pagePlugin"/>
+			</array>
+		</property>
 	</bean>
 
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">

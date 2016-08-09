@@ -7,7 +7,7 @@ public class ImgInfoDTO {
     private String url;
     private Integer length;
 
-    public ImgInfoDTO(String url, Integer length) {
+    public ImgInfoDTO(String url, int length) {
         this.url = url;
         this.length = length;
     }

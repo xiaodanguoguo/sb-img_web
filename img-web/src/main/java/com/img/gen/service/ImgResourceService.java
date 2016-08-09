@@ -1,8 +1,10 @@
 package com.img.gen.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.img.gen.dao.model.ImgResource;
+import com.img.gen.pungin.PageView;
 
 /**
  * dal Interface:ImgResource
@@ -50,4 +52,12 @@ public interface ImgResourceService {
 	 */
 	public List<ImgResource> getImgResourceByHot();
 
+	/**
+	 * 分页查询图片
+	 * @param integer
+	 * @param integer1
+	 * @param paramMap
+     * @return
+     */
+	PageView queryByPage(Integer integer, Integer integer1, Map<String, Object> paramMap);
 }

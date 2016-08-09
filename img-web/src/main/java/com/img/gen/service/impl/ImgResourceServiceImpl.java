@@ -1,7 +1,9 @@
 package com.img.gen.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
+import com.img.gen.pungin.PageView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +35,7 @@ public class ImgResourceServiceImpl implements ImgResourceService{
     }
 
     public Integer createImgResource(ImgResource record){
-        return imgResourceDao.insert(record);
+        return imgResourceDao.insertSelective(record);
     }
 
     public Integer deleteImgResource(ImgResource record){
@@ -81,4 +83,15 @@ public class ImgResourceServiceImpl implements ImgResourceService{
 	public List<ImgResource> getImgResourceByHot() {
 		return imgResourceDao.selectImgResourceByHot();
 	}
+
+    @Override
+    public PageView queryByPage(Integer pageNo, Integer pageSize, Map<String, Object> paramMap) {
+        PageView pageView = new PageView();
+        pageView.setPageNow(pageNo);
+        pageView.setPageSize(pageSize);
+        paramMap.put("paging",pageView);
+        List<ImgResource> listResources = imgResourceDao.queryByPage(paramMap);
+        pageView.setRecords(listResources);
+        return pageView;
+    }
 }

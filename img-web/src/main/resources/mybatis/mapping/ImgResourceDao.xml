@@ -76,32 +76,32 @@
     <insert id="insertSelective" parameterType="com.img.gen.dao.model.ImgResource">
         insert into img_resource
         <trim prefix="(" suffix=")" suffixOverrides="," >
-            <if test="imgUrl != null and imgUrl != ''">IMG_URL,</if>
-            <if test="imgSize != null and imgSize != ''">IMG_SIZE,</if>
-            <if test="userId != null and userId != ''">USER_ID,</if>
-            <if test="imgType != null and imgType != ''">IMG_TYPE,</if>
-            <if test="pageView != null and pageView != ''">PAGE_VIEW,</if>
-            <if test="likeCnt != null and likeCnt != ''">LIKE_CNT,</if>
-            <if test="imgName != null and imgName != ''">IMG_NAME,</if>
-            <if test="generate != null and generate != ''">GENERATE,</if>
-            <if test="lastGenTime != null and lastGenTime != ''">LAST_GEN_TIME,</if>
-            <if test="shareCnt != null and shareCnt != ''">SHARE_CNT,</if>
-			<if test="smallImgUrl != null and smallImgUrl != ''">SMALL_IMG_URL,</if>
-			<if test="smallImgSize != null and smallImgSize != ''">SMALL_IMG_SIZE,</if>
+            <if test="imgUrl != null ">IMG_URL,</if>
+            <if test="imgSize != null ">IMG_SIZE,</if>
+            <if test="userId != null ">USER_ID,</if>
+            <if test="imgType != null ">IMG_TYPE,</if>
+            <if test="pageView != null ">PAGE_VIEW,</if>
+            <if test="likeCnt != null ">LIKE_CNT,</if>
+            <if test="imgName != null ">IMG_NAME,</if>
+            <if test="generate != null ">GENERATE,</if>
+            <if test="lastGenTime != null ">LAST_GEN_TIME,</if>
+            <if test="shareCnt != null ">SHARE_CNT,</if>
+			<if test="smallImgUrl != null ">SMALL_IMG_URL,</if>
+			<if test="smallImgSize != null ">SMALL_IMG_SIZE,</if>
 		</trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
-            <if test="imgUrl != null and imgUrl != ''">#{imgUrl},</if>
-            <if test="imgSize != null and imgSize != ''">#{imgSize},</if>
-            <if test="userId != null and userId != ''">#{userId},</if>
-            <if test="imgType != null and imgType != ''">#{imgType},</if>
-            <if test="pageView != null and pageView != ''">#{pageView},</if>
-            <if test="likeCnt != null and likeCnt != ''">#{likeCnt},</if>
-            <if test="imgName != null and imgName != ''">#{imgName},</if>
-            <if test="generate != null and generate != ''">#{generate},</if>
-            <if test="lastGenTime != null and lastGenTime != ''">#{lastGenTime},</if>
-            <if test="shareCnt != null and shareCnt != ''">#{shareCnt},</if>
-			<if test="smallImgUrl != null and smallImgUrl != ''">#{smallImgUrl},</if>
-			<if test="smallImgSize != null and smallImgSize != ''">#{smallImgSize}</if>
+            <if test="imgUrl != null ">#{imgUrl},</if>
+            <if test="imgSize != null ">#{imgSize},</if>
+            <if test="userId != null ">#{userId},</if>
+            <if test="imgType != null ">#{imgType},</if>
+            <if test="pageView != null ">#{pageView},</if>
+            <if test="likeCnt != null ">#{likeCnt},</if>
+            <if test="imgName != null ">#{imgName},</if>
+            <if test="generate != null">#{generate},</if>
+            <if test="lastGenTime != null">#{lastGenTime},</if>
+            <if test="shareCnt != null ">#{shareCnt},</if>
+			<if test="smallImgUrl != null ">#{smallImgUrl},</if>
+			<if test="smallImgSize != null">#{smallImgSize},</if>
 		</trim>
 	</insert>
 
@@ -204,5 +204,10 @@
 		from img_resource
 		order by 
 		GENERATE DESC, LIKE_CNT DESC, SHARE_CNT DESC, PAGE_VIEW DESC
+	</select>
+
+	<select id="queryByPage" resultMap="imgResourceResultMap" parameterType="java.util.Map">
+		select <include refid="table_columns" />
+		from img_resource
 	</select>
 </mapper>

@@ -37,3 +37,15 @@
     height:500px;
     background: rgb(245,245,245);
 }
+
+
+.img-background{
+    width: 240px;
+    height: 160px;
+    background-color: rgb(245,245,245);
+    margin: 0px;
+}
+
+.img-background img {
+    margin-left: 18.5px;
+}

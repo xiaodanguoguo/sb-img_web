@@ -15,11 +15,13 @@
 	<!-- Custom CSS -->
 	<link href="${ctx}/resource/css/4-col-portfolio.css" rel="stylesheet">
 
+	<link href="${ctx}/resource/css/style.css" rel="stylesheet">
 	<!-- jQuery -->
 	<script src="${ctx}/resource/js/jquery-1.11.1.min.js"></script>
 
 	<!-- Bootstrap Core JavaScript -->
 	<script src="${ctx}/resource/js/bootstrap.min.js"></script>
+
 
 </head>
 
@@ -27,7 +29,7 @@
 
 <!-- Navigation -->
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-	<div class="container">
+	<div class="container" >
 		<!-- Brand and toggle get grouped for better mobile display -->
 		<!-- <div class="navbar-header">
              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -148,16 +150,19 @@
 </nav>
 
 <!-- Page Content -->
-<div class="container">
+<div class="container" id="content">
 	<!-- Projects Row -->
 	<div class="row">
-
 		<!-- 左边图片布局 -->
-		<div class="col-lg-10">
-			<c:forEach  items="${imgResources}" var="imgResource" >
+		<div class="col-lg-12">
+			<c:forEach  items="${pageModel.records}" var="imgResource" >
 				<div class="col-md-3 portfolio-item">
-					<a href="#">
-						<img class="img-responsive" src="${baesImgSrc}${imgResource.imgUrl}" width="207px" height="124px" alt="">
+						<%--${imgResource}--%>
+					<a href="${ctx}/img/detail.html?id=${imgResource.imgId}">
+						<div class="img-background">
+
+							<img class="img-responsive" src="${baesImgSrc}${imgResource.imgUrl}?imageView/1/w/207/h/124" width="207px" height="124px" alt="">
+						</div>
 					</a>
 				</div>
 			</c:forEach>
@@ -167,7 +172,7 @@
 		</div>
 
 		<!--右边扩展布局 -->
-		<div class="col-md-2">
+		<%--<div class="col-md-2">
 
 			<!-- Blog Search Well -->
 			<div class="well">
@@ -215,7 +220,7 @@
 					他向我摇头一笑，不是啊，我每天都是准时来接大白菜的，今天来早了，噢，我是她男朋友...</p>
 			</div>
 
-		</div>
+		</div>--%>
 	</div>
 	<!-- /.row -->
 
@@ -227,12 +232,22 @@
 		<div class="col-lg-12">
 			<ul class="pagination">
 				<li>
-					<a href="#">&laquo;</a>
+					<a href="${ctx}/img/queryByPage.html?pageNo=1&pageSize=${pageModel.pageSize}" >首页</a>
 				</li>
+
+				<li >
+					<a href="${ctx}/img/queryByPage.html?pageNo=${pageModel.pageNow-1 < 1 ? 1 : pageModel.pageNow-1 }&pageSize=${pageModel.pageSize}">上一页</a>
+				</li>
+
 				<li class="active">
-					<a href="#">1</a>
+					<a href="${ctx}/img/queryByPage.html?pageNo=${pageModel.pageNow}&pageSize=${pageModel.pageSize}">第${pageModel.pageNow}页</a>
 				</li>
-				<li>
+
+				<li >
+					<a href="${ctx}/img/queryByPage.html?pageNo=${pageModel.pageNow+1 > pageModel.pageCount ? pageModel.pageCount: pageModel.pageNow+1}&pageSize=${pageModel.pageSize}">下一页</a>
+				</li>
+
+				<%--<li>
 					<a href="#">2</a>
 				</li>
 				<li>
@@ -243,9 +258,9 @@
 				</li>
 				<li>
 					<a href="#">5</a>
-				</li>
+				</li>--%>
 				<li>
-					<a href="#">&raquo;</a>
+					<a href="${ctx}/index/queryByPage.html?pageNo=${pageModel.pageCount}&pageSize=${pageModel.pageSize}">末页</a>
 				</li>
 			</ul>
 		</div>
@@ -264,11 +279,21 @@
 		<!-- /.row -->
 	</footer>
 
+
 </div>
 <!-- /.container -->
 
 
 
 </body>
+<script>
+
+	$(function(){
+	})
+
+
+
+</script>
+
 
 </html>

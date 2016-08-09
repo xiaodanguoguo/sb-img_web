@@ -13,8 +13,8 @@ import java.util.Date;
 public class ImgResourceDTO implements Serializable {
 	
 	private Long	imgId;
-	private String	imgUrl;		
-	private Integer	imgSize;		
+	private String	imgUrl;
+	private Integer	imgSize;
 	private Long	userId;
 	private Integer	imgType;
 	private Integer	pageView;		

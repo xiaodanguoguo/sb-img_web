@@ -81,7 +81,6 @@ public class GetImgUtil {
 
 							begin = html.indexOf("class=\"head-title\">"); //
 							String name = html.substring(begin, html.indexOf("</h1>", begin));
-							name = name.replace("class=\"head-title\">", "");
 							imgResource.setImgName(name);
 //							bigImgId = String.valueOf((int) (Math.random() * 100000) + 1000000);
 							bigImgId = IdHelper.generateShortUUID();

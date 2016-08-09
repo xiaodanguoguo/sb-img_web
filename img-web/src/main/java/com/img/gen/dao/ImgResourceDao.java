@@ -1,6 +1,7 @@
 package com.img.gen.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -57,4 +58,6 @@ public interface ImgResourceDao {
 	 * @return
 	 */
 	List<ImgResource> selectImgResourceByHot();
+
+    List<ImgResource> queryByPage(Map<String, Object> paramMap);
 }

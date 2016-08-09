@@ -75,7 +75,7 @@ public class ImgResource implements Serializable {
 		return imgId;
 	}
 
-	public void setImgId(Long imgId) {
+	public void setImgId(Integer imgId) {
 		this.imgId = imgId;
 	}
 
