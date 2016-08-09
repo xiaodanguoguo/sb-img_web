@@ -93,9 +93,9 @@ public class GetImgUtil {
 					String src = "http://www.doubean.com/"
 							+ result.substring(result.indexOf("src=\"") + 6, result.lastIndexOf("\""));
 					String smailImgName = bigImgId + "smail.jpg";
-					ImgInfoDTO samllImgInfoDTO = downloadImg(src, smailImgName);
-					imgResource.setSmallImgUrl(samllImgInfoDTO.getUrl());
-					imgResource.setSmallImgSize(samllImgInfoDTO.getLength());
+					ImgInfoDTO smallImgInfoDTO = downloadImg(src, smailImgName);
+					imgResource.setSmallImgUrl(smallImgInfoDTO.getUrl());
+					imgResource.setSmallImgSize(smallImgInfoDTO.getLength());
 					imgResourceService.createImgResource(imgResource);
 				}
 			} // end if
