@@ -12,10 +12,10 @@ import java.util.Date;
  */
 public class ImgResourceDTO implements Serializable {
 	
-	private String	imgId;		
+	private Long	imgId;
 	private String	imgUrl;		
 	private Integer	imgSize;		
-	private Integer	userId;		
+	private Long	userId;
 	private Integer	imgType;
 	private Integer	pageView;		
 	private Integer	likeCnt;		
@@ -33,7 +33,7 @@ public class ImgResourceDTO implements Serializable {
 	/**
 	 * full Constructor
 	 */
-	public ImgResourceDTO(String imgId, String imgUrl, Integer imgSize, Integer userId, Integer imgType, Integer pageView, Integer likeCnt, String imgName, Integer generate, Date lastGenTime, Integer shareCnt) {
+	public ImgResourceDTO(Long imgId, String imgUrl, Integer imgSize, Long userId, Integer imgType, Integer pageView, Integer likeCnt, String imgName, Integer generate, Date lastGenTime, Integer shareCnt) {
 		this.imgId = imgId;
 		this.imgUrl = imgUrl;
 		this.imgSize = imgSize;
@@ -45,14 +45,6 @@ public class ImgResourceDTO implements Serializable {
 		this.generate = generate;
 		this.lastGenTime = lastGenTime;
 		this.shareCnt = shareCnt;
-	}
-
-	public String getImgId() {
-		return imgId;
-	}
-
-	public void setImgId(String imgId) {
-		this.imgId = imgId;
 	}
 
 	public String getImgUrl() {
@@ -71,11 +63,19 @@ public class ImgResourceDTO implements Serializable {
 		this.imgSize = imgSize;
 	}
 
-	public Integer getUserId() {
+	public Long getImgId() {
+		return imgId;
+	}
+
+	public void setImgId(Long imgId) {
+		this.imgId = imgId;
+	}
+
+	public Long getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Integer userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 

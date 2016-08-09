@@ -14,9 +14,9 @@ public class ImgCommentDTO implements Serializable {
 	
 	private String	commentId;		
 	private String	commentContent;		
-	private Integer	userId;		
+	private Long	userId;
 	private Date	createTime;		
-	private Integer	imgId;		
+	private Long	imgId;
 	private Boolean	isLogin;		
 
 	// Constructor
@@ -26,7 +26,7 @@ public class ImgCommentDTO implements Serializable {
 	/**
 	 * full Constructor
 	 */
-	public ImgCommentDTO(String commentId, String commentContent, Integer userId, Date createTime, Integer imgId, Boolean isLogin) {
+	public ImgCommentDTO(String commentId, String commentContent, Long userId, Date createTime, Long imgId, Boolean isLogin) {
 		this.commentId = commentId;
 		this.commentContent = commentContent;
 		this.userId = userId;
@@ -51,11 +51,11 @@ public class ImgCommentDTO implements Serializable {
 		this.commentContent = commentContent;
 	}
 
-	public Integer getUserId() {
+	public Long getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Integer userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 
@@ -67,11 +67,11 @@ public class ImgCommentDTO implements Serializable {
 		this.createTime = createTime;
 	}
 
-	public Integer getImgId() {
+	public Long getImgId() {
 		return imgId;
 	}
 
-	public void setImgId(Integer imgId) {
+	public void setImgId(Long imgId) {
 		this.imgId = imgId;
 	}
 

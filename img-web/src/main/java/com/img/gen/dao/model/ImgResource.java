@@ -12,10 +12,10 @@ import java.util.Date;
  */
 public class ImgResource implements Serializable {
 	
-	private Integer	imgId;
+	private Long	imgId;
 	private String	imgUrl;		
 	private Integer	imgSize;		
-	private Integer	userId;		
+	private Long	userId;
 	private Integer	imgType = 1;
 	private Integer	pageView = 0;
 	private Integer	likeCnt = 0;
@@ -24,7 +24,7 @@ public class ImgResource implements Serializable {
 	private Date	lastGenTime;		
 	private Integer	shareCnt = 0;
 	private String smallImgUrl;/*小图url*/
-	private Integer samilImgSize;  /* 小图大小 */
+	private Integer smallImgSize;  /* 小图大小 */
 
 	public String getSmallImgUrl() {
 		return smallImgUrl;
@@ -34,22 +34,30 @@ public class ImgResource implements Serializable {
 		this.smallImgUrl = smallImgUrl;
 	}
 
-	public Integer getSamilImgSize() {
-		return samilImgSize;
+	public Integer getSmallImgSize() {
+		return smallImgSize;
 	}
 
-	public void setSamilImgSize(Integer samilImgSize) {
-		this.samilImgSize = samilImgSize;
+	public void setSmallImgSize(Integer smallImgSize) {
+		this.smallImgSize = smallImgSize;
 	}
 
 	// Constructor
 	public ImgResource() {
 	}
 
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
 	/**
 	 * full Constructor
 	 */
-	public ImgResource(Integer imgId, String imgUrl, Integer imgSize, Integer userId, Integer imgType, Integer pageView, Integer likeCnt, String imgName, Integer generate, Date lastGenTime, Integer shareCnt) {
+	public ImgResource(Long imgId, String imgUrl, Integer imgSize, Long userId, Integer imgType, Integer pageView, Integer likeCnt, String imgName, Integer generate, Date lastGenTime, Integer shareCnt) {
 		this.imgId = imgId;
 		this.imgUrl = imgUrl;
 		this.imgSize = imgSize;
@@ -63,12 +71,11 @@ public class ImgResource implements Serializable {
 		this.shareCnt = shareCnt;
 	}
 
-
-	public Integer getImgId() {
+	public Long getImgId() {
 		return imgId;
 	}
 
-	public void setImgId(Integer imgId) {
+	public void setImgId(Long imgId) {
 		this.imgId = imgId;
 	}
 
@@ -87,15 +94,6 @@ public class ImgResource implements Serializable {
 
 	public void setImgSize(Integer imgSize) {
 		this.imgSize = imgSize;
-	}
-
-	
-	public Integer getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Integer userId) {
-		this.userId = userId;
 	}
 
 	public Integer getImgType() {

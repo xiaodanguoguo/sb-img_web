@@ -45,7 +45,7 @@ public class CacheServiceImpl implements CacheService{
 	 * @return
 	 */
 	@Override
-	public ImgCacheDTO getImgById(Integer imgId) {
+	public ImgCacheDTO getImgById(Long imgId) {
 		if (BeanUtils.isNotNull(imgCache)) init();
 		ImgCacheDTO imgCacheDTO = imgCache.get(imgId);
 		if (BeanUtils.isNotNull(imgCacheDTO))
@@ -63,7 +63,7 @@ public class CacheServiceImpl implements CacheService{
 	}
 
 	@Override
-	public Integer incrLikeCnt(Integer imgId) {
+	public Integer incrLikeCnt(Long imgId) {
 		ImgCacheDTO imgObj = getImgById(imgId);
 		if (!BeanUtils.isNotNull(imgObj)) 
 			return null;
@@ -82,7 +82,7 @@ public class CacheServiceImpl implements CacheService{
 	}
 
 	@Override
-	public Integer incrPageView(Integer imgId) {
+	public Integer incrPageView(Long imgId) {
 		ImgCacheDTO imgObj = getImgById(imgId);
 		if (!BeanUtils.isNotNull(imgObj)) 
 			return null;
@@ -100,7 +100,7 @@ public class CacheServiceImpl implements CacheService{
 	}
 
 	@Override
-	public Integer incrGenerate(Integer imgId) {
+	public Integer incrGenerate(Long imgId) {
 		ImgCacheDTO imgObj = getImgById(imgId);
 		if (!BeanUtils.isNotNull(imgObj)) 
 			return null;
@@ -118,7 +118,7 @@ public class CacheServiceImpl implements CacheService{
 	}
 
 	@Override
-	public Integer incrShareCnt(Integer imgId) {
+	public Integer incrShareCnt(Long imgId) {
 		ImgCacheDTO imgObj = getImgById(imgId);
 		if (!BeanUtils.isNotNull(imgObj)) 
 			return null;
@@ -135,7 +135,7 @@ public class CacheServiceImpl implements CacheService{
 		return shareCnt;
 	}
 	
-	private void updateImg(Integer imgId, ImgResource imgResource) {
+	private void updateImg(Long imgId, ImgResource imgResource) {
 		imgResource.setImgId(imgId);
 		imgResourceService.updateImgResourceByPrimaryKey(imgResource);
 	}

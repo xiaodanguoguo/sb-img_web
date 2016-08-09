@@ -201,14 +201,16 @@ public class IndexController {
 	}
 
 	@RequestMapping("/img/import")
+	@ResponseBody
 	public JsonResult<String> importImg() {
 		JsonResult<String> result = new JsonResult<>(JsonResult.SUCCESS);
 		try {
 			for (int i = 1; i < 39; i++) {
-                String url = "http://www.doubean.com/face/ListWithImage.aspx?pn=" + i;
-                imgUtil.extractKeyWordHtml(url, "<img alt=\"");
-            }
+				String url = "http://www.doubean.com/face/ListWithImage.aspx?pn=" + i;
+				imgUtil.extractKeyWordHtml(url, "<img alt=\"");
+			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			result.setResults(JsonResult.ERROR);
 		}
 		return result;

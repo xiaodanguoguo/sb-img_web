@@ -13,8 +13,8 @@ import java.util.Date;
 public class UserCollectionDTO implements Serializable {
 	
 	private String	collectId;		
-	private Integer	userId;		
-	private String	imgId;		
+	private Long	userId;
+	private Long	imgId;
 	private Date	collectTime;		
 
 	// Constructor
@@ -24,7 +24,7 @@ public class UserCollectionDTO implements Serializable {
 	/**
 	 * full Constructor
 	 */
-	public UserCollectionDTO(String collectId, Integer userId, String imgId, Date collectTime) {
+	public UserCollectionDTO(String collectId, Long userId, Long imgId, Date collectTime) {
 		this.collectId = collectId;
 		this.userId = userId;
 		this.imgId = imgId;
@@ -39,19 +39,19 @@ public class UserCollectionDTO implements Serializable {
 		this.collectId = collectId;
 	}
 
-	public Integer getUserId() {
+	public Long getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Integer userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 
-	public String getImgId() {
+	public Long getImgId() {
 		return imgId;
 	}
 
-	public void setImgId(String imgId) {
+	public void setImgId(Long imgId) {
 		this.imgId = imgId;
 	}
 

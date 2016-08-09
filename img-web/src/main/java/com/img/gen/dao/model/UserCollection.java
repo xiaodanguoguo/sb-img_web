@@ -14,7 +14,7 @@ public class UserCollection implements Serializable {
 	
 	private String	collectId;		
 	private Long	userId;		
-	private String	imgId;		
+	private Long	imgId;
 	private Date	collectTime;		
 
 	// Constructor
@@ -24,7 +24,7 @@ public class UserCollection implements Serializable {
 	/**
 	 * full Constructor
 	 */
-	public UserCollection(String collectId, Long userId, String imgId, Date collectTime) {
+	public UserCollection(String collectId, Long userId, Long imgId, Date collectTime) {
 		this.collectId = collectId;
 		this.userId = userId;
 		this.imgId = imgId;
@@ -49,12 +49,11 @@ public class UserCollection implements Serializable {
 		this.userId = userId;
 	}
 
-	
-	public String getImgId() {
+	public Long getImgId() {
 		return imgId;
 	}
 
-	public void setImgId(String imgId) {
+	public void setImgId(Long imgId) {
 		this.imgId = imgId;
 	}
 
