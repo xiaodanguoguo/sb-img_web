@@ -16,13 +16,13 @@ public class ImgResourceDTO implements Serializable {
 	private String	imgUrl;
 	private Integer	imgSize;
 	private Long	userId;
-	private Integer	imgType;
-	private Integer	pageView;		
-	private Integer	likeCnt;		
-	private String	imgName;		
-	private Integer	generate;		
+	private String	imgType;
+	private Integer	pageView = 0;
+	private Integer	likeCnt = 0;
+	private String	imgName;
+	private Integer	generate = 0;
 	private Date	lastGenTime;		
-	private Integer	shareCnt;		
+	private Integer	shareCnt = 0;
 	private String smallImgUrl;/*小图url*/
 	private Integer samilImgSize;  /* 小图大小 */
 
@@ -33,7 +33,7 @@ public class ImgResourceDTO implements Serializable {
 	/**
 	 * full Constructor
 	 */
-	public ImgResourceDTO(Long imgId, String imgUrl, Integer imgSize, Long userId, Integer imgType, Integer pageView, Integer likeCnt, String imgName, Integer generate, Date lastGenTime, Integer shareCnt) {
+	public ImgResourceDTO(Long imgId, String imgUrl, Integer imgSize, Long userId, String imgType, Integer pageView, Integer likeCnt, String imgName, Integer generate, Date lastGenTime, Integer shareCnt) {
 		this.imgId = imgId;
 		this.imgUrl = imgUrl;
 		this.imgSize = imgSize;
@@ -79,11 +79,11 @@ public class ImgResourceDTO implements Serializable {
 		this.userId = userId;
 	}
 
-	public Integer getImgType() {
+	public String getImgType() {
 		return imgType;
 	}
 
-	public void setImgType(Integer imgType) {
+	public void setImgType(String imgType) {
 		this.imgType = imgType;
 	}
 

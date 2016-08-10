@@ -16,7 +16,7 @@ public class ImgResource implements Serializable {
 	private String	imgUrl;		
 	private Integer	imgSize;		
 	private Long	userId;
-	private Integer	imgType = 1;
+	private String	imgType;
 	private Integer	pageView = 0;
 	private Integer	likeCnt = 0;
 	private String	imgName;		
@@ -57,7 +57,7 @@ public class ImgResource implements Serializable {
 	/**
 	 * full Constructor
 	 */
-	public ImgResource(Long imgId, String imgUrl, Integer imgSize, Long userId, Integer imgType, Integer pageView, Integer likeCnt, String imgName, Integer generate, Date lastGenTime, Integer shareCnt) {
+	public ImgResource(Long imgId, String imgUrl, Integer imgSize, Long userId, String imgType, Integer pageView, Integer likeCnt, String imgName, Integer generate, Date lastGenTime, Integer shareCnt) {
 		this.imgId = imgId;
 		this.imgUrl = imgUrl;
 		this.imgSize = imgSize;
@@ -96,11 +96,11 @@ public class ImgResource implements Serializable {
 		this.imgSize = imgSize;
 	}
 
-	public Integer getImgType() {
+	public String getImgType() {
 		return imgType;
 	}
 
-	public void setImgType(Integer imgType) {
+	public void setImgType(String imgType) {
 		this.imgType = imgType;
 	}
 
@@ -159,5 +159,9 @@ public class ImgResource implements Serializable {
 	@Override
 	public String toString() {
 		return "ImgResource [" + "imgId=" + imgId + ", imgUrl=" + imgUrl + ", imgSize=" + imgSize + ", userId=" + userId + ", imgType=" + imgType + ", pageView=" + pageView + ", likeCnt=" + likeCnt + ", imgName=" + imgName + ", generate=" + generate + ", lastGenTime=" + lastGenTime + ", shareCnt=" + shareCnt +  "]";
+	}
+
+	public static ImgResource getInstance() {
+		return new ImgResource();
 	}
 }

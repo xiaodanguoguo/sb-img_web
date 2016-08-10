@@ -8,7 +8,7 @@
     <title>七牛云上传文件测试</title>
 </head>
 <body>
-<form id="form" method="post" enctype="multipart/form-data" action="${ctx}/qiniuFileTest.html">
+<form id="form" method="post" enctype="multipart/form-data" action="${ctx}/index/qiniuFileTest.html">
     <div class="form-group">
         <label>File input</label>
         <input type="file" name="file">
@@ -22,7 +22,7 @@
 
 
 
-<form id="form1" method="post" enctype="multipart/form-data" action="${ctx}/qiniuFileTest1.html">
+<form id="form1" method="post" enctype="multipart/form-data" action="${ctx}/index/qiniuFileTest1.html">
     <div class="form-group">
         <label>File input</label>
         <input type="file" name="file">

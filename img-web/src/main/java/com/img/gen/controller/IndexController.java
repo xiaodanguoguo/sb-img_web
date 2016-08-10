@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import com.alibaba.fastjson.JSONObject;
 import com.img.gen.conmon.*;
 import com.img.gen.conmon.parser.GetImgUtil;
+import com.img.gen.conmon.thread.AssertContext;
+import com.img.gen.controller.dto.ImgResourceDTO;
 import com.img.gen.dao.model.ImgComment;
 import com.img.gen.dao.model.ImgResource;
 import com.img.gen.pungin.PageView;
@@ -33,7 +35,7 @@ import com.img.gen.dao.model.Joke;
 import com.img.gen.service.QiniuUploadService;
 
 @Controller
-@RequestMapping("index")
+@RequestMapping("index/")
 public class IndexController {
 
 	@Autowired
@@ -101,7 +103,7 @@ public class IndexController {
      */
 	@RequestMapping("qiniuFileTest")
 	/************此方法能够实现上传文件到七牛云，但是在tomcat里面产生了一个垃圾文件********************/
-	public ModelAndView qiniuFileTest(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request){
+	public ModelAndView qiniuFileTest(@RequestParam(value = "file", required = false) MultipartFile file, ImgResourceDTO imgResourceDTO, HttpServletRequest request){
 		ModelAndView modelAndView = new ModelAndView();
 		try {
 			String path = request.getSession().getServletContext().getRealPath("upload");
@@ -111,7 +113,15 @@ public class IndexController {
 				uploadFile.mkdirs();
 			}
 			file.transferTo(uploadFile);//把文件transfer到零时文件夹
-			qiniuUploadService.upload(uploadFile,fileName);
+			String imgUrl = qiniuUploadService.upload(uploadFile, fileName);
+			ImgResource imgResource = ImgResource.getInstance();
+			BeanUtils.copyProperties(imgResourceDTO, imgResource);
+			imgResource.setImgSize(new Integer(String.valueOf(uploadFile.length())));
+			imgResource.setImgUrl(imgUrl);
+			imgResource.setUserId(AssertContext.getUserId());
+			imgResourceService.createImgResource(imgResource);
+
+			FileUtils.deleteFile(uploadFile);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
