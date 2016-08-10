@@ -132,7 +132,7 @@ public class ImgController {
 		String srcImgName = uuid+"temp"+".jpg";
 		String targetImgName = uuid+".jpg";
 		//下载图片
-		imgUtil.downloadImg(img,imgFolderPath , srcImgName);
+		imgUtil.downloadImg(img, srcImgName);
 		//生成图片
 		ImageUtils.convertImg((imgFolderPath +File.separator+ srcImgName) , text,color,Integer.valueOf(x),Integer.valueOf(y),Integer.valueOf(width),Integer.valueOf(height),Integer.valueOf(fontSize),imgFolderPath +File.separator+ targetImgName);
 
