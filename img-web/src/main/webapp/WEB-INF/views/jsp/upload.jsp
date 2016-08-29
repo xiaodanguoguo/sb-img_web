@@ -159,11 +159,11 @@
     <!-- Projects Row -->
     <div class="row">
 
-
         <form action="${ctx}/img/uploadImg.html" class="imgForm" method="post" enctype="multipart/form-data">
             <div class="col-sm-4 center-block">
 
-                <input type="file" name="file" id="id-input-file-2">
+
+                <input type="file" name="file" class="file" id="id-input-file-2">
 
                 <br/>
 
@@ -228,7 +228,23 @@
 
        $(".subBtn").click(function(){
 
-               //$(".imgForm").submit();
+           if($(".file").val() == null || $(".file").val() == ""){
+               layer.alert('选择文件再上传', {icon: 6});
+               return;
+           }
+
+           if($(".imgmenu").val() == null || $(".imgmenu").val() == ""){
+               layer.alert('请选择分类再上传', {icon: 6});
+               return;
+           }
+
+           var file = $(".file").val();
+           if(!/.(gif|jpg|jpeg|png|gif|jpg|png)$/.test(file)) {
+               layer.alert('只允许上传图片', {icon: 6});
+               return;
+           }
+
+           $(".imgForm").submit();
 
        });
 
