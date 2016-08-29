@@ -40,6 +40,16 @@ public class ImgController {
 	@Autowired
 	private QiniuUploadService qiniuUploadService;//七牛云上传下载
 
+
+	/**
+	 * 上传图片
+	 * @return
+     */
+	@RequestMapping("upload")
+	public String upload(){
+		return "upload";
+	}
+
 	/**
 	 * 分页查询图片
 	 * @param pageNo
