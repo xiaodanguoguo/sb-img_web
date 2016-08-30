@@ -28,6 +28,9 @@
     <script src="${ctx}/resource/plugin/layer/layer.js"></script>
 
     <link href="${ctx}/resource/plugin/layer/skin/layer.css" rel="stylesheet">
+
+    <!--ajax 上传文件 -->
+    <script src="${ctx}/resource/js/ajaxfileupload.js"></script>
 </head>
 
 <body>
@@ -159,7 +162,7 @@
     <!-- Projects Row -->
     <div class="row">
 
-        <form action="${ctx}/img/uploadImg.html" class="imgForm" method="post" enctype="multipart/form-data">
+        <form action="javascript:void(0)" class="imgForm" method="post" enctype="multipart/form-data">
             <div class="col-sm-4 center-block">
 
 
@@ -167,7 +170,7 @@
 
                 <br/>
 
-                <select name="menu"  class="form-control imgmenu" id="form-field-select-1">
+                <select name="imgmenu"  class="form-control imgmenu" id="form-field-select-1">
                     <option value="">请选择</option>
                     <option value="AL">金馆长</option>
                     <option value="AK">单身狗</option>
@@ -244,7 +247,24 @@
                return;
            }
 
-           $(".imgForm").submit();
+           //alert($(".imgmenu").val())
+
+            $.ajaxFileUpload({
+                secureuri: false, //是否需要安全协议，一般设置为false
+                url : ctx + "/img/doupload.html",//上传的路径
+                fileElementId: 'id-input-file-2', //文件上传域的ID
+                dataType : 'json',//返回值类型 一般设置为json
+                data : {
+                    imgmenu : $(".imgmenu").val(),
+                },
+                success: function (data, status){ //服务器成功响应处理函数
+                   if(data.success){
+                       alert(data.retMsg);
+                   }
+                }
+            })
+
+
 
        });
 

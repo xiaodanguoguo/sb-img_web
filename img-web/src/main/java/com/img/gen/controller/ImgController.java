@@ -10,9 +10,7 @@ import com.img.gen.pungin.PageView;
 import com.img.gen.service.QiniuUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import com.img.gen.conmon.cache.CacheService;
 import com.img.gen.conmon.thread.AssertContext;
@@ -22,6 +20,7 @@ import com.img.gen.dao.model.ImgResource;
 import com.img.gen.dao.model.UserCollection;
 import com.img.gen.service.ImgResourceService;
 import com.img.gen.service.UserCollectionService;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -42,13 +41,23 @@ public class ImgController {
 
 
 	/**
-	 * 上传图片
+	 * 跳转页面
 	 * @return
      */
 	@RequestMapping("upload")
 	public String upload(){
 		return "upload";
 	}
+
+	@RequestMapping("doupload")
+	@ResponseBody
+	public JSONObject doupload(@RequestParam("file") MultipartFile[] files,String imgmenu,HttpServletRequest request){
+		JSONObject retObj = new JSONObject();
+		retObj.put("success",true);
+		retObj.put("retMsg","上传成功");
+		return  retObj;
+	}
+
 
 	/**
 	 * 分页查询图片
