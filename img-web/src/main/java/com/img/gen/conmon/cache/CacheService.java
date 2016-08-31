@@ -8,33 +8,33 @@ public interface CacheService {
 	 * @param imgId  图片ID
 	 * @return
 	 */
-	public ImgCacheDTO getImgById(Long imgId);
+	public ImgCacheDTO getImgById(Integer imgId);
 	
 	/**
 	 * 点赞数+1
 	 * @param imgId
 	 * @return
 	 */
-	public Integer incrLikeCnt(Long imgId);
+	public Integer incrLikeCnt(Integer imgId);
 	
 	/**
 	 * 浏览数+1
 	 * @param imgId
 	 * @return
 	 */
-	public Integer incrPageView(Long imgId);
+	public Integer incrPageView(Integer imgId);
 	
 	/**
 	 * 生成数+1
 	 * @param imgId
 	 * @return
 	 */
-	public Integer incrGenerate(Long imgId);
+	public Integer incrGenerate(Integer imgId);
 	
 	/**
 	 * 分享数+1
 	 * @param imgId
 	 * @return
 	 */
-	public Integer incrShareCnt(Long imgId);
+	public Integer incrShareCnt(Integer imgId);
 }

@@ -165,12 +165,14 @@
         <form action="javascript:void(0)" class="imgForm" method="post" enctype="multipart/form-data">
             <div class="col-sm-4 center-block">
 
+                名称:<input type="text" name="name" class="form-control  name" >
+                <br/>
 
-                <input type="file" name="file" class="file" id="id-input-file-2">
+                文件:<input type="file" name="file" class="form-control file" id="id-input-file-2">
 
                 <br/>
 
-                <select name="imgmenu"  class="form-control imgmenu" id="form-field-select-1">
+                类别：<select name="imgmenu"  class="form-control imgmenu" id="form-field-select-1">
                     <option value="">请选择</option>
                     <c:forEach items="${menuList}" var="menu">
                         <option value="${menu.id}">${menu.name}</option>
@@ -228,6 +230,11 @@
 
        $(".subBtn").click(function(){
 
+           if($(".name").val() == null || $(".name").val() == ""){
+               layer.alert('输入名称', {icon: 6});
+               return;
+           }
+
            if($(".file").val() == null || $(".file").val() == ""){
                layer.alert('选择文件再上传', {icon: 6});
                return;
@@ -245,6 +252,11 @@
            }
 
            //alert($(".imgmenu").val())
+            $(this).addClass('disabled');//按钮失效
+           //上传中。。。。。
+           layer.load(1, {
+               shade: [0.1,'#fff'] //0.1透明度的白色背景
+           });
 
             $.ajaxFileUpload({
                 secureuri: false, //是否需要安全协议，一般设置为false
@@ -253,10 +265,25 @@
                 dataType : 'json',//返回值类型 一般设置为json
                 data : {
                     imgmenu : $(".imgmenu").val(),
+                    name    : $(".name").val()
                 },
                 success: function (data, status){ //服务器成功响应处理函数
                    if(data.success){
-                       alert(data.retMsg);
+                       //询问框
+                       layer.close(1);//关闭加载层
+                       layer.msg('上传成功，选择操', {
+                           time: 0 //不自动关闭
+                           ,btn: ['继续上传', '制作表情']
+                           ,yes: function(index){
+                                layer.close(index);
+                                window.location.reload();
+                           },end:function () {
+                               //跳转到详细页面
+                               alert("lalalla")
+                           }
+                       });
+
+
                    }
                 }
             })

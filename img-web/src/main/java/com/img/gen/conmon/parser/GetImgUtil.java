@@ -111,7 +111,7 @@ public class GetImgUtil {
 	 * @param imgUrl
 	 * @param imgName
 	 * @throws Exception
-     */
+	 */
 	public ImgInfoDTO downloadImg(String imgUrl, String imgName) throws Exception {
 		System.out.println(imgUrl);
 		HttpClient client = new HttpClient();
@@ -121,16 +121,30 @@ public class GetImgUtil {
 		byte[] responseBody = get.getResponseBody();
 
 		String url = qiniuUploadService.upload(responseBody, imgName);
-
 		return new ImgInfoDTO(url, responseBody.length);
-//		File storeFile = new File(fileAddr);
-//		if (!storeFile.exists())
-//			storeFile.mkdirs();
-//		storeFile = new File(fileAddr + File.pathSeparator + imgName);
-//		FileOutputStream output = new FileOutputStream(storeFile);
-        //得到网络资源的字节数组,并写入文件  
-//        output.write(get.getResponseBody());
-//        output.close();
+	}
+
+	/**
+	 * 下载图片
+	 * @param imgUrl
+	 * @param fileAddr
+	 * @param imgName
+	 * @return
+	 * @throws Exception
+	 */
+	public void downloadImg(String imgUrl,String fileAddr, String imgName) throws Exception {
+		HttpClient client = new HttpClient();
+		HttpMethod get = new GetMethod(imgUrl);
+		client.executeMethod(get);
+
+		File storeFile = new File(fileAddr);
+		if (!storeFile.exists())
+			storeFile.mkdirs();//创建文件夹
+		storeFile = new File(fileAddr + File.separator + imgName);
+		FileOutputStream output = new FileOutputStream(storeFile);
+		//得到网络资源的字节数组,并写入文件
+		output.write(get.getResponseBody());
+		output.close();
 	}
 
 	public static void main(String[] args) throws Exception {

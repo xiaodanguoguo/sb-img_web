@@ -1,6 +1,8 @@
 package com.img.gen.controller;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.*;
 
 import com.alibaba.fastjson.JSONObject;
@@ -68,11 +70,59 @@ public class ImgController {
      */
 	@RequestMapping("doupload")
 	@ResponseBody
-	public JSONObject doupload(@RequestParam("file") MultipartFile[] files,String imgmenu,HttpServletRequest request){
+	public JSONObject doupload(@RequestParam("file") MultipartFile[] files,String name,String imgmenu,HttpServletRequest request){
 		JSONObject retObj = new JSONObject();
-		retObj.put("success",true);
-		retObj.put("retMsg","上传成功");
-		return  retObj;
+		String imgFolderPath = request.getRealPath("/") + File.separator + "temp" + File.separator + "img";//图片文件夹名称
+		String uuid = UUID.randomUUID().toString();
+		String targetImgName = uuid+".jpg";
+		try {
+			byte[] bytes = files[0].getBytes();//
+			File uploadFile = new File(imgFolderPath +File.separator+ targetImgName);
+			if(!uploadFile.exists()){
+				uploadFile.createNewFile();
+			}
+			FileOutputStream fileOutputStream = new FileOutputStream(uploadFile);
+			fileOutputStream.write(bytes);//写到零时文件夹
+			fileOutputStream.flush();
+			fileOutputStream.close();//释放资源
+			//上传到七牛云
+			qiniuUploadService.upload(uploadFile,targetImgName);
+			ImgResource record = new ImgResource();
+			record = getResourceValue(targetImgName,name,imgmenu,files[0].getSize());
+			imgResourceService.createImgResource(record);
+			//删除文件
+			FileUtils.deleteFile(uploadFile);
+
+			retObj.put("success",true);
+			retObj.put("retMsg","上传成功");
+		} catch (IOException e) {
+			e.printStackTrace();
+			retObj.put("success",false);
+			retObj.put("retMsg","上传失败");
+		}
+		return retObj;
+	}
+
+	/**
+	 * 设置对象的直
+	 * @param targetImgName 图片的url地址
+	 * @param name 图片名称
+	 * @param imgmenu 类目编号
+	 * @param size 图片大小
+     * @return
+     */
+	private ImgResource getResourceValue(String targetImgName, String name, String imgmenu, long size) {
+		ImgResource retRecord = new ImgResource();
+		retRecord.setGenerate(0);
+		retRecord.setImgName(name);
+		retRecord.setImgSize((int)size);
+		retRecord.setImgType(imgmenu);
+		retRecord.setLastGenTime(new Date());
+		retRecord.setLikeCnt(0);
+		retRecord.setPageView(0);
+		retRecord.setImgUrl(targetImgName);
+		retRecord.setCreateTime(new Date());
+		return  retRecord;
 	}
 
 
@@ -168,7 +218,7 @@ public class ImgController {
 		String srcImgName = uuid+"temp"+".jpg";
 		String targetImgName = uuid+".jpg";
 		//下载图片
-		imgUtil.downloadImg(img, srcImgName);
+		imgUtil.downloadImg(img,imgFolderPath , srcImgName);
 		//生成图片
 		ImageUtils.convertImg((imgFolderPath +File.separator+ srcImgName) , text,color,Integer.valueOf(x),Integer.valueOf(y),Integer.valueOf(width),Integer.valueOf(height),Integer.valueOf(fontSize),imgFolderPath +File.separator+ targetImgName);
 
@@ -201,7 +251,7 @@ public class ImgController {
 	 */
 	@ResponseBody
 	@RequestMapping("get/{imgId}")
-	public JsonResult<ImgResourceDTO> getImg(@PathVariable("imgId") Long imgId) {
+	public JsonResult<ImgResourceDTO> getImg(@PathVariable("imgId") Integer imgId) {
 		JsonResult<ImgResourceDTO> result = new JsonResult<>(JsonResult.SUCCESS);
 		try {
 			Integer pageView = cacheService.incrPageView(imgId);
@@ -242,7 +292,7 @@ public class ImgController {
 	 */
 	@ResponseBody
 	@RequestMapping("like/{imgId}")
-	public JsonResult<Integer> likeImg(@PathVariable("imgId") Long imgId) {
+	public JsonResult<Integer> likeImg(@PathVariable("imgId") Integer imgId) {
 		JsonResult<Integer> result = new JsonResult<>(JsonResult.SUCCESS);
 		try {
 			result.setResults(cacheService.incrLikeCnt(imgId));
