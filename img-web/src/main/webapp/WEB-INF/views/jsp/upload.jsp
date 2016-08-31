@@ -52,6 +52,14 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li>
+                    <a href="${ctx}/img/index.html">全部表情</a>
+                </li>
+
+                <li>
+                    <a href="${ctx}/img/upload.html">上传表情</a>
+                </li>
+
+                <li>
                     <a href="#">金馆长</a>
                 </li>
                 <li>
@@ -274,17 +282,30 @@
                        layer.msg('上传成功，选择操', {
                            time: 0 //不自动关闭
                            ,btn: ['继续上传', '制作表情']
-                           ,yes: function(index){
+                           ,yes:function(index){
                                 layer.close(index);
                                 window.location.reload();
-                           },end:function () {
+                           }
+                           ,btn2:function (index) {
                                //跳转到详细页面
                                alert("lalalla")
-                           }
+                            }
                        });
 
 
                    }
+
+
+                   /* layer.confirm('您是如何看待前端开发？', {
+                        btn: ['重要','奇葩'] //按钮
+                    }, function(){
+                        layer.msg('的确很重要', {icon: 1});
+                    }, function(){
+                        layer.msg('也可以这样', {
+                            time: 20000, //20s后自动关闭
+                            btn: ['明白了', '知道了']
+                        });
+                    });*/
                 }
             })
 

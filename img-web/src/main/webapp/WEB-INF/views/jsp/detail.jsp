@@ -20,215 +20,7 @@
     <!--拾色器插件 -->
     <script src="${ctx}/resource/plugin/icolor/colorPicker.js"></script>
     <link href="${ctx}/resource/plugin/icolor/colorPicker.css" rel="stylesheet">
-    <script>
 
-        //全局位置变量
-        var textX = 0
-        var textY = 0;
-        var fontSize = 16;//默认字体
-        var color = "#000000";//默认黑色
-        var imgWidth = 0 ;//图片宽度
-        var imgHeight = 0;//图片高度
-        /**
-         * 实现拖拽的js效果
-         */
-        $(function(){
-
-            $(".img-responsive").on('load', function(){
-                $("#imgWidth").val($(this).width());
-                $("#imgHeight").val($(this).height());
-
-                imgWidth = $("#imgWidth").val();
-                imgHeight = $("#imgHeight").val();
-            });
-
-
-            /*--------------拖曳效果----------------
-             *原理：标记拖曳状态dragging ,坐标位置iX, iY
-             * mousedown:fn(){dragging = true, 记录起始坐标位置，设置鼠标捕获}
-             * mouseover:fn(){判断如果dragging = true, 则当前坐标位置 - 记录起始坐标位置，绝对定位的元素获得差值}
-             * mouseup:fn(){dragging = false, 释放鼠标捕获，防止冒泡}
-             */
-            var dragging = false;
-            var iX, iY,iX1,iY1;
-
-
-
-            console.log(imgWidth);
-
-            var maxX = 460 - 200;//最大x值,200为文本框的宽度
-            var maxY = 500 - 80;//最大y值，40为文本框的高度
-            var minX = 0;//最小x值
-            var minY = 0;//最小y值
-            var indexCount = 0;
-            $("#dragText").mousedown(function(e) {
-
-                indexCount++;//
-                dragging = true;
-                if(indexCount == 1){
-                    iX = e.clientX ;//位置含义：当前的位置与dom的距离 x
-                    iY = e.clientY ;//位置含义： 当前的位置与dom的距离 y
-                }
-                iX1 = e.clientX ;//位置含义：当前的位置与dom的距离 x
-                iY1 = e.clientY ;//位置含义： 当前的位置与dom的距离 y
-                this.setCapture && this.setCapture();//捕获鼠标事件
-                return false;
-            });
-
-            /**
-             * 鼠标的移动事件
-             * @param e
-             * @returns {boolean}
-             */
-            document.onmousemove = function(e) {
-                if (dragging) {
-                    var e = e || window.event;
-                    var oX = e.clientX - iX;
-                    var oY = e.clientY - iY;
-                    textX = oX;
-                    textY = oY;
-                    /*********把文本框的拖拽限制在图片之内********************/
-                    oX = checkValueByType(oX,1);
-                    oY = checkValueByType(oY,2);
-
-                    $("#dragLayer").css({"left":oX + "px", "top":oY + "px"});
-                    return false;
-                }
-            };
-
-            /**
-             * 鼠标停止事件
-             */
-            $(document).mouseup(function(e) {
-                dragging = false;
-                e.cancelBubble = true;
-            })
-
-
-            /**
-             * 校验x和y的值超过范围
-             * @param value 值
-             * @param type 1.x值 2.y值
-             */
-            function  checkValueByType(value,type){
-                if(type == 1){
-                    if(value > maxX){
-                        return maxX;
-                    } else if( value < minX){
-                        return minX;
-                    }else{
-                        return value;
-                    }
-                }else{
-                    if(value > maxY){
-                        return maxY;
-                    } else if( value < minY){
-                        return minY;
-                    }else{
-                        return value;
-                    }
-                }
-
-            }
-
-
-
-
-            /**
-             * 点击生成图片
-             */
-            $("#submitBtn").click(function(){
-                //alert("我要生成图片啦");
-                var text = $("#imageName").val();
-                var x = textX;
-                var y = textY;
-                var img = $(".img-responsive").attr("src");
-                color = $("#bau").val();
-                imgWidth = $("#imgWidth").val();
-                imgHeight = $("#imgHeight").val();
-                $.ajax({
-                    url: ctx +" /img/generatorImg.html",    //请求的url地址
-                    dataType: "json",   //返回格式为json
-                    data: {
-                        "id" : ${imgResource.imgId},
-                        "text": text,
-                        "x" : x,
-                        "y" : y,
-                        "img" :img,
-                        "fontSize" : fontSize,
-                        "color" : color,
-                        "width" : imgWidth,
-                        "height" : imgHeight
-                    },    //参数值
-                    type: "POST",   //请求方式
-                    dataType: "json",
-                    success: function(data) {
-                        //请求成功时处理
-                        if(data.success){
-                            $(".img-responsive").attr("src",baseImgSrc+data.imgUrl);//更换图片
-                        }
-                    },
-
-                    error: function() {
-                        //请求出错处理
-                    }
-                });
-            })
-
-            /**
-             * 字体变大
-             */
-            $("#add_font").click(function() {
-
-                //获取para的字体大小
-                var thisEle = $("#imageName").css("font-size");
-                //parseFloat的第二个参数表示转化的进制，10就表示转为10进制
-                var textFontSize = parseFloat(thisEle , 10);
-                //javascript自带方法
-                var unit = thisEle.slice(-2); //获取单位:px
-                var cName = $(this).attr("class");
-                if(textFontSize < 40){//最大字体为40px
-                    textFontSize += 2;//字体增大
-                }
-                fontSize = textFontSize;
-                console.log(textFontSize);
-                $("#imageName").css("font-size",  textFontSize + unit );
-            })
-
-            /**
-             * 字体变小
-             */
-            $("#sub_font").click(function(){
-                //获取para的字体大小
-                var thisEle = $("#imageName").css("font-size");
-                //parseFloat的第二个参数表示转化的进制，10就表示转为10进制
-                var textFontSize = parseFloat(thisEle , 10);
-                //javascript自带方法
-                var unit = thisEle.slice(-2); //获取单位:px
-                var cName = $(this).attr("class");
-                if(textFontSize > 12){//最小字体为12px
-                    textFontSize -= 2;//字体减小
-                }
-                fontSize = textFontSize;
-                console.log(textFontSize);
-                $("#imageName").css("font-size",  textFontSize + unit );
-            })
-
-            $("#refreshBtn").click(function () {
-                document.location.reload();
-            })
-
-            //TODO 1.文本框只能够在图片中，不能超过图片
-
-            //TODO 2.解决掉定位每次都从0开始的bug
-
-            //TODO 3.把图片的宽度和高度作为参数传递过去
-
-
-
-            //TODO 4.
-        })
-    </script>
 
 </head>
 
@@ -297,6 +89,14 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
+                <li>
+                    <a href="${ctx}/img/index.html">全部表情</a>
+                </li>
+
+                <li>
+                    <a href="${ctx}/img/upload.html">上传表情</a>
+                </li>
+
                 <li>
                     <a href="#">金馆长</a>
                 </li>
@@ -547,7 +347,215 @@
 
 
 
+<script>
 
+    //全局位置变量
+    var textX = 0
+    var textY = 0;
+    var fontSize = 16;//默认字体
+    var color = "#000000";//默认黑色
+    var imgWidth = 0 ;//图片宽度
+    var imgHeight = 0;//图片高度
+    /**
+     * 实现拖拽的js效果
+     */
+    $(function(){
+
+        $(".img-responsive").on('load', function(){
+            $("#imgWidth").val($(this).width());
+            $("#imgHeight").val($(this).height());
+
+            imgWidth = $("#imgWidth").val();
+            imgHeight = $("#imgHeight").val();
+        });
+
+
+        /*--------------拖曳效果----------------
+         *原理：标记拖曳状态dragging ,坐标位置iX, iY
+         * mousedown:fn(){dragging = true, 记录起始坐标位置，设置鼠标捕获}
+         * mouseover:fn(){判断如果dragging = true, 则当前坐标位置 - 记录起始坐标位置，绝对定位的元素获得差值}
+         * mouseup:fn(){dragging = false, 释放鼠标捕获，防止冒泡}
+         */
+        var dragging = false;
+        var iX, iY,iX1,iY1;
+
+
+
+        console.log(imgWidth);
+
+        var maxX = 460 - 200;//最大x值,200为文本框的宽度
+        var maxY = 500 - 80;//最大y值，40为文本框的高度
+        var minX = 0;//最小x值
+        var minY = 0;//最小y值
+        var indexCount = 0;
+        $("#dragText").mousedown(function(e) {
+
+            indexCount++;//
+            dragging = true;
+            if(indexCount == 1){
+                iX = e.clientX ;//位置含义：当前的位置与dom的距离 x
+                iY = e.clientY ;//位置含义： 当前的位置与dom的距离 y
+            }
+            iX1 = e.clientX ;//位置含义：当前的位置与dom的距离 x
+            iY1 = e.clientY ;//位置含义： 当前的位置与dom的距离 y
+            this.setCapture && this.setCapture();//捕获鼠标事件
+            return false;
+        });
+
+        /**
+         * 鼠标的移动事件
+         * @param e
+         * @returns {boolean}
+         */
+        document.onmousemove = function(e) {
+            if (dragging) {
+                var e = e || window.event;
+                var oX = e.clientX - iX;
+                var oY = e.clientY - iY;
+                textX = oX;
+                textY = oY;
+                /*********把文本框的拖拽限制在图片之内********************/
+                oX = checkValueByType(oX,1);
+                oY = checkValueByType(oY,2);
+
+                $("#dragLayer").css({"left":oX + "px", "top":oY + "px"});
+                return false;
+            }
+        };
+
+        /**
+         * 鼠标停止事件
+         */
+        $(document).mouseup(function(e) {
+            dragging = false;
+            e.cancelBubble = true;
+        })
+
+
+        /**
+         * 校验x和y的值超过范围
+         * @param value 值
+         * @param type 1.x值 2.y值
+         */
+        function  checkValueByType(value,type){
+            if(type == 1){
+                if(value > maxX){
+                    return maxX;
+                } else if( value < minX){
+                    return minX;
+                }else{
+                    return value;
+                }
+            }else{
+                if(value > maxY){
+                    return maxY;
+                } else if( value < minY){
+                    return minY;
+                }else{
+                    return value;
+                }
+            }
+
+        }
+
+
+
+
+        /**
+         * 点击生成图片
+         */
+        $("#submitBtn").click(function(){
+            //alert("我要生成图片啦");
+            var text = $("#imageName").val();
+            var x = textX;
+            var y = textY;
+            var img = $(".img-responsive").attr("src");
+            color = $("#bau").val();
+            imgWidth = $("#imgWidth").val();
+            imgHeight = $("#imgHeight").val();
+            $.ajax({
+                url: ctx +" /img/generatorImg.html",    //请求的url地址
+                dataType: "json",   //返回格式为json
+                data: {
+                    "id" : ${imgResource.imgId},
+                    "text": text,
+                    "x" : x,
+                    "y" : y,
+                    "img" :img,
+                    "fontSize" : fontSize,
+                    "color" : color,
+                    "width" : imgWidth,
+                    "height" : imgHeight
+                },    //参数值
+                type: "POST",   //请求方式
+                dataType: "json",
+                success: function(data) {
+                    //请求成功时处理
+                    if(data.success){
+                        $(".img-responsive").attr("src",baseImgSrc+data.imgUrl);//更换图片
+                    }
+                },
+
+                error: function() {
+                    //请求出错处理
+                }
+            });
+        })
+
+        /**
+         * 字体变大
+         */
+        $("#add_font").click(function() {
+
+            //获取para的字体大小
+            var thisEle = $("#imageName").css("font-size");
+            //parseFloat的第二个参数表示转化的进制，10就表示转为10进制
+            var textFontSize = parseFloat(thisEle , 10);
+            //javascript自带方法
+            var unit = thisEle.slice(-2); //获取单位:px
+            var cName = $(this).attr("class");
+            if(textFontSize < 40){//最大字体为40px
+                textFontSize += 2;//字体增大
+            }
+            fontSize = textFontSize;
+            console.log(textFontSize);
+            $("#imageName").css("font-size",  textFontSize + unit );
+        })
+
+        /**
+         * 字体变小
+         */
+        $("#sub_font").click(function(){
+            //获取para的字体大小
+            var thisEle = $("#imageName").css("font-size");
+            //parseFloat的第二个参数表示转化的进制，10就表示转为10进制
+            var textFontSize = parseFloat(thisEle , 10);
+            //javascript自带方法
+            var unit = thisEle.slice(-2); //获取单位:px
+            var cName = $(this).attr("class");
+            if(textFontSize > 12){//最小字体为12px
+                textFontSize -= 2;//字体减小
+            }
+            fontSize = textFontSize;
+            console.log(textFontSize);
+            $("#imageName").css("font-size",  textFontSize + unit );
+        })
+
+        $("#refreshBtn").click(function () {
+            document.location.reload();
+        })
+
+        //TODO 1.文本框只能够在图片中，不能超过图片
+
+        //TODO 2.解决掉定位每次都从0开始的bug
+
+        //TODO 3.把图片的宽度和高度作为参数传递过去
+
+
+
+        //TODO 4.
+    })
+</script>
 </body>
 </html>
 

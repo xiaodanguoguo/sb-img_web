@@ -44,6 +44,14 @@
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
 				<li>
+					<a href="${ctx}/img/index.html">全部表情</a>
+				</li>
+
+				<li>
+					<a href="${ctx}/img/upload.html">上传表情</a>
+				</li>
+
+				<li>
 					<a href="#">金馆长</a>
 				</li>
 				<li>
