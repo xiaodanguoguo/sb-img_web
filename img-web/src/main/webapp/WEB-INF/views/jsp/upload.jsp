@@ -172,12 +172,9 @@
 
                 <select name="imgmenu"  class="form-control imgmenu" id="form-field-select-1">
                     <option value="">请选择</option>
-                    <option value="AL">金馆长</option>
-                    <option value="AK">单身狗</option>
-                    <option value="AZ">懵逼</option>
-                    <option value="AR">金馆长</option>
-                    <option value="CA">单身狗</option>
-                    <option value="CO">懵逼</option>
+                    <c:forEach items="${menuList}" var="menu">
+                        <option value="${menu.id}">${menu.name}</option>
+                    </c:forEach>
                 </select>
 
                 <br/>

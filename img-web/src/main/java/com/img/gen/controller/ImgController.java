@@ -6,8 +6,11 @@ import java.util.*;
 import com.alibaba.fastjson.JSONObject;
 import com.img.gen.conmon.*;
 import com.img.gen.conmon.parser.GetImgUtil;
+import com.img.gen.dao.model.ImgMenu;
 import com.img.gen.pungin.PageView;
+import com.img.gen.service.ImgMenuService;
 import com.img.gen.service.QiniuUploadService;
+import com.sun.javafx.sg.prism.NGShape;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -38,16 +41,23 @@ public class ImgController {
 	private GetImgUtil imgUtil;
 	@Autowired
 	private QiniuUploadService qiniuUploadService;//七牛云上传下载
-
+	@Autowired
+	private ImgMenuService imgMenuService;
 
 	/**
 	 * 跳转页面
 	 * @return
      */
 	@RequestMapping("upload")
-	public String upload(){
-		return "upload";
+	public ModelAndView upload(){
+		ModelAndView modelAndView = new ModelAndView("upload");
+		List<ImgMenu> menuList = new ArrayList<ImgMenu>();
+		menuList = imgMenuService.findAll();
+		modelAndView.addObject("menuList",menuList);
+		return modelAndView;
+
 	}
+
 
 	@RequestMapping("doupload")
 	@ResponseBody
