@@ -59,6 +59,13 @@ public class ImgController {
 	}
 
 
+	/**
+	 * 上传图片
+	 * @param files
+	 * @param imgmenu
+	 * @param request
+     * @return
+     */
 	@RequestMapping("doupload")
 	@ResponseBody
 	public JSONObject doupload(@RequestParam("file") MultipartFile[] files,String imgmenu,HttpServletRequest request){
