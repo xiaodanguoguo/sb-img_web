@@ -54,10 +54,10 @@ public interface ImgResourceService {
 
 	/**
 	 * 分页查询图片
-	 * @param integer
-	 * @param integer1
+	 * @param pageNo
+	 * @param pageSize
 	 * @param paramMap
      * @return
      */
-	PageView queryByPage(Integer integer, Integer integer1, Map<String, Object> paramMap);
+	PageView queryByPage(String pageNo, String pageSize, Map<String, Object> paramMap);
 }

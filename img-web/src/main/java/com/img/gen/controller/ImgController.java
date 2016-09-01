@@ -60,6 +60,19 @@ public class ImgController {
 
 	}
 
+	/**
+	 * 全部分类
+	 * @return
+     */
+	@RequestMapping("imgMenu")
+	@ResponseBody
+	public JSONObject imgMenu(){
+		JSONObject retObj = new JSONObject();
+		List<ImgMenu> menuList = imgMenuService.findAll();
+		retObj.put("menuList",menuList);
+		retObj.put("success",true);
+		return retObj;
+	}
 
 	/**
 	 * 上传图片
@@ -158,7 +171,7 @@ public class ImgController {
 	public ModelAndView index(){
 		ModelAndView modelAndView = new ModelAndView("index");
 		Map<String,Object> paramMap = new HashMap<String,Object>();
-		PageView pageMode = imgResourceService.queryByPage(1,30,paramMap);//默认30条记录
+		PageView pageMode = imgResourceService.queryByPage("1","20",paramMap);//默认30条记录
 		modelAndView.addObject("pageModel",pageMode);
 		return  modelAndView;
 	}
@@ -177,7 +190,10 @@ public class ImgController {
 	public ModelAndView queryByPage(String pageNo,String pageSize,String type,String keys){
 		ModelAndView modelAndView = new ModelAndView("index");
 		Map<String,Object> paramMap = new HashMap<String,Object>();
-		PageView pageMode = imgResourceService.queryByPage(Integer.valueOf(pageNo),Integer.valueOf(pageSize),paramMap);
+		if(type != null && type != ""){
+			paramMap.put("imgType",Integer.valueOf(type));
+		}
+		PageView pageMode = imgResourceService.queryByPage(pageNo,pageSize,paramMap);
 		modelAndView.addObject("pageModel",pageMode);
 		return modelAndView;
 	}

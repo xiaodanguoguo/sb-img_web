@@ -215,5 +215,6 @@
 	<select id="queryByPage" resultMap="imgResourceResultMap" parameterType="java.util.Map">
 		select <include refid="table_columns" />
 		from img_resource
+		<include refid="page_where" />
 	</select>
 </mapper>

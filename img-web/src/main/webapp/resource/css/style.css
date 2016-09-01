@@ -49,3 +49,14 @@
 .img-background img {
     margin-left: 18.5px;
 }
+
+.img-name{
+    width:207px;
+    height:40px;
+    line-height:20px;
+    text-align:center;
+    margin-top: 5px;
+    display:block;
+    color: #000000;
+    font-family: 黑体;
+}

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.img.gen.pungin.PageView;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jca.cci.core.InteractionCallback;
 import org.springframework.stereotype.Service;
 
 import com.img.gen.dao.ImgResourceDao;
@@ -55,7 +56,7 @@ public class ImgResourceServiceImpl implements ImgResourceService{
      * @author kim
      * @param pageNo
      * @param pageSize
-     * @param imgResource
+     * @param
      * @return
      */
 	@Override
@@ -66,7 +67,7 @@ public class ImgResourceServiceImpl implements ImgResourceService{
 	/**
 	 * 条件查询图片总记录条数
 	 * @author kim
-	 * @param imgResource
+	 * @param
 	 * @return
 	 */
 	@Override
@@ -85,10 +86,14 @@ public class ImgResourceServiceImpl implements ImgResourceService{
 	}
 
     @Override
-    public PageView queryByPage(Integer pageNo, Integer pageSize, Map<String, Object> paramMap) {
+    public PageView queryByPage(String pageNo, String pageSize, Map<String, Object> paramMap) {
         PageView pageView = new PageView();
-        pageView.setPageNow(pageNo);
-        pageView.setPageSize(pageSize);
+        pageView.setPageNow(1);
+        pageView.setPageSize(20);
+        if(pageNo != null && pageSize != null){
+            pageView.setPageNow(Integer.valueOf(pageNo));
+            pageView.setPageSize(Integer.valueOf(pageSize));
+        }
         paramMap.put("paging",pageView);
         List<ImgResource> listResources = imgResourceDao.queryByPage(paramMap);
         pageView.setRecords(listResources);
